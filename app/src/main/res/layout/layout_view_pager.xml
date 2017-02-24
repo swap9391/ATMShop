@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/layoutDots"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            >
+
+            <ImageButton
+                android:id="@+id/navigateOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_uncomplete_one"
+                android:background="@android:color/transparent"
+                android:layout_margin="10dp"
+                />
+
+            <ImageButton
+                android:id="@+id/navigateTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_uncomplete_two"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                />
+
+            <ImageButton
+                android:id="@+id/navigateThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_uncomplete_three"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                />
+
+            <ImageButton
+                android:id="@+id/navigateFour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_uncomplete_four"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                />
+
+            <ImageButton
+                android:id="@+id/navigateFive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_uncomplete_five"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                />
+
+            <ImageButton
+                android:id="@+id/navigateSix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_uncomplete_six"
+                android:layout_margin="10dp"
+                android:background="@android:color/transparent"
+                />
+
+
+        </LinearLayout>
+
+        <!-- View pager to swipe views -->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_below="@+id/layoutDots"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"/>
+
+
+
+
+    </RelativeLayout>
+
+        <com.filippudak.ProgressPieView.ProgressPieView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="20dp"
+            android:id="@+id/progressPieView"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
