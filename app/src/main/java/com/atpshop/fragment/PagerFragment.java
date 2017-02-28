@@ -184,8 +184,8 @@ public class PagerFragment extends Fragment implements View.OnClickListener{
 
                 }
 
-                // changing the next button text 'NEXT' / 'GOT IT'
-               /* if (position == layouts.length - 1) {
+                /*// changing the next button text 'NEXT' / 'GOT IT'
+                if (position == layouts.length - 1) {
                     // last page. make button text to GOT IT
                     btnNext.setText(getString(R.string.start));
                     btnSkip.setVisibility(View.GONE);
@@ -206,6 +206,7 @@ public class PagerFragment extends Fragment implements View.OnClickListener{
 
         // Default version
         mProgressPieView = (ProgressPieView)view. findViewById(R.id.progressPieView);
+
         mProgressPieView.setOnProgressListener(new ProgressPieView.OnProgressListener() {
             @Override
             public void onProgressChanged(int progress, int max) {
@@ -262,6 +263,10 @@ public class PagerFragment extends Fragment implements View.OnClickListener{
         /*} else {
             launchHomeScreen();
         }*/
+    }
+
+    public void setPage(int position){
+        viewPager.setCurrentItem(position);
     }
 
     public int getItem(int i) {
@@ -387,11 +392,6 @@ public class PagerFragment extends Fragment implements View.OnClickListener{
                             mProgressPieView.setText(status + "%");
 
                                 //progressdialog.dismiss();
-
-
-
-
-
 
 
                         }

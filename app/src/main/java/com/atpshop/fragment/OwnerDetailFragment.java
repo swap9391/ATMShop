@@ -69,6 +69,7 @@ public class OwnerDetailFragment extends Fragment implements View.OnClickListene
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
              bindModel();
                 if(check()){
                     save();
@@ -115,8 +116,9 @@ public class OwnerDetailFragment extends Fragment implements View.OnClickListene
         hashMap.put(IJson.owner_name, "" + ownerDetailBean.getOwnerName());
         hashMap.put(IJson.ownerMobileNo, "" + ownerDetailBean.getOwnerMobileNo());
         hashMap.put(IJson.ownerAlternativeMobileNo, "" + ownerDetailBean.getOwnerAlternativeMobileNo());
-        hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(),IConstants.USER_ID));
+       // hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(),IConstants.USER_ID));
         hashMap.put(IJson.ownerId,""+getMyActivity().getOwnerId());
+        hashMap.put(IJson.userId, "1" );
 
 
 
@@ -124,15 +126,17 @@ public class OwnerDetailFragment extends Fragment implements View.OnClickListene
             @Override
             public void onResponse(OwnerDetailBean[] object) {
 
-
                 if (object[0] instanceof OwnerDetailBean) {
                     for (OwnerDetailBean bean : object) {
                         CommonUtils.showToast(getMyActivity(),"Owner Data Saved Successfully");
                         getMyActivity().setOwnerId(bean.getOwnerId());
+
+                        PagerFragment pager = ((PagerFragment) getParentFragment());
+                        pager.setPage(1);
+
+
                     }
                 }
-
-
             }
 
             @Override
@@ -143,6 +147,7 @@ public class OwnerDetailFragment extends Fragment implements View.OnClickListene
 
 
     }
+
 
     public MainActivity getMyActivity() {
         return (MainActivity) getActivity();

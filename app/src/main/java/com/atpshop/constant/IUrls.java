@@ -12,6 +12,9 @@ public interface IUrls {
     String URL_SHOP_DETAILS = BASE_URL + "updateshopdetails";
     String URL_SHOP_RENT = BASE_URL + "saverentdetails";
     String URL_SHOP_PHOTOS = BASE_URL + "uploadshopimages";
+    String URL_SHOP_LIST = BASE_URL + "getownerdetails";
+    String URL_FULL_DETAIL = BASE_URL + "getshopdetails";
+
 
 
 

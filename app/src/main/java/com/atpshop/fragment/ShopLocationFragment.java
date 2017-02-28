@@ -124,9 +124,10 @@ public class ShopLocationFragment extends Fragment implements View.OnClickListen
         hashMap.put(IJson.district, "" + shopLocationBean.getDistrict());
         hashMap.put(IJson.state, "" + shopLocationBean.getState());
         hashMap.put(IJson.pincode, "" + shopLocationBean.getPincode());
-        hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(), IConstants.USER_ID));
-        //hashMap.put(IJson.ownerId,""+getMyActivity().getOwnerId());
-        hashMap.put(IJson.ownerId,"28");
+        //hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(), IConstants.USER_ID));
+        hashMap.put(IJson.userId, "1" );
+        hashMap.put(IJson.ownerId,""+getMyActivity().getOwnerId());
+        //hashMap.put(IJson.ownerId,"28");
         hashMap.put(IJson.shopId,""+getMyActivity().getShopId());
 
 
@@ -140,6 +141,10 @@ public class ShopLocationFragment extends Fragment implements View.OnClickListen
                     for (ShopLocationBean bean : object) {
                         CommonUtils.showToast(getMyActivity(), "Shop Location Saved Successfully");
                         getMyActivity().setShopId(bean.getShopId());
+
+                        PagerFragment pager = ((PagerFragment) getParentFragment());
+                        pager.setPage(2);
+
                     }
                 }
 

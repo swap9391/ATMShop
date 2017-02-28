@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
     <color name="hyperlink">#3F51B5</color>
+    <color name="border">#FFFFFF</color>
+
 
 
     <!-- dots inactive colors -->

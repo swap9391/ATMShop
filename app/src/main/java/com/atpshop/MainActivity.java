@@ -32,6 +32,7 @@ import com.atpshop.fragment.FullDetailFragment;
 import com.atpshop.fragment.OwnerDetailFragment;
 import com.atpshop.fragment.PagerFragment;
 import com.atpshop.fragment.PostFragment;
+import com.atpshop.fragment.ShopListFragment;
 import com.atpshop.model.OwnerDetailBean;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -44,9 +45,12 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.ConnectionCallbacks,
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toolbar toolbar;
     int position;
     private int REQUEST_PHOTO_LEFT=101,REQUEST_PHOTO_RIGHT=102,REQUEST_PHOTO_FRO=103,REQUEST_PHOTO_OPP=104;
-    int ownerId, shopId;
+    int ownerId=0, shopId=0;
 
     //Drawer
     private NavigationView navigationView;
@@ -70,10 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // tags used to attach the fragments
     private static final String TAG_HOME = "home";
-    private static final String TAG_PHOTOS = "photos";
-    private static final String TAG_MOVIES = "movies";
-    private static final String TAG_NOTIFICATIONS = "notifications";
-    private static final String TAG_SETTINGS = "settings";
+    private static final String TAG_SHOP_DETLS = "shopdtls";
+    private static final String TAG_SHARE = "share";
     public static String CURRENT_TAG = TAG_HOME;
 
     // toolbar titles respected to selected nav menu item
@@ -194,21 +196,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return homeFragment;
             case 1:
                 // photos
-                PostFragment photosFragment = new PostFragment();
-                return photosFragment;
-            case 2:
-                // movies fragment
-                FullDetailFragment moviesFragment = new FullDetailFragment();
+                ShopListFragment moviesFragment = new ShopListFragment();
                 return moviesFragment;
-            case 3:
-                // notifications fragment
-                PostFragment notificationsFragment = new PostFragment();
-                return notificationsFragment;
 
-            case 4:
-                // settings fragment
-                PostFragment settingsFragment = new PostFragment();
-                return settingsFragment;
+            case 2:
+                FullDetailFragment photosFragment = new FullDetailFragment();
+                return photosFragment;
+                // movies fragment
+
             default:
                 return new PagerFragment();
         }
@@ -234,21 +229,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME;
                         break;
-                    case R.id.nav_photos:
+                    case R.id.nav_shop_dtls:
                         navItemIndex = 1;
-                        CURRENT_TAG = TAG_PHOTOS;
+                        CURRENT_TAG = TAG_SHOP_DETLS;
                         break;
-                    case R.id.nav_movies:
+                    case R.id.nav_share:
                         navItemIndex = 2;
-                        CURRENT_TAG = TAG_MOVIES;
-                        break;
-                    case R.id.nav_notifications:
-                        navItemIndex = 3;
-                        CURRENT_TAG = TAG_NOTIFICATIONS;
-                        break;
-                    case R.id.nav_settings:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_SETTINGS;
+                        CURRENT_TAG = TAG_SHARE;
                         break;
                     case R.id.nav_about_us:
                         CommonUtils.showToast(MainActivity.this, "About Us");
@@ -489,5 +476,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return gpsTracker;
     }
 
+    public void showFragment(Fragment fragment, Map<String, Serializable> parameters) {
+        Bundle bundle = new Bundle();
+        if (parameters != null) {
+            Set fragmentTransaction = parameters.entrySet();
+            Iterator iterator = fragmentTransaction.iterator();
 
+            while (iterator.hasNext()) {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                bundle.putSerializable((String) entry.getKey(), (Serializable) entry.getValue());
+            }
+        }
+
+        fragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction1 = this.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction1.replace(R.id.frame, fragment);
+        fragmentTransaction1.commit();
+    }
 }

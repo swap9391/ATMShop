@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:minHeight="100dp"
+    card_view:cardBackgroundColor="@color/white"
+    card_view:cardCornerRadius="6dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/lblOwnerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Owner Name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/dot_dark_screen1" />
+
+        <TextView
+            android:id="@+id/lblContactNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblOwnerName"
+            android:layout_margin="5dp"
+            android:text="Mobile Number"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/dot_dark_screen3" />
+
+        <TextView
+            android:id="@+id/lblContactNo2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblContactNo"
+            android:layout_margin="5dp"
+            android:text="Mobile Number"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/dot_dark_screen3" />
+
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

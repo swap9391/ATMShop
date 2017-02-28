@@ -196,14 +196,17 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
 
             if (data != null) {
                 if (data.getExtras() != null) {
+
                     bitmap = (Bitmap) data.getExtras().get("data");
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                     byte[] vehicleImage = stream.toByteArray();
+                    Uri uri = CommonUtils.getImageUri(getMyActivity(),bitmap);
+                    String encodedImage = Base64.encodeToString(vehicleImage, Base64.DEFAULT);
 
-                    File outputFile = savebitmap(bitmap);
+                   // File outputFile = savebitmap(bitmap);
 
-                    stream.writeTo(new FileOutputStream(outputFile));
+                   // stream.writeTo(new FileOutputStream(outputFile));
                     //    addTowedVehiRequest.setVehicleImage(Base64.encodeToString(vehicleImage, Base64.DEFAULT));
 
                     // bitmap = Bitmap.createScaledBitmap(bitmap, 50, 40, true);
@@ -214,13 +217,13 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
                     switch (requestCode) {
                         case 101:
                             CustomerFiles customerFiles1 = new CustomerFiles();
-                            customerFiles1.setImagePath(outputFile.getPath());
+                            //customerFiles1.setImagePath(outputFile.getPath());
                             customerFiles1.setImage_type(IConstants.LEFT_IMAGE);
-                            customerFiles1.setImage(Base64.encodeToString(vehicleImage, Base64.DEFAULT));
+                            customerFiles1.setImage(encodedImage);
                             dataT.add(customerFiles1);
                             imgLeft.setVisibility(View.VISIBLE);
                             Picasso.with(getMyActivity())
-                                    .load(outputFile)
+                                    .load(uri)
                                     .placeholder(R.drawable.circular_progress_dialog)
                                     .error(R.drawable.circular_progress_dialog)         // optional
                                     .into(imgLeft);
@@ -228,13 +231,12 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
                             break;
                         case 102:
                             CustomerFiles customerFiles2 = new CustomerFiles();
-                            customerFiles2.setImagePath(outputFile.getPath());
                             customerFiles2.setImage_type(IConstants.RIGHT_IMAGE);
-                            customerFiles2.setImage(Base64.encodeToString(vehicleImage, Base64.DEFAULT));
+                            customerFiles2.setImage(encodedImage);
                             dataT.add(customerFiles2);
                             imgRight.setVisibility(View.VISIBLE);
                             Picasso.with(getMyActivity())
-                                    .load(outputFile)
+                                    .load(uri)
                                     .placeholder(R.drawable.circular_progress_dialog)
                                     .error(R.drawable.circular_progress_dialog)         // optional
                                     .into(imgRight);
@@ -242,13 +244,12 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
                             break;
                         case 103:
                             CustomerFiles customerFiles3 = new CustomerFiles();
-                            customerFiles3.setImagePath(outputFile.getPath());
                             customerFiles3.setImage_type(IConstants.FRONT_IMAGE);
-                            customerFiles3.setImage(Base64.encodeToString(vehicleImage, Base64.DEFAULT));
+                            customerFiles3.setImage(encodedImage);
                             dataT.add(customerFiles3);
                             imgFront.setVisibility(View.VISIBLE);
                             Picasso.with(getMyActivity())
-                                    .load(outputFile)
+                                    .load(uri)
                                     .placeholder(R.drawable.circular_progress_dialog)
                                     .error(R.drawable.circular_progress_dialog)         // optional
                                     .into(imgFront);
@@ -256,13 +257,12 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
                             break;
                         case 104:
                             CustomerFiles customerFiles4 = new CustomerFiles();
-                            customerFiles4.setImagePath(outputFile.getPath());
                             customerFiles4.setImage_type(IConstants.OPPOSITE_IMAGE);
-                            customerFiles4.setImage(Base64.encodeToString(vehicleImage, Base64.DEFAULT));
+                            customerFiles4.setImage(encodedImage);
                             dataT.add(customerFiles4);
                             imgOpposit.setVisibility(View.VISIBLE);
                             Picasso.with(getMyActivity())
-                                    .load(outputFile)
+                                    .load(uri)
                                     .placeholder(R.drawable.circular_progress_dialog)
                                     .error(R.drawable.circular_progress_dialog)         // optional
                                     .into(imgOpposit);
@@ -334,7 +334,8 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
 
         hashMap.put(IJson.image_string, "" + customerFiles.getImage());
         hashMap.put(IJson.imageType, "" + customerFiles.getImage_type());
-        hashMap.put(IJson.shopId, "1" );
+        //hashMap.put(IJson.shopId, "1" );
+        hashMap.put(IJson.shopId,""+ getMyActivity().getShopId());
         hashMap.put(IJson.latitude,""+ getMyActivity().getLocation().getLatitude());
         hashMap.put(IJson.longitude,""+ getMyActivity().getLocation().getLongitude() );
         hashMap.put(IJson.imageId,"0" );
@@ -354,6 +355,8 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
                         if (sentCount < dataT.size()) {
                             save();
                         } else {
+                            PagerFragment pager = ((PagerFragment) getParentFragment());
+                            pager.setPage(5);
                             return;
                         }
 

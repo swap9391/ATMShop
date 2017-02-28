@@ -1,9 +1,12 @@
 package com.atpshop.model;
+
+import java.io.Serializable;
+
 /**
  * Created by Swapnil on 31/01/2017.
  */
 
-public class OwnerDetailBean {
+public class OwnerDetailBean implements Serializable{
     private int ownerId;
     private String ownerName;
     private String ownerMobileNo;

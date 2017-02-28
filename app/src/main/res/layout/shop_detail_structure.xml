@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_loc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:minHeight="100dp"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="6dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/relShopLocation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/shoploctitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="5dp"
+                android:ems="10"
+                android:text="Shop Location"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+            <ImageButton
+                android:id="@+id/imgloceddit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/ic_edit" />
+
+            <View
+                android:id="@+id/vwLoc"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/imgloceddit"
+
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#E5E5E5"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vwLoc">
+
+                <TextView
+                    android:id="@+id/lblapttitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Apartment Name"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblapt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="XYZcdscdscdcsdscdscdscdscdscdsc"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+
+                <TextView
+                    android:id="@+id/lblareatitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblapt"
+                    android:layout_margin="3dp"
+                    android:ems="7"
+                    android:text="Area"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblarea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblapt"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="XYZcdscdscdcsdscdscdscdscdscdsc"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/lblstatetitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblarea"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="State"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblarea"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="XYZcdscdscdcsdscdscdscdscdscdsc"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/lblcitytitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblState"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="City"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblState"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="XYZcdscdscdcsdscdscdscdscdscdsc"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/lblpintitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblCity"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Pin Code"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblPin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblCity"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="XYZcdscdscdcsdscdscdscdscdscdsc"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <!--Shop Detail-->
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:minHeight="100dp"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="6dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/relShopDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/shopdetailstitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="5dp"
+                android:text="Shop Details"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+            <ImageButton
+                android:id="@+id/imgshopddit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/ic_edit" />
+
+            <View
+                android:id="@+id/vwshopDetls"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/imgshopddit"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#E5E5E5"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vwshopDetls">
+
+                <TextView
+                    android:id="@+id/lblshophttitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Shop Height"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblshopht"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="None"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+
+                <TextView
+                    android:id="@+id/lblshopwttitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblshopht"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Shop Width"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblshopwt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblshopht"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="None"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/lblinthttitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblshopwt"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Internal Height"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblintht"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblshopwt"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="None"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/lblintwttitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblintht"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Internal Width"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblintwt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblintht"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="None"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/lblintdepttitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblintwt"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Internal Depth"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblintdept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblintwt"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="None"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+    <!--Rent Detail-->
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_rent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:minHeight="100dp"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="6dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/relRentDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/renttitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Rent Details"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+
+            <ImageButton
+                android:id="@+id/imgrentddit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/ic_edit" />
+
+            <View
+                android:id="@+id/vwrent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/imgrentddit"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#E5E5E5"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vwrent">
+
+                <TextView
+                    android:id="@+id/lblexprenttitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Expected Rent"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblexptrent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="None"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+
+                <TextView
+                    android:id="@+id/lblnegrenttitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblexptrent"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Negotiable Rent"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/lblnegrent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblexptrent"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="None"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

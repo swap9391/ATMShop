@@ -102,7 +102,8 @@ RentDetailBean rentDetailBean;
     private void save(){
 
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(IJson.shopId, "7" );
+        //hashMap.put(IJson.shopId, "7" );
+        hashMap.put(IJson.shopId, ""+getMyActivity().getShopId() );
         hashMap.put(IJson.shopRent, "" + rentDetailBean.getShopRent());
         hashMap.put(IJson.negotiableRent, "" + rentDetailBean.getNegotiableRent());
 
@@ -113,6 +114,9 @@ RentDetailBean rentDetailBean;
                 if (object[0] instanceof RentDetailBean) {
                     for (RentDetailBean bean : object) {
                         CommonUtils.showToast(getMyActivity(),"Rent Details Saved Successfully!!");
+                        PagerFragment pager = ((PagerFragment) getParentFragment());
+                        pager.setPage(4);
+
                     }
                 }
 

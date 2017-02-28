@@ -126,7 +126,7 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
         hashMap.put(IJson.internalWidth, "" + shopDetailBean.getInternalWidth());
         hashMap.put(IJson.internalDepth, "" + shopDetailBean.getInternalDepth());
         hashMap.put(IJson.carpetArea, "" + shopDetailBean.getCarpetArea());
-        hashMap.put(IJson.shopId, "7" );
+        hashMap.put(IJson.shopId,""+ getMyActivity().getShopId() );
 
 
         CallWebservice.getWebservice(getMyActivity(), Request.Method.POST, IUrls.URL_SHOP_DETAILS, hashMap, new VolleyResponseListener<ShopDetailBean>() {
@@ -136,7 +136,11 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
 
                 if (object[0] instanceof ShopDetailBean) {
                     for (ShopDetailBean bean : object) {
-                        CommonUtils.showToast(getMyActivity(),"Shop Location Saved Successfully");
+                        CommonUtils.showToast(getMyActivity(),"Shop Details Saved Successfully");
+
+                        PagerFragment pager = ((PagerFragment) getParentFragment());
+                        pager.setPage(3);
+
                     }
                 }
 

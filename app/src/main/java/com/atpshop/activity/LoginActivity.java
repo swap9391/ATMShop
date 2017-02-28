@@ -86,17 +86,10 @@ public class LoginActivity extends AppCompatActivity {
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
+               /* Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent1);*/
                 Login();
-             //   makeJsonObjectRequest();
-               /**/
-               /* if (!txtUserName.getText().toString().isEmpty() && !txtPassword.getText().toString().isEmpty()) {
-                    Login(txtUserName.getText().toString(), txtPassword.getText().toString());
-                }
-                else {
-                    Toast.makeText(LoginActivity.this,"Enter Username and Password",Toast.LENGTH_SHORT).show();
-                }*/
+
             }
         });
 
