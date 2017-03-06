@@ -18,6 +18,7 @@ import com.atpshop.MainActivity;
 import com.atpshop.R;
 import com.atpshop.common.CommonUtils;
 import com.atpshop.constant.CallWebservice;
+import com.atpshop.constant.IConstants;
 import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
 import com.atpshop.constant.VolleyResponseListener;
@@ -35,7 +36,7 @@ import java.util.Set;
  * Created by root on 11/1/17.
  */
 
-public class ShopListFragment extends Fragment implements View.OnClickListener {
+public class ShopListFragment extends CommonFragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     MyAdapter myAdapter;
@@ -126,8 +127,8 @@ public class ShopListFragment extends Fragment implements View.OnClickListener {
 
     public void getShopList(){
         HashMap<String, String> hashMap = new HashMap<>();
-        // hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(),IConstants.USER_ID));
-        hashMap.put(IJson.userId, "1" );
+         hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(), IConstants.USER_ID));
+        //hashMap.put(IJson.userId, "1" );
 
 
 
@@ -152,7 +153,7 @@ public class ShopListFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onError(String message) {
-                CommonUtils.showToast(getMyActivity(),message);
+                getErroDialog(message);
             }
         }, OwnerDetailBean[].class);
 

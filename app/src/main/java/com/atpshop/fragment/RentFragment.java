@@ -17,6 +17,7 @@ import com.atpshop.common.CommonUtils;
 import com.atpshop.common.FloatingActionButton;
 import com.atpshop.common.StringUtils;
 import com.atpshop.constant.CallWebservice;
+import com.atpshop.constant.CustomDialogListener;
 import com.atpshop.constant.IConstants;
 import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
@@ -31,7 +32,7 @@ import java.util.HashMap;
  * Created by root on 11/1/17.
  */
 
-public class RentFragment extends Fragment implements View.OnClickListener {
+public class RentFragment extends CommonFragment implements View.OnClickListener {
 
 RentDetailBean rentDetailBean;
     EditText edt_expected,edt_negot;
@@ -94,7 +95,10 @@ RentDetailBean rentDetailBean;
             edt_expected.setError("Enter Negotiable Rent");
             return false;
         }
-
+        if (getMyActivity().getShopId()<=0) {
+            CommonUtils.showToast(getMyActivity(),"Please Fill Shop Location Detail First");
+            return false;
+        }
         return  true;
     }
 
@@ -113,9 +117,15 @@ RentDetailBean rentDetailBean;
 
                 if (object[0] instanceof RentDetailBean) {
                     for (RentDetailBean bean : object) {
-                        CommonUtils.showToast(getMyActivity(),"Rent Details Saved Successfully!!");
-                        PagerFragment pager = ((PagerFragment) getParentFragment());
-                        pager.setPage(4);
+
+                        getSuccessDialog("!Congrats", "Rent Details Saved Successfully", new CustomDialogListener() {
+                            @Override
+                            public void onResponse() {
+                                PagerFragment pager = ((PagerFragment) getParentFragment());
+                                pager.setPage(4);
+
+                            }
+                        });
 
                     }
                 }
@@ -124,7 +134,7 @@ RentDetailBean rentDetailBean;
 
             @Override
             public void onError(String message) {
-                CommonUtils.showToast(getMyActivity(),message);
+                getErroDialog(message);
             }
         }, RentDetailBean[].class);
 

@@ -16,10 +16,19 @@ public class CustomerFiles {
     private int imageId;
     private String latitude;
     private String longitude;
+    private String imageName;
+
 
     public CustomerFiles() {
     }
 
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 
     public int getImageId() {
         return imageId;

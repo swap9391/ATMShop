@@ -1,6 +1,7 @@
 package com.atpshop.constant;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -9,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.atpshop.common.CommonUtils;
 import com.atpshop.common.Connectivity;
 import com.atpshop.common.CustomProgressDialog;
 import com.google.gson.Gson;
@@ -22,35 +24,52 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 /**
  * Created by Swapnil Jadhav on 13/7/16.
  */
 public class CallWebservice {
     public static JSONArray jsonArray1 = null;
+    public static SweetAlertDialog proDialog;
 
 
-    /**
-     * used it while u get whole data in response  not only id
-     *
-     * @param context
-     * @param method
-     * @param url
-     * @param param
-     * @param listener
-     * @param aClass
-     * @param <T>
-     */
+     /* used it while u get whole data in response  not only id
+
+      @param context
+      @param method
+      @param url
+      @param param
+      @param listener
+      @param aClass
+      @param <T>
+*/
+
+    public static void getProgressDialog(Context context) {
+        proDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+        proDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        proDialog.setTitleText("Loading...");
+        proDialog.setCancelable(false);
+        proDialog.show();
+    }
+
+    public static void dismissDialog() {
+        if (proDialog.isShowing()) {
+            proDialog.dismiss();
+        }
+    }
+
     public synchronized static <T> void getWebservice(final Context context, int method, String url, final HashMap<String, String> param, final VolleyResponseListener listener, final Class<T[]> aClass) {
         if (Connectivity.isConnected(context)) {
-            CustomProgressDialog.showDialog(context, "Please Wait");
+            getProgressDialog(context);
             JsonObjectRequest req = new JsonObjectRequest(url, new JSONObject(param),
                     new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                CustomProgressDialog.dismissDialog(context);
+                                dismissDialog();
                                 JSONObject jsonObject = response;
                                 String key = jsonObject.getString(IConstants.RESPONSE_KEY);
                                 String message = jsonObject.getString(IConstants.RESPONSE_MESSAGE);
@@ -63,11 +82,12 @@ public class CallWebservice {
                                     Object[] object = gson.fromJson(String.valueOf(jsonArray1), aClass);
                                     listener.onResponse(object);
                                 } else if (key.equalsIgnoreCase(IConstants.RESPONSE_ERROR)) {
-                                    CustomProgressDialog.dismissDialog(context);
-                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                                    dismissDialog();
                                     listener.onError(message.toString());
                                 }
                             } catch (JSONException e) {
+                                dismissDialog();
+                                CommonUtils.showToast(context, e.getMessage());
                                 e.printStackTrace();
                             }
 
@@ -75,7 +95,7 @@ public class CallWebservice {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    CustomProgressDialog.dismissDialog(context);
+                    dismissDialog();
                     listener.onError(error.toString());
                 }
             });

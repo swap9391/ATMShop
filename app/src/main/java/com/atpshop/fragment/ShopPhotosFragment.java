@@ -33,6 +33,7 @@ import com.atpshop.common.FloatingActionButton;
 import com.atpshop.common.GPSTracker;
 import com.atpshop.common.MarshMallowPermission;
 import com.atpshop.constant.CallWebservice;
+import com.atpshop.constant.CustomDialogListener;
 import com.atpshop.constant.IConstants;
 import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
@@ -58,7 +59,7 @@ import static com.atpshop.constant.IConstants.USER_ID;
  * Created by root on 11/1/17.
  */
 
-public class ShopPhotosFragment extends Fragment implements View.OnClickListener {
+public class ShopPhotosFragment extends CommonFragment implements View.OnClickListener {
 
 
     //scroll image
@@ -93,9 +94,6 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
         imgOpposit = (ImageView) view.findViewById(R.id.imgOpposite);
 
         customerFiles = new CustomerFiles();
-        if (getMyActivity().getLocation().getLatitude() <= 0 || getMyActivity().getLocation().getLongitude() <= 0) {
-            getMyActivity().LocationDialog();
-        }
 
 
         btnLeft.setOnClickListener(this);
@@ -113,7 +111,7 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
         imgArray = new ArrayList<>();
 
 
-        LinearLayout yourframelayout = (LinearLayout)view. findViewById(R.id.floating_login);
+        LinearLayout yourframelayout = (LinearLayout) view.findViewById(R.id.floating_login);
         FloatingActionButton fabButton = new FloatingActionButton.Builder(getMyActivity(), yourframelayout)
                 .withDrawable(getResources().getDrawable(R.mipmap.ic_check_white))
                 .withButtonColor(Color.parseColor("#00C853"))
@@ -126,7 +124,7 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
             @Override
             public void onClick(View v) {
                 bindModel();
-                if(check()){
+                if (check()) {
                     save();
                 }
             }
@@ -146,35 +144,45 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case R.id.btnLeft:
-            case R.id.imgLeft:
-                Intent cameraIntent1 = new Intent(
-                        MediaStore.ACTION_IMAGE_CAPTURE);
-                getMyActivity().startActivityForResult(cameraIntent1, REQUEST_PHOTO_LEFT);
-                break;
-            case R.id.btnRight:
-            case R.id.imgRight:
-                Intent cameraIntent2 = new Intent(
-                        MediaStore.ACTION_IMAGE_CAPTURE);
-                getMyActivity().startActivityForResult(cameraIntent2, REQUEST_PHOTO_RIGHT);
-                break;
+        MarshMallowPermission marshMallowPermission = new MarshMallowPermission(getActivity());
 
-            case R.id.btnFront:
-            case R.id.imgFront:
-                Intent cameraIntent3 = new Intent(
-                        MediaStore.ACTION_IMAGE_CAPTURE);
-                getMyActivity().startActivityForResult(cameraIntent3, REQUEST_PHOTO_FRO);
-                break;
+        if (!marshMallowPermission.checkPermissionForCamera() && !marshMallowPermission.checkPermissionForExternalStorage() && !marshMallowPermission.checkPermissionForReadExternalStorage() ) {
+            marshMallowPermission.requestPermissionForCamera();
+            marshMallowPermission.requestPermissionForExternalStorage();
+            marshMallowPermission.requestPermissionForReadExternalStorage();
 
-            case R.id.btnOpposite:
-            case R.id.imgOpposite:
-                Intent cameraIntent4 = new Intent(
-                        MediaStore.ACTION_IMAGE_CAPTURE);
-                getMyActivity().startActivityForResult(cameraIntent4, REQUEST_PHOTO_OPP);
-                break;
+        }else {
+
+            switch (v.getId()) {
+                case R.id.btnLeft:
+                case R.id.imgLeft:
+                    Intent cameraIntent1 = new Intent(
+                            MediaStore.ACTION_IMAGE_CAPTURE);
+                    getMyActivity().startActivityForResult(cameraIntent1, REQUEST_PHOTO_LEFT);
+                    break;
+                case R.id.btnRight:
+                case R.id.imgRight:
+                    Intent cameraIntent2 = new Intent(
+                            MediaStore.ACTION_IMAGE_CAPTURE);
+                    getMyActivity().startActivityForResult(cameraIntent2, REQUEST_PHOTO_RIGHT);
+                    break;
+
+                case R.id.btnFront:
+                case R.id.imgFront:
+                    Intent cameraIntent3 = new Intent(
+                            MediaStore.ACTION_IMAGE_CAPTURE);
+                    getMyActivity().startActivityForResult(cameraIntent3, REQUEST_PHOTO_FRO);
+                    break;
+
+                case R.id.btnOpposite:
+                case R.id.imgOpposite:
+                    Intent cameraIntent4 = new Intent(
+                            MediaStore.ACTION_IMAGE_CAPTURE);
+                    getMyActivity().startActivityForResult(cameraIntent4, REQUEST_PHOTO_OPP);
+                    break;
 
 
+            }
         }
     }
 
@@ -201,12 +209,12 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                     byte[] vehicleImage = stream.toByteArray();
-                    Uri uri = CommonUtils.getImageUri(getMyActivity(),bitmap);
+                    Uri uri = CommonUtils.getImageUri(getMyActivity(), bitmap);
                     String encodedImage = Base64.encodeToString(vehicleImage, Base64.DEFAULT);
 
-                   // File outputFile = savebitmap(bitmap);
+                    // File outputFile = savebitmap(bitmap);
 
-                   // stream.writeTo(new FileOutputStream(outputFile));
+                    // stream.writeTo(new FileOutputStream(outputFile));
                     //    addTowedVehiRequest.setVehicleImage(Base64.encodeToString(vehicleImage, Base64.DEFAULT));
 
                     // bitmap = Bitmap.createScaledBitmap(bitmap, 50, 40, true);
@@ -309,7 +317,7 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
 
         try {
             outStream = new FileOutputStream(file);
-          //  bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            //  bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
             outStream.flush();
             outStream.close();
 
@@ -335,11 +343,10 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
         hashMap.put(IJson.image_string, "" + customerFiles.getImage());
         hashMap.put(IJson.imageType, "" + customerFiles.getImage_type());
         //hashMap.put(IJson.shopId, "1" );
-        hashMap.put(IJson.shopId,""+ getMyActivity().getShopId());
-        hashMap.put(IJson.latitude,""+ getMyActivity().getLocation().getLatitude());
-        hashMap.put(IJson.longitude,""+ getMyActivity().getLocation().getLongitude() );
-        hashMap.put(IJson.imageId,"0" );
-
+        hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
+        hashMap.put(IJson.latitude, "" + getMyActivity().getLocation().getLatitude());
+        hashMap.put(IJson.longitude, "" + getMyActivity().getLocation().getLongitude());
+        hashMap.put(IJson.imageId, "0");
 
 
         CallWebservice.getWebservice(getMyActivity(), Request.Method.POST, IUrls.URL_SHOP_PHOTOS, hashMap, new VolleyResponseListener<CustomerFiles>() {
@@ -355,13 +362,21 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
                         if (sentCount < dataT.size()) {
                             save();
                         } else {
-                            PagerFragment pager = ((PagerFragment) getParentFragment());
-                            pager.setPage(5);
+
+                            getSuccessDialog("!Congrats", "Shop Photos Saved Successfully", new CustomDialogListener() {
+                                @Override
+                                public void onResponse() {
+
+                                    PagerFragment pager = ((PagerFragment) getParentFragment());
+                                    pager.setPage(5);
+
+                                }
+                            });
+
+
                             return;
                         }
 
-                        CommonUtils.showToast(getMyActivity(), "Owner Data Saved Successfully");
-                        getMyActivity().setOwnerId(bean.getShopId());
                     }
                 }
 
@@ -370,7 +385,7 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onError(String message) {
-                CommonUtils.showToast(getMyActivity(), message);
+                getErroDialog(message);
             }
         }, CustomerFiles[].class);
 
@@ -387,6 +402,12 @@ public class ShopPhotosFragment extends Fragment implements View.OnClickListener
         if (getMyActivity().getLocation().getLatitude() <= 0 || getMyActivity().getLocation().getLongitude() <= 0) {
             getMyActivity().LocationDialog();
             CommonUtils.showToast(getMyActivity(), "Start GPS Location First");
+            return false;
+        }
+
+
+        if (getMyActivity().getShopId() <= 0) {
+            CommonUtils.showToast(getMyActivity(), "Please Fill Shop Location Detail First");
             return false;
         }
 

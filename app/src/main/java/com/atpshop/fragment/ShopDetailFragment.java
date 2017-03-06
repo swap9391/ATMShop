@@ -3,6 +3,8 @@ package com.atpshop.fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.atpshop.common.CommonUtils;
 import com.atpshop.common.FloatingActionButton;
 import com.atpshop.common.StringUtils;
 import com.atpshop.constant.CallWebservice;
+import com.atpshop.constant.CustomDialogListener;
 import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
 import com.atpshop.constant.VolleyResponseListener;
@@ -28,26 +31,30 @@ import java.util.HashMap;
  * Created by root on 11/1/17.
  */
 
-public class ShopDetailFragment extends Fragment implements View.OnClickListener {
+public class ShopDetailFragment extends CommonFragment implements View.OnClickListener, TextWatcher {
 
-    EditText et_shutter_ht,et_shutter_wt,et_interna_ht,et_interna_wt,et_interna_depth,et_carpet_area;
+    EditText et_shutter_ht, et_shutter_wt, et_interna_ht, et_interna_wt, et_interna_depth, et_carpet_area;
     ShopDetailBean shopDetailBean;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view;
         view = inflater.inflate(R.layout.shop_details_layout, container, false);
 
-        shopDetailBean= new ShopDetailBean();
+        shopDetailBean = new ShopDetailBean();
         et_shutter_ht = (EditText) view.findViewById(R.id.edt_shutter_height);
-        et_shutter_wt= (EditText) view.findViewById(R.id.edt_shutter_width);
+        et_shutter_wt = (EditText) view.findViewById(R.id.edt_shutter_width);
         et_interna_ht = (EditText) view.findViewById(R.id.edt_internal_height);
         et_interna_wt = (EditText) view.findViewById(R.id.edt_internal_width);
         et_interna_depth = (EditText) view.findViewById(R.id.edt_internal_depth);
         et_carpet_area = (EditText) view.findViewById(R.id.edt_carpet_area);
 
+        et_interna_wt.addTextChangedListener(this);
+        et_interna_depth.addTextChangedListener(this);
 
-        LinearLayout yourframelayout = (LinearLayout)view. findViewById(R.id.floating_login);
+
+        LinearLayout yourframelayout = (LinearLayout) view.findViewById(R.id.floating_login);
         FloatingActionButton fabButton = new FloatingActionButton.Builder(getMyActivity(), yourframelayout)
                 .withDrawable(getResources().getDrawable(R.mipmap.ic_check_white))
                 .withButtonColor(Color.parseColor("#00C853"))
@@ -59,8 +66,8 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            bindModel();
-                if(check()){
+                bindModel();
+                if (check()) {
                     save();
                 }
 
@@ -73,10 +80,8 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
     }
 
 
-
-
-    private void bindModel(){
-        shopDetailBean.setShopHeight(et_shutter_ht.getText().toString() );
+    private void bindModel() {
+        shopDetailBean.setShopHeight(et_shutter_ht.getText().toString());
         shopDetailBean.setShopWidth(et_shutter_wt.getText().toString());
         shopDetailBean.setInternalHeight(et_interna_ht.getText().toString());
         shopDetailBean.setInternalWidth(et_interna_wt.getText().toString());
@@ -85,39 +90,44 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
 
     }
 
-    private boolean check(){
+    private boolean check() {
 
-        if(shopDetailBean.getShopHeight()==null &&StringUtils.isEmpty(shopDetailBean.getShopHeight())  ){
+        if (shopDetailBean.getShopHeight() == null && StringUtils.isEmpty(shopDetailBean.getShopHeight())) {
             et_shutter_ht.setError("Please Enter Shutter Height");
-             return false;
+            return false;
         }
 
-        if(shopDetailBean.getShopWidth()==null &&StringUtils.isEmpty(shopDetailBean.getShopWidth())  ){
+        if (shopDetailBean.getShopWidth() == null && StringUtils.isEmpty(shopDetailBean.getShopWidth())) {
             et_shutter_wt.setError("Please Enter Shutter Width");
             return false;
         }
 
-        if(shopDetailBean.getInternalWidth()==null &&StringUtils.isEmpty(shopDetailBean.getInternalHeight())  ){
+        if (shopDetailBean.getInternalWidth() == null && StringUtils.isEmpty(shopDetailBean.getInternalHeight())) {
             et_interna_ht.setError("Please Enter Internal Height");
             return false;
         }
 
 
-        if(shopDetailBean.getInternalWidth()==null &&StringUtils.isEmpty(shopDetailBean.getInternalWidth())  ){
+        if (shopDetailBean.getInternalWidth() == null && StringUtils.isEmpty(shopDetailBean.getInternalWidth())) {
             et_interna_wt.setError("Please Enter Internal Width");
             return false;
         }
 
-        if(shopDetailBean.getInternalDepth()==null &&StringUtils.isEmpty(shopDetailBean.getInternalDepth())  ){
+        if (shopDetailBean.getInternalDepth() == null && StringUtils.isEmpty(shopDetailBean.getInternalDepth())) {
             et_interna_depth.setError("Please Enter Internal Depth");
             return false;
         }
 
-        return  true;
+        if (getMyActivity().getShopId() <= 0) {
+            CommonUtils.showToast(getMyActivity(), "Please Fill Shop Location Detail First");
+            return false;
+        }
+
+        return true;
     }
 
 
-    private void save(){
+    private void save() {
 
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(IJson.shopHeight, "" + shopDetailBean.getShopHeight());
@@ -126,7 +136,7 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
         hashMap.put(IJson.internalWidth, "" + shopDetailBean.getInternalWidth());
         hashMap.put(IJson.internalDepth, "" + shopDetailBean.getInternalDepth());
         hashMap.put(IJson.carpetArea, "" + shopDetailBean.getCarpetArea());
-        hashMap.put(IJson.shopId,""+ getMyActivity().getShopId() );
+        hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
 
 
         CallWebservice.getWebservice(getMyActivity(), Request.Method.POST, IUrls.URL_SHOP_DETAILS, hashMap, new VolleyResponseListener<ShopDetailBean>() {
@@ -136,10 +146,15 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
 
                 if (object[0] instanceof ShopDetailBean) {
                     for (ShopDetailBean bean : object) {
-                        CommonUtils.showToast(getMyActivity(),"Shop Details Saved Successfully");
 
-                        PagerFragment pager = ((PagerFragment) getParentFragment());
-                        pager.setPage(3);
+                        getSuccessDialog("!Congrats", "Shop Details Saved Successfully", new CustomDialogListener() {
+                            @Override
+                            public void onResponse() {
+                                PagerFragment pager = ((PagerFragment) getParentFragment());
+                                pager.setPage(3);
+                            }
+                        });
+
 
                     }
                 }
@@ -149,14 +164,12 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onError(String message) {
-                CommonUtils.showToast(getMyActivity(),message);
+                getErroDialog(message);
             }
         }, ShopDetailBean[].class);
 
 
     }
-
-
 
 
     public MainActivity getMyActivity() {
@@ -167,5 +180,35 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        String text = editable.toString();
+        int value = CommonUtils.asInt(text, 0);
+        if (editable == et_interna_depth.getEditableText()) {
+            // DO STH
+            if (value > 0 && !StringUtils.isEmpty(et_interna_wt.getText().toString())) {
+                int totalcapet = value * CommonUtils.asInt(et_interna_wt.getText().toString(), 0);
+                et_carpet_area.setText("" + totalcapet);
+            }
+
+        } else if (editable == et_interna_wt.getEditableText()) {
+            // DO STH
+            if (value > 0 && !StringUtils.isEmpty(et_interna_depth.getText().toString())) {
+                int totalcapet = value * CommonUtils.asInt(et_interna_depth.getText().toString(), 0);
+                et_carpet_area.setText("" + totalcapet);
+            }
+        }
     }
 }

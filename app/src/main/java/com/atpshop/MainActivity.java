@@ -1,39 +1,37 @@
 package com.atpshop;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.atpshop.activity.LoginActivity;
 import com.atpshop.common.CommonUtils;
 import com.atpshop.common.GPSTracker;
-import com.atpshop.fragment.FullDetailFragment;
-import com.atpshop.fragment.OwnerDetailFragment;
+import com.atpshop.constant.IConstants;
 import com.atpshop.fragment.PagerFragment;
-import com.atpshop.fragment.PostFragment;
 import com.atpshop.fragment.ShopListFragment;
-import com.atpshop.model.OwnerDetailBean;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -46,22 +44,20 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.ConnectionCallbacks,
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         ResultCallback<LocationSettingsResult> {
 
     private ViewPager viewPager;
     Toolbar toolbar;
     int position;
-    private int REQUEST_PHOTO_LEFT=101,REQUEST_PHOTO_RIGHT=102,REQUEST_PHOTO_FRO=103,REQUEST_PHOTO_OPP=104;
-    int ownerId=0, shopId=0;
+    private int REQUEST_PHOTO_LEFT = 101, REQUEST_PHOTO_RIGHT = 102, REQUEST_PHOTO_FRO = 103, REQUEST_PHOTO_OPP = 104;
+    int ownerId = 0, shopId = 0;
 
     //Drawer
     private NavigationView navigationView;
@@ -98,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
-
-        if(getLocation().getLatitude()<=0 || getLocation().getLongitude()<=0){
+        setSupportActionBar(toolbar);
+        if (getLocation().getLatitude() <= 0 || getLocation().getLongitude() <= 0) {
             LocationDialog();
         }
 
@@ -132,8 +128,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadNavHeader() {
         // name, website
-        txtName.setText("Ravi Tamada");
-        txtWebsite.setText("www.androidhive.info");
+        txtName.setText(CommonUtils.getSharedPref(IConstants.USER_NAME, MainActivity.this));
+
+        txtWebsite.setText(CommonUtils.getSharedPref(IConstants.USER_MOBILE, MainActivity.this));
 
         // loading header background image
 
@@ -200,9 +197,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return moviesFragment;
 
             case 2:
-                FullDetailFragment photosFragment = new FullDetailFragment();
-                return photosFragment;
-                // movies fragment
+                // Share App
+                try {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Indoc- India Documents");
+                    String sAux = "\nLet me recommend you this application\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.exa.bdg&hl=en \n\n";
+                    i.putExtra(Intent.EXTRA_TEXT, sAux);
+                    startActivity(Intent.createChooser(i, "choose one"));
+                } catch (Exception e) {
+                    //e.toString();
+                }
 
             default:
                 return new PagerFragment();
@@ -493,4 +499,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction1.replace(R.id.frame, fragment);
         fragmentTransaction1.commit();
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                LogoutDialog();
+                break;
+        }
+        return true;
+    }
+
+    public static AlertDialog.Builder showAlertDialog(Context context) {
+        AlertDialog.Builder alertDialog = null;
+        alertDialog = new AlertDialog.Builder(context);
+        alertDialog.setTitle("Do you want to logout?");
+        return alertDialog;
+    }
+
+    private void LogoutDialog() {
+
+        try {
+            AlertDialog.Builder builder = showAlertDialog(this);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+
+                    CommonUtils.removeSharePref(IConstants.USER_ID, MainActivity.this);
+                    CommonUtils.removeSharePref(IConstants.USER_NAME, MainActivity.this);
+                    CommonUtils.removeSharePref(IConstants.USER_MOBILE, MainActivity.this);
+
+
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+
+                }
+            }).show();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+
+    }
+
+
 }

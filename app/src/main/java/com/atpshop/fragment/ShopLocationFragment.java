@@ -17,6 +17,7 @@ import com.atpshop.common.CommonUtils;
 import com.atpshop.common.FloatingActionButton;
 import com.atpshop.common.StringUtils;
 import com.atpshop.constant.CallWebservice;
+import com.atpshop.constant.CustomDialogListener;
 import com.atpshop.constant.IConstants;
 import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
@@ -30,7 +31,7 @@ import java.util.HashMap;
  * Created by root on 11/1/17.
  */
 
-public class ShopLocationFragment extends Fragment implements View.OnClickListener {
+public class ShopLocationFragment extends CommonFragment implements View.OnClickListener {
 
     ShopLocationBean shopLocationBean;
     EditText et_apartment, et_street, et_city, et_state, et_pincode;
@@ -112,6 +113,12 @@ public class ShopLocationFragment extends Fragment implements View.OnClickListen
             return false;
         }
 
+        if (getMyActivity().getOwnerId()<=0) {
+            CommonUtils.showToast(getMyActivity(),"Please Fill Owner Detail First");
+            return false;
+        }
+
+
         return true;
     }
 
@@ -124,8 +131,8 @@ public class ShopLocationFragment extends Fragment implements View.OnClickListen
         hashMap.put(IJson.district, "" + shopLocationBean.getDistrict());
         hashMap.put(IJson.state, "" + shopLocationBean.getState());
         hashMap.put(IJson.pincode, "" + shopLocationBean.getPincode());
-        //hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(), IConstants.USER_ID));
-        hashMap.put(IJson.userId, "1" );
+        hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(), IConstants.USER_ID));
+        //hashMap.put(IJson.userId, "1" );
         hashMap.put(IJson.ownerId,""+getMyActivity().getOwnerId());
         //hashMap.put(IJson.ownerId,"28");
         hashMap.put(IJson.shopId,""+getMyActivity().getShopId());
@@ -139,11 +146,18 @@ public class ShopLocationFragment extends Fragment implements View.OnClickListen
 
                 if (object[0] instanceof ShopLocationBean) {
                     for (ShopLocationBean bean : object) {
-                        CommonUtils.showToast(getMyActivity(), "Shop Location Saved Successfully");
                         getMyActivity().setShopId(bean.getShopId());
 
-                        PagerFragment pager = ((PagerFragment) getParentFragment());
-                        pager.setPage(2);
+                        getSuccessDialog("!Congrats", "Shop Location Saved Successfully", new CustomDialogListener() {
+                            @Override
+                            public void onResponse() {
+                                PagerFragment pager = ((PagerFragment) getParentFragment());
+                                pager.setPage(2);
+                            }
+                        });
+
+
+
 
                     }
                 }
@@ -153,7 +167,7 @@ public class ShopLocationFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void onError(String message) {
-                CommonUtils.showToast(getMyActivity(), message);
+                getErroDialog(message);
             }
         }, ShopLocationBean[].class);
 

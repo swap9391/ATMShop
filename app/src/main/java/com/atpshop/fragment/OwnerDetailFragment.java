@@ -22,6 +22,7 @@ import com.atpshop.common.CommonUtils;
 import com.atpshop.common.FloatingActionButton;
 import com.atpshop.common.StringUtils;
 import com.atpshop.constant.CallWebservice;
+import com.atpshop.constant.CustomDialogListener;
 import com.atpshop.constant.IConstants;
 import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
@@ -36,9 +37,9 @@ import java.util.HashMap;
  * Created by root on 11/1/17.
  */
 
-public class OwnerDetailFragment extends Fragment implements View.OnClickListener {
+public class OwnerDetailFragment extends CommonFragment implements View.OnClickListener {
 
-    EditText et_owner_name,et_contact_1,et_contact_2;
+    EditText et_owner_name, et_contact_1, et_contact_2;
     OwnerDetailBean ownerDetailBean;
     private OwnerDetailFragment TAG = OwnerDetailFragment.this;
 
@@ -57,7 +58,7 @@ public class OwnerDetailFragment extends Fragment implements View.OnClickListene
         et_contact_1 = (EditText) view.findViewById(R.id.edt_owner_contact1);
         et_contact_2 = (EditText) view.findViewById(R.id.edt_owner_contact2);
 
-        LinearLayout yourframelayout = (LinearLayout)view. findViewById(R.id.floating_login);
+        LinearLayout yourframelayout = (LinearLayout) view.findViewById(R.id.floating_login);
         FloatingActionButton fabButton = new FloatingActionButton.Builder(getMyActivity(), yourframelayout)
                 .withDrawable(getResources().getDrawable(R.mipmap.ic_check_white))
                 .withButtonColor(Color.parseColor("#00C853"))
@@ -70,56 +71,54 @@ public class OwnerDetailFragment extends Fragment implements View.OnClickListene
             @Override
             public void onClick(View v) {
 
-             bindModel();
-                if(check()){
+                bindModel();
+                if (check()) {
                     save();
                 }
             }
         });
 
 
-
         return view;
 
     }
 
-    private void bindModel(){
+    private void bindModel() {
         ownerDetailBean.setOwnerName(et_owner_name.getText().toString());
         ownerDetailBean.setOwnerMobileNo(et_contact_1.getText().toString());
         ownerDetailBean.setOwnerAlternativeMobileNo(et_contact_2.getText().toString());
     }
 
-    private boolean check(){
+    private boolean check() {
 
-        if(ownerDetailBean.getOwnerName()==null || StringUtils.isEmpty(ownerDetailBean.getOwnerName())){
+        if (ownerDetailBean.getOwnerName() == null || StringUtils.isEmpty(ownerDetailBean.getOwnerName())) {
             et_owner_name.setError("Please Enter Owner Name");
             return false;
         }
 
-        if(ownerDetailBean.getOwnerMobileNo()==null || StringUtils.isEmpty(ownerDetailBean.getOwnerMobileNo())){
+        if (ownerDetailBean.getOwnerMobileNo() == null || StringUtils.isEmpty(ownerDetailBean.getOwnerMobileNo())) {
             et_contact_1.setError("Please Enter Contact Number");
             return false;
         }
 
-        if(ownerDetailBean.getOwnerMobileNo()!=null && !StringUtils.isEmpty(ownerDetailBean.getOwnerMobileNo()) && ownerDetailBean.getOwnerMobileNo().length()<10 ){
+        if (ownerDetailBean.getOwnerMobileNo() != null && !StringUtils.isEmpty(ownerDetailBean.getOwnerMobileNo()) && ownerDetailBean.getOwnerMobileNo().length() < 10) {
             et_contact_1.setError("Minimum 10 digits required");
             return false;
         }
 
-        return  true;
+        return true;
     }
 
 
-    private void save(){
+    private void save() {
 
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(IJson.owner_name, "" + ownerDetailBean.getOwnerName());
         hashMap.put(IJson.ownerMobileNo, "" + ownerDetailBean.getOwnerMobileNo());
         hashMap.put(IJson.ownerAlternativeMobileNo, "" + ownerDetailBean.getOwnerAlternativeMobileNo());
-       // hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(),IConstants.USER_ID));
-        hashMap.put(IJson.ownerId,""+getMyActivity().getOwnerId());
-        hashMap.put(IJson.userId, "1" );
-
+        hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(), IConstants.USER_ID));
+        hashMap.put(IJson.ownerId, "" + getMyActivity().getOwnerId());
+        // hashMap.put(IJson.userId, "1" );
 
 
         CallWebservice.getWebservice(getMyActivity(), Request.Method.POST, IUrls.URL_OWNER_DETAILS, hashMap, new VolleyResponseListener<OwnerDetailBean>() {
@@ -128,11 +127,14 @@ public class OwnerDetailFragment extends Fragment implements View.OnClickListene
 
                 if (object[0] instanceof OwnerDetailBean) {
                     for (OwnerDetailBean bean : object) {
-                        CommonUtils.showToast(getMyActivity(),"Owner Data Saved Successfully");
                         getMyActivity().setOwnerId(bean.getOwnerId());
-
-                        PagerFragment pager = ((PagerFragment) getParentFragment());
-                        pager.setPage(1);
+                        getSuccessDialog("!Congrats", "Owner Detail Saved Successfully", new CustomDialogListener() {
+                            @Override
+                            public void onResponse() {
+                                PagerFragment pager = ((PagerFragment) getParentFragment());
+                                pager.setPage(1);
+                            }
+                        });
 
 
                     }
@@ -141,7 +143,7 @@ public class OwnerDetailFragment extends Fragment implements View.OnClickListene
 
             @Override
             public void onError(String message) {
-                CommonUtils.showToast(getMyActivity(),message);
+                getErroDialog(message);
             }
         }, OwnerDetailBean[].class);
 
@@ -158,8 +160,6 @@ public class OwnerDetailFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
 
     }
-
-
 
 
 }

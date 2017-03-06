@@ -1332,7 +1332,7 @@ public class CommonUtils {
 
     public static int getUserId(Context context) {
         SharedPreferences prefs = context.getSharedPreferences("MY_PREFS", context.MODE_PRIVATE);
-        int userId = prefs.getInt("userid", 0);
+        int userId = prefs.getInt(IConstants.USER_ID, 0);
         return userId;
     }
 

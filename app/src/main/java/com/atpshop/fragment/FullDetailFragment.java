@@ -40,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by root on 11/1/17.
  */
 
-public class FullDetailFragment extends Fragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
+public class FullDetailFragment extends CommonFragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
 
     private FullDetailFragment TAG = FullDetailFragment.this;
 
@@ -151,16 +151,13 @@ public class FullDetailFragment extends Fragment implements View.OnClickListener
                 if (object[0] instanceof FullShopDetailBean) {
                     for (FullShopDetailBean bean : object) {
                         bindData(bean);
-
                     }
-
-
                 }
             }
 
             @Override
             public void onError(String message) {
-                CommonUtils.showToast(getMyActivity(), message);
+                getErroDialog(message);
             }
         }, FullShopDetailBean[].class);
 
@@ -182,26 +179,77 @@ public class FullDetailFragment extends Fragment implements View.OnClickListener
         lblintht.setText(bean.getInternalHeight() + " feet");
         lblintwt.setText(bean.getInternalWidth() + " feet");
         lblintdept.setText(bean.getInternalDepth() + " feet");
-        ///lblexptrent.setText(bean.getOwnerName());
-        //lblnegrent.setText(bean.getOwnerName());
-        setImages(circleLeft, "http://interiorikon.com/images/tn_1338724215_390108518_2-shop-for-sale-with-axis-bank-ATM-9year-basis-Mumbai.jpg");
-        setImages(circleRight, "http://www.tgt-kioicho.jp/img/shop/shop1464682111_2x.jpg");
-        setImages(circleFront, "https://img04.olx.in/images_olxin/276625447_1_644x461_atm-shop-and-office-for-any-showroom-digonestic-kolkata_rev003.jpg");
-        setImages(circleOppos, "http://teja3.kuikr.com/i5/20170124/SHOP-AVAILABLE-FOR-RENT---MORE-SUITABLE-FOR-ATM---ak_LWBP1686246844-1485279029_lg.jpeg");
+        lblexptrent.setText(getResources().getString(R.string.Rs) + bean.getRent().getShopRent());
+        lblnegrent.setText(getResources().getString(R.string.Rs) + bean.getRent().getNegotiableRent());
 
+
+        if (bean.getShopImages().size() > 0) {
+            setImages(circleLeft, bean.getShopImages().get(0).getImageName() != null ? bean.getShopImages().get(0).getImageName() : null);
+        } else {
+            setImages(circleLeft, null);
+        }
+        if (bean.getShopImages().size() > 1) {
+            setImages(circleRight, bean.getShopImages().get(1).getImageName() != null ? bean.getShopImages().get(1).getImageName() : null);
+        } else {
+            setImages(circleRight, null);
+        }
+        if (bean.getShopImages().size() > 2) {
+            setImages(circleFront, bean.getShopImages().get(2).getImageName() != null ? bean.getShopImages().get(2).getImageName() : null);
+        } else {
+            setImages(circleFront, null);
+        }
+        if (bean.getShopImages().size() > 3) {
+            setImages(circleOppos, bean.getShopImages().get(3).getImageName() != null ? bean.getShopImages().get(3).getImageName() : null);
+        } else {
+            setImages(circleOppos, null);
+        }
+
+
+        int count = 0;
         if (ownerDetailBean.getOwnerName() != null) {
-            ShowProgressDialog(30);
-        } else if (bean.getDistrict() != null) {
-            ShowProgressDialog(45);
-        } else if (bean.getInternalWidth() != null) {
-            ShowProgressDialog(60);
+            count++;
+        }
+        if (bean.getAppartmentName() != null) {
+            count++;
+        }
+        if (bean.getInternalWidth() != null) {
+            count++;
+        }
+        if (bean.getRent() != null && bean.getRent().getShopRent() > 0) {
+            count++;
+        }
+        if (bean.getShopImages() != null && bean.getShopImages().size() > 0) {
+            count++;
+        }
+
+
+        switch (count) {
+            case 1:
+                ShowProgressDialog(30);
+                break;
+            case 2:
+                ShowProgressDialog(45);
+                break;
+            case 3:
+                ShowProgressDialog(60);
+                break;
+            case 4:
+                ShowProgressDialog(75);
+                break;
+            case 5:
+                ShowProgressDialog(85);
+                break;
+            default:
+                ShowProgressDialog(0);
+
+
         }
 
     }
 
     public void setImages(CircleImageView img, final String path) {
         Picasso.with(getMyActivity()).
-                load(path).
+                load(IUrls.IMAGE_BASE + path).
                 error(R.drawable.ic_atm).
                 noFade().
                 placeholder(R.drawable.ic_atm).
@@ -215,7 +263,7 @@ public class FullDetailFragment extends Fragment implements View.OnClickListener
                 // TODO Auto-generated method stub
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                Uri myUri = Uri.parse(path);
+                Uri myUri = Uri.parse(IUrls.IMAGE_BASE + path);
                 intent.setDataAndType(myUri, "image/*");
                 startActivity(intent);
 

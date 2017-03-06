@@ -14,6 +14,7 @@ public interface IUrls {
     String URL_SHOP_PHOTOS = BASE_URL + "uploadshopimages";
     String URL_SHOP_LIST = BASE_URL + "getownerdetails";
     String URL_FULL_DETAIL = BASE_URL + "getshopdetails";
+    String IMAGE_BASE =  "http://35.163.66.100:8080/content/";
 
 
 

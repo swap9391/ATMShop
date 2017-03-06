@@ -1,5 +1,8 @@
 package com.atpshop.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.atpshop.constant.IJson.appartmentName;
 import static com.atpshop.constant.IJson.area;
 import static com.atpshop.constant.IJson.carpetArea;
@@ -34,6 +37,24 @@ public class FullShopDetailBean {
     private String district;
     private String pincode;
     OwnerDetailBean owner = new OwnerDetailBean();
+    RentDetailBean rent = new RentDetailBean();
+    List<CustomerFiles> shopImages = new ArrayList<CustomerFiles>();
+
+    public RentDetailBean getRent() {
+        return rent;
+    }
+
+    public void setRent(RentDetailBean rent) {
+        this.rent = rent;
+    }
+
+    public List<CustomerFiles> getShopImages() {
+        return shopImages;
+    }
+
+    public void setShopImages(List<CustomerFiles> shopImages) {
+        this.shopImages = shopImages;
+    }
 
     public OwnerDetailBean getOwner() {
         return owner;

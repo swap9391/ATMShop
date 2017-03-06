@@ -12,6 +12,15 @@ public class LoginBean {
     private String password;
     private Integer userId;
     private Integer active;
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getMobileNumber() {
         return mobileNumber;

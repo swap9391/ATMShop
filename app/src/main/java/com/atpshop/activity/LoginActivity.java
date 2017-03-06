@@ -42,6 +42,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class LoginActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -54,23 +56,21 @@ public class LoginActivity extends AppCompatActivity {
             Manifest.permission.READ_SMS
     };
 
-    EditText edt_mobile,edt_password;
+    EditText edt_mobile, edt_password;
     LoginBean loginBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
-
-
-        edt_mobile=(EditText)findViewById(R.id.edt_mobile_no);
-        edt_password=(EditText)findViewById(R.id.edt_password);
-       loginBean =new LoginBean();
-        /* if(CommonUtils.getUserId(this)>0){
-            Intent intent = new Intent(this,MainActivity.class);
+        if (CommonUtils.getUserId(this) > 0) {
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
-        }*/
+        }
+        edt_mobile = (EditText) findViewById(R.id.edt_mobile_no);
+        edt_password = (EditText) findViewById(R.id.edt_password);
+        loginBean = new LoginBean();
 
         txtUserName = (EditText) findViewById(R.id.edt_mobile_no);
         txtPassword = (EditText) findViewById(R.id.edt_password);
@@ -98,14 +98,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void bindModel(){
+    private void bindModel() {
 
         loginBean.setMobileNumber(edt_mobile.getText().toString());
         loginBean.setPassword(edt_password.getText().toString());
     }
-
-
-
 
 
     public void Login() {
@@ -114,9 +111,8 @@ public class LoginActivity extends AppCompatActivity {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(IJson.mobile_no, "" + loginBean.getMobileNumber());
         hashMap.put(IJson.password, "" + loginBean.getPassword());
-        hashMap.put(IJson.userId, "0" );
-        hashMap.put(IJson.active, "1" );
-
+        hashMap.put(IJson.userId, "0");
+        hashMap.put(IJson.active, "1");
 
 
         CallWebservice.getWebservice(TAG, Request.Method.POST, IUrls.URL_LOGIN, hashMap, new VolleyResponseListener<LoginBean>() {
@@ -126,10 +122,24 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (object[0] instanceof LoginBean) {
                     for (LoginBean bean : object) {
-                       CommonUtils.showToast(LoginActivity.this,"Login Success");
-                        CommonUtils.InsertSharedPref(LoginActivity.this, IConstants.USER_ID,bean.getUserId());
-                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        startActivity(intent);
+                        CommonUtils.InsertSharedPref(LoginActivity.this, IConstants.USER_ID, bean.getUserId());
+                        CommonUtils.InsertSharedPref(LoginActivity.this, IConstants.USER_NAME, bean.getUserName());
+                        CommonUtils.InsertSharedPref(LoginActivity.this, IConstants.USER_MOBILE, bean.getMobileNumber());
+                        final SweetAlertDialog pDialogSuccess = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.SUCCESS_TYPE);
+                        pDialogSuccess.setCancelable(false);
+                        pDialogSuccess.setTitleText("! Congrats");
+                        pDialogSuccess.setContentText("You Are Logged In Successfully");
+                        pDialogSuccess.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismiss();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                        pDialogSuccess.show();
+
 
                     }
                 }
@@ -160,7 +170,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(String message) {
-                CommonUtils.showToast(LoginActivity.this,message);
+                new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText("Try Again !")
+                        .setContentText(message)
+                        .show();
             }
         }, LoginBean[].class);
 
@@ -191,8 +204,8 @@ public class LoginActivity extends AppCompatActivity {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(IJson.mobile_no, "" + loginBean.getMobileNumber());
         hashMap.put(IJson.password, "" + loginBean.getPassword());
-        hashMap.put(IJson.userId, "0" );
-        hashMap.put(IJson.active, "1" );
+        hashMap.put(IJson.userId, "0");
+        hashMap.put(IJson.active, "1");
 
         JsonObjectRequest req = new JsonObjectRequest(IUrls.URL_LOGIN, new JSONObject(hashMap),
                 new Response.Listener<JSONObject>() {
