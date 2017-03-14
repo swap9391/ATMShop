@@ -49,8 +49,6 @@ public class OwnerDetailFragment extends CommonFragment implements View.OnClickL
         View view;
         view = inflater.inflate(R.layout.owner_detail_layout, container, false);
 
-        getMyActivity().setTitle("Owner Details");
-        getMyActivity().setPosition(0);
 
         ownerDetailBean = new OwnerDetailBean();
 
@@ -143,8 +141,8 @@ public class OwnerDetailFragment extends CommonFragment implements View.OnClickL
 
             @Override
             public void onError(String message) {
-                getErroDialog(message);
             }
+
         }, OwnerDetailBean[].class);
 
 

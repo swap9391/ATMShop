@@ -82,14 +82,11 @@
         </LinearLayout>
 
         <!-- View pager to swipe views -->
-        <android.support.v4.view.ViewPager
+        <com.atpshop.fragment.CustomViewPager
             android:id="@+id/pager"
             android:layout_below="@+id/layoutDots"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"/>
-
-
-
 
     </RelativeLayout>
 

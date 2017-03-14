@@ -23,6 +23,7 @@ import com.atpshop.constant.CustomDialogListener;
 import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
 import com.atpshop.constant.VolleyResponseListener;
+import com.atpshop.model.FullShopDetailBean;
 import com.atpshop.model.ShopDetailBean;
 
 import java.util.HashMap;
@@ -35,6 +36,8 @@ public class ShopDetailFragment extends CommonFragment implements View.OnClickLi
 
     EditText et_shutter_ht, et_shutter_wt, et_interna_ht, et_interna_wt, et_interna_depth, et_carpet_area;
     ShopDetailBean shopDetailBean;
+    FullShopDetailBean fullShopDetailBean;
+    boolean isUpadte = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +56,10 @@ public class ShopDetailFragment extends CommonFragment implements View.OnClickLi
         et_interna_wt.addTextChangedListener(this);
         et_interna_depth.addTextChangedListener(this);
 
+        fullShopDetailBean= getMyActivity().getFullShopDetailBean();
+        if (fullShopDetailBean.getOwner().getOwnerId() > 0) {
+            bindView();
+        }
 
         LinearLayout yourframelayout = (LinearLayout) view.findViewById(R.id.floating_login);
         FloatingActionButton fabButton = new FloatingActionButton.Builder(getMyActivity(), yourframelayout)
@@ -77,6 +84,22 @@ public class ShopDetailFragment extends CommonFragment implements View.OnClickLi
 
         return view;
 
+    }
+
+    private void bindView() {
+        isUpadte = true;
+        et_shutter_ht.setText(fullShopDetailBean.getShopHeight());
+        et_shutter_wt.setText(fullShopDetailBean.getShopWidth());
+        et_interna_ht.setText(fullShopDetailBean.getInternalHeight());
+        et_interna_wt.setText(fullShopDetailBean.getInternalWidth());
+        et_interna_depth.setText(fullShopDetailBean.getInternalDepth());
+        et_carpet_area.setText(fullShopDetailBean.getCarpetArea());
+        getMyActivity().setOwnerId(fullShopDetailBean.getOwner().getOwnerId());
+        if (fullShopDetailBean.getShopId() > 0) {
+            getMyActivity().setShopId(fullShopDetailBean.getShopId());
+        } else {
+            getMyActivity().setShopId(0);
+        }
     }
 
 
@@ -150,10 +173,19 @@ public class ShopDetailFragment extends CommonFragment implements View.OnClickLi
                         getSuccessDialog("!Congrats", "Shop Details Saved Successfully", new CustomDialogListener() {
                             @Override
                             public void onResponse() {
-                                PagerFragment pager = ((PagerFragment) getParentFragment());
-                                pager.setPage(3);
+                                if (isUpadte==false) {
+                                    PagerFragment pager = ((PagerFragment) getParentFragment());
+                                    pager.setPage(3);
+                                }else {
+                                    FullShopDetailBean fullShopDetailBean = new FullShopDetailBean();
+                                    getMyActivity().setFullShopDetailBean(fullShopDetailBean);
+                                    getMyActivity().showFragment(ShopListFragment.class);
+                                }
                             }
                         });
+
+
+
 
 
                     }
@@ -164,7 +196,6 @@ public class ShopDetailFragment extends CommonFragment implements View.OnClickLi
 
             @Override
             public void onError(String message) {
-                getErroDialog(message);
             }
         }, ShopDetailBean[].class);
 

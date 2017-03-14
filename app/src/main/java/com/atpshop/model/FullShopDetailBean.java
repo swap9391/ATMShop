@@ -1,5 +1,6 @@
 package com.atpshop.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import static com.atpshop.constant.IJson.state;
  * Created by Swapnil on 27/02/2017.
  */
 
-public class FullShopDetailBean {
+public class FullShopDetailBean implements Serializable {
     private int shopId;
     private String appartmentName;
     private String shopHeight;
@@ -36,6 +37,7 @@ public class FullShopDetailBean {
     private String state;
     private String district;
     private String pincode;
+    private int editPage;
     OwnerDetailBean owner = new OwnerDetailBean();
     RentDetailBean rent = new RentDetailBean();
     List<CustomerFiles> shopImages = new ArrayList<CustomerFiles>();
@@ -166,5 +168,13 @@ public class FullShopDetailBean {
 
     public void setPincode(String pincode) {
         this.pincode = pincode;
+    }
+
+    public int getEditPage() {
+        return editPage;
+    }
+
+    public void setEditPage(int editPage) {
+        this.editPage = editPage;
     }
 }

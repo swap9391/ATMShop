@@ -3,7 +3,11 @@ package com.atpshop.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,6 +57,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import static android.R.attr.path;
 import static com.atpshop.constant.IConstants.USER_ID;
 
 /**
@@ -70,8 +75,6 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
     List<CustomerFiles> dataT;
     Button btnLeft, btnRight, btnFront, btnOpposit;
     ImageView imgLeft, imgRight, imgFront, imgOpposit;
-    ProgressBar progressBar;
-    TextView txtPercentage;
     private int REQUEST_PHOTO_LEFT = 101, REQUEST_PHOTO_RIGHT = 102, REQUEST_PHOTO_FRO = 103, REQUEST_PHOTO_OPP = 104;
 
     CustomerFiles customerFiles;
@@ -81,8 +84,6 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                              Bundle savedInstanceState) {
         View view;
         view = inflater.inflate(R.layout.add_shop_photos, container, false);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        txtPercentage = (TextView) view.findViewById(R.id.txtPercentage);
         btnLeft = (Button) view.findViewById(R.id.btnLeft);
         btnRight = (Button) view.findViewById(R.id.btnRight);
         btnFront = (Button) view.findViewById(R.id.btnFront);
@@ -197,6 +198,31 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
         }
     }
 
+    public Bitmap BITMAP_RESIZER(Bitmap bitmap,int newWidth,int newHeight) {
+        Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+
+        float ratioX = newWidth / (float) bitmap.getWidth();
+        float ratioY = newHeight / (float) bitmap.getHeight();
+        float middleX = newWidth / 2.0f;
+        float middleY = newHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
+
+        canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, paint);
+
+        return scaledBitmap;
+
+    }
+
     private void setVehicleImage(Intent data, int requestCode) {
 
         Bitmap bitmap = null;
@@ -207,19 +233,12 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
 
                     bitmap = (Bitmap) data.getExtras().get("data");
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                   // Bitmap bt=Bitmap.createScaledBitmap(bitmap, 720, 1100, false);
+                    Bitmap bt=BITMAP_RESIZER(bitmap, 720, 1100);
+                    bt.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     byte[] vehicleImage = stream.toByteArray();
-                    Uri uri = CommonUtils.getImageUri(getMyActivity(), bitmap);
+                    Uri uri = CommonUtils.getImageUri(getMyActivity(), bt);
                     String encodedImage = Base64.encodeToString(vehicleImage, Base64.DEFAULT);
-
-                    // File outputFile = savebitmap(bitmap);
-
-                    // stream.writeTo(new FileOutputStream(outputFile));
-                    //    addTowedVehiRequest.setVehicleImage(Base64.encodeToString(vehicleImage, Base64.DEFAULT));
-
-                    // bitmap = Bitmap.createScaledBitmap(bitmap, 50, 40, true);
-                    // capturedImg.setVisibility(View.VISIBLE);
-                    //capturedImg.setImageBitmap(bitmap);
 
 
                     switch (requestCode) {

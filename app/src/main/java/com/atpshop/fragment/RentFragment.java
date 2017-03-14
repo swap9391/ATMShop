@@ -134,7 +134,6 @@ RentDetailBean rentDetailBean;
 
             @Override
             public void onError(String message) {
-                getErroDialog(message);
             }
         }, RentDetailBean[].class);
 

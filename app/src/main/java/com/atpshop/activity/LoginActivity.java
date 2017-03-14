@@ -170,10 +170,6 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(String message) {
-                new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE)
-                        .setTitleText("Try Again !")
-                        .setContentText(message)
-                        .show();
             }
         }, LoginBean[].class);
 

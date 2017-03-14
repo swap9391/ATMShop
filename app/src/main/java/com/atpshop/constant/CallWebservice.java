@@ -26,6 +26,8 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static android.R.id.message;
+
 
 /**
  * Created by Swapnil Jadhav on 13/7/16.
@@ -60,6 +62,13 @@ public class CallWebservice {
         }
     }
 
+    public static void getErroDialog(String msg, Context context) {
+        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Try Again !")
+                .setContentText(msg)
+                .show();
+    }
+
     public synchronized static <T> void getWebservice(final Context context, int method, String url, final HashMap<String, String> param, final VolleyResponseListener listener, final Class<T[]> aClass) {
         if (Connectivity.isConnected(context)) {
             getProgressDialog(context);
@@ -83,19 +92,20 @@ public class CallWebservice {
                                     listener.onResponse(object);
                                 } else if (key.equalsIgnoreCase(IConstants.RESPONSE_ERROR)) {
                                     dismissDialog();
+                                    getErroDialog(message.toString(), context);
                                     listener.onError(message.toString());
                                 }
                             } catch (JSONException e) {
                                 dismissDialog();
-                                CommonUtils.showToast(context, e.getMessage());
-                                e.printStackTrace();
+                                getErroDialog(e.getMessage(), context);
+                                listener.onError(e.getMessage());
                             }
 
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    dismissDialog();
+                    getErroDialog(error.toString(), context);
                     listener.onError(error.toString());
                 }
             });

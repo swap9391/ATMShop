@@ -1,79 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layoutDots"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            >
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layoutDots"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/edt_owner_name"
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
-                android:hint="Enter Owner Name"
-                android:singleLine="true" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="7dp">
+
+                <EditText
+                    android:id="@+id/edt_owner_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
+                    android:hint="Enter Owner Name"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            >
-
-            <EditText
-                android:id="@+id/edt_owner_contact1"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Contact Number 1"
-                android:inputType="number"
-                android:maxLength="10"
-                />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="7dp">
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            >
+                <EditText
+                    android:id="@+id/edt_owner_contact1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Contact Number 1"
+                    android:inputType="number"
+                    android:maxLength="10" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/edt_owner_contact2"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Contact Number 2"
-                android:inputType="number"
-                android:maxLength="10"
-                />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="7dp">
+
+                <EditText
+                    android:id="@+id/edt_owner_contact2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Contact Number 2"
+                    android:inputType="number"
+                    android:maxLength="10" />
+            </android.support.design.widget.TextInputLayout>
 
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="80dp"></View>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/floating_login"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"></LinearLayout>
 
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/floating_login"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        ></LinearLayout>
-
-
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

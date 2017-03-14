@@ -1,40 +1,59 @@
 package com.atpshop.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.atpshop.MainActivity;
 import com.atpshop.R;
 import com.atpshop.common.CommonUtils;
 import com.atpshop.constant.CallWebservice;
+import com.atpshop.constant.CustomDialogListener;
+import com.atpshop.constant.IConstants;
 import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
 import com.atpshop.constant.VolleyResponseListener;
+import com.atpshop.model.CustomerFiles;
 import com.atpshop.model.FullShopDetailBean;
 import com.atpshop.model.OwnerDetailBean;
 import com.filippudak.ProgressPieView.ProgressPieView;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.R.attr.data;
+import static android.R.attr.path;
+import static com.atpshop.R.id.btnFront;
+import static com.atpshop.R.id.btnLeft;
+import static com.atpshop.R.id.btnRight;
+import static com.atpshop.R.id.imgFront;
+import static com.atpshop.R.id.imgLeft;
+import static com.atpshop.R.id.imgRight;
 
 /**
  * Created by root on 11/1/17.
@@ -43,7 +62,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FullDetailFragment extends CommonFragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
 
     private FullDetailFragment TAG = FullDetailFragment.this;
-
+    FullShopDetailBean fullShopDetailBean;
     CircleImageView circleImageView;
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f;
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f;
@@ -58,11 +77,19 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
     View view;
     OwnerDetailBean ownerDetailBean;
     TextView lblOwnerName, lblMobile;
-    TextView lblapt, lblarea, lblState, lblCity, lblPin, lblshopht, lblshopwt, lblintht, lblintwt, lblintdept, lblexptrent, lblnegrent;
+    TextView lblapt, lblarea, lblState, lblCity, lblPin, lblshopht, lblshopwt, lblintht, lblintwt, lblintdept, lblCarpetArea,lblexptrent, lblnegrent;
     CircleImageView circleLeft, circleRight, circleFront, circleOppos;
+    ImageButton editLocation, editrent, editShopDetail;
     private ProgressPieView mProgressPieView;
     Handler handler;
     int status = 0;
+    //images
+    private int REQUEST_PHOTO_LEFT = 101, REQUEST_PHOTO_RIGHT = 102, REQUEST_PHOTO_FRO = 103, REQUEST_PHOTO_OPP = 104;
+    Uri fileView;
+    int imageCount = 0, sentCount = 0;
+    File file;
+    List<CustomerFiles> dataT;
+    CustomerFiles customerFiles;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,6 +135,10 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         Init();
         getFullDetails();
 
+        //images
+        dataT = new ArrayList<CustomerFiles>();
+        customerFiles = new CustomerFiles();
+
         return view;
 
     }
@@ -126,6 +157,7 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         lblintht = (TextView) view.findViewById(R.id.lblintht);
         lblintwt = (TextView) view.findViewById(R.id.lblintwt);
         lblintdept = (TextView) view.findViewById(R.id.lblintdept);
+        lblCarpetArea = (TextView) view.findViewById(R.id.lblCarpetArea);
         lblexptrent = (TextView) view.findViewById(R.id.lblexptrent);
         lblnegrent = (TextView) view.findViewById(R.id.lblnegrent);
         lblnegrent = (TextView) view.findViewById(R.id.lblnegrent);
@@ -133,7 +165,17 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         circleRight = (CircleImageView) view.findViewById(R.id.circleRight);
         circleFront = (CircleImageView) view.findViewById(R.id.circleFront);
         circleOppos = (CircleImageView) view.findViewById(R.id.circleOppo);
+        editLocation = (ImageButton) view.findViewById(R.id.imgloceddit);
+        editShopDetail = (ImageButton) view.findViewById(R.id.imgshopddit);
+        editrent = (ImageButton) view.findViewById(R.id.imgrentddit);
 
+        circleLeft.setOnClickListener(this);
+        circleOppos.setOnClickListener(this);
+        circleRight.setOnClickListener(this);
+        circleFront.setOnClickListener(this);
+        editrent.setOnClickListener(this);
+        editShopDetail.setOnClickListener(this);
+        editLocation.setOnClickListener(this);
 
     }
 
@@ -150,14 +192,16 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
 
                 if (object[0] instanceof FullShopDetailBean) {
                     for (FullShopDetailBean bean : object) {
-                        bindData(bean);
+                        fullShopDetailBean = bean;
+                        bindData();
                     }
                 }
             }
 
             @Override
             public void onError(String message) {
-                getErroDialog(message);
+
+                getMyActivity().showFragment(ShopListFragment.class);
             }
         }, FullShopDetailBean[].class);
 
@@ -165,41 +209,43 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
     }
 
 
-    public void bindData(FullShopDetailBean bean) {
+    public void bindData() {
+
 
         lblOwnerName.setText(ownerDetailBean.getOwnerName());
         lblMobile.setText(ownerDetailBean.getOwnerMobileNo());
-        lblapt.setText(bean.getAppartmentName());
-        lblarea.setText(bean.getArea());
-        lblState.setText(bean.getState());
-        lblCity.setText(bean.getDistrict());
-        lblPin.setText(bean.getPincode());
-        lblshopht.setText(bean.getShopHeight() + " feet");
-        lblshopwt.setText(bean.getShopWidth() + " feet");
-        lblintht.setText(bean.getInternalHeight() + " feet");
-        lblintwt.setText(bean.getInternalWidth() + " feet");
-        lblintdept.setText(bean.getInternalDepth() + " feet");
-        lblexptrent.setText(getResources().getString(R.string.Rs) + bean.getRent().getShopRent());
-        lblnegrent.setText(getResources().getString(R.string.Rs) + bean.getRent().getNegotiableRent());
+        lblapt.setText(fullShopDetailBean.getAppartmentName());
+        lblarea.setText(fullShopDetailBean.getArea());
+        lblState.setText(fullShopDetailBean.getState());
+        lblCity.setText(fullShopDetailBean.getDistrict());
+        lblPin.setText(fullShopDetailBean.getPincode());
+        lblshopht.setText(fullShopDetailBean.getShopHeight() + " feet");
+        lblshopwt.setText(fullShopDetailBean.getShopWidth() + " feet");
+        lblintht.setText(fullShopDetailBean.getInternalHeight() + " feet");
+        lblintwt.setText(fullShopDetailBean.getInternalWidth() + " feet");
+        lblintdept.setText(fullShopDetailBean.getInternalDepth() + " feet");
+        lblCarpetArea.setText(fullShopDetailBean.getCarpetArea() + " feet");
+        lblexptrent.setText(getResources().getString(R.string.Rs) + fullShopDetailBean.getRent().getShopRent());
+        lblnegrent.setText(getResources().getString(R.string.Rs) + fullShopDetailBean.getRent().getNegotiableRent());
 
 
-        if (bean.getShopImages().size() > 0) {
-            setImages(circleLeft, bean.getShopImages().get(0).getImageName() != null ? bean.getShopImages().get(0).getImageName() : null);
+        if (fullShopDetailBean.getShopImages().size() > 0) {
+            setImages(circleLeft, fullShopDetailBean.getShopImages().get(0).getImageName() != null ? fullShopDetailBean.getShopImages().get(0).getImageName() : null);
         } else {
             setImages(circleLeft, null);
         }
-        if (bean.getShopImages().size() > 1) {
-            setImages(circleRight, bean.getShopImages().get(1).getImageName() != null ? bean.getShopImages().get(1).getImageName() : null);
+        if (fullShopDetailBean.getShopImages().size() > 1) {
+            setImages(circleRight, fullShopDetailBean.getShopImages().get(1).getImageName() != null ? fullShopDetailBean.getShopImages().get(1).getImageName() : null);
         } else {
             setImages(circleRight, null);
         }
-        if (bean.getShopImages().size() > 2) {
-            setImages(circleFront, bean.getShopImages().get(2).getImageName() != null ? bean.getShopImages().get(2).getImageName() : null);
+        if (fullShopDetailBean.getShopImages().size() > 2) {
+            setImages(circleFront, fullShopDetailBean.getShopImages().get(2).getImageName() != null ? fullShopDetailBean.getShopImages().get(2).getImageName() : null);
         } else {
             setImages(circleFront, null);
         }
-        if (bean.getShopImages().size() > 3) {
-            setImages(circleOppos, bean.getShopImages().get(3).getImageName() != null ? bean.getShopImages().get(3).getImageName() : null);
+        if (fullShopDetailBean.getShopImages().size() > 3) {
+            setImages(circleOppos, fullShopDetailBean.getShopImages().get(3).getImageName() != null ? fullShopDetailBean.getShopImages().get(3).getImageName() : null);
         } else {
             setImages(circleOppos, null);
         }
@@ -209,16 +255,16 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         if (ownerDetailBean.getOwnerName() != null) {
             count++;
         }
-        if (bean.getAppartmentName() != null) {
+        if (fullShopDetailBean.getAppartmentName() != null) {
             count++;
         }
-        if (bean.getInternalWidth() != null) {
+        if (fullShopDetailBean.getInternalWidth() != null) {
             count++;
         }
-        if (bean.getRent() != null && bean.getRent().getShopRent() > 0) {
+        if (fullShopDetailBean.getRent() != null && fullShopDetailBean.getRent().getShopRent() > 0) {
             count++;
         }
-        if (bean.getShopImages() != null && bean.getShopImages().size() > 0) {
+        if (fullShopDetailBean.getShopImages() != null && fullShopDetailBean.getShopImages().size() > 0) {
             count++;
         }
 
@@ -254,21 +300,6 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
                 noFade().
                 placeholder(R.drawable.ic_atm).
                 into(img);
-
-
-        img.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                Uri myUri = Uri.parse(IUrls.IMAGE_BASE + path);
-                intent.setDataAndType(myUri, "image/*");
-                startActivity(intent);
-
-            }
-        });
 
     }
 
@@ -336,31 +367,277 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         return (MainActivity) getActivity();
     }
 
+    private void performSelection(final String uripath, final int recode) {
+        String[] labels = new String[]{"Show", "Update"};
+        AlertDialog dlg = new AlertDialog.Builder(getActivity()).setItems(
+                labels, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        switch (which) {
+                            case 0: {
+                                Intent intent = new Intent();
+                                intent.setAction(Intent.ACTION_VIEW);
+                                Uri myUri = Uri.parse(IUrls.IMAGE_BASE + uripath);
+                                intent.setDataAndType(myUri, "image/*");
+                                startActivity(intent);
+                                break;
+                            }
+                            case 1: {
+                                Intent cameraIntent1 = new Intent(
+                                        MediaStore.ACTION_IMAGE_CAPTURE);
+                                getMyActivity().startActivityForResult(cameraIntent1, recode);
+                            }
+                        }
+
+                    }
+                }).create();
+        dlg.show();
+
+    }
+
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.circleLeft:
+                if (fullShopDetailBean.getShopImages().get(0).getImageId() > 0) {
+                    performSelection(fullShopDetailBean.getShopImages().get(0).getImageName() != null ? fullShopDetailBean.getShopImages().get(0).getImageName() : null, REQUEST_PHOTO_LEFT);
+                }
+                break;
+            case R.id.circleRight:
+                performSelection(fullShopDetailBean.getShopImages().get(1).getImageName() != null ? fullShopDetailBean.getShopImages().get(1).getImageName() : null, REQUEST_PHOTO_LEFT);
+                break;
+            case R.id.circleFront:
+                performSelection(fullShopDetailBean.getShopImages().get(2).getImageName() != null ? fullShopDetailBean.getShopImages().get(2).getImageName() : null, REQUEST_PHOTO_LEFT);
+                break;
+            case R.id.circleOppo:
+                performSelection(fullShopDetailBean.getShopImages().get(3).getImageName() != null ? fullShopDetailBean.getShopImages().get(3).getImageName() : null, REQUEST_PHOTO_LEFT);
+                break;
+
+            case R.id.imgloceddit:
+                PagerFragment pagerFragment1= new PagerFragment();
+                Map<String, Serializable> parameters = new HashMap<String, Serializable>(2);
+                fullShopDetailBean.setEditPage(1);
+                parameters.put("FULLDETAIL", fullShopDetailBean);
+                getMyActivity().showFragment(pagerFragment1, parameters);
+                break;
+
+            case R.id.imgshopddit:
+                PagerFragment pagerFragment2= new PagerFragment();
+                Map<String, Serializable> parameters2 = new HashMap<String, Serializable>(2);
+                fullShopDetailBean.setEditPage(2);
+                parameters2.put("FULLDETAIL", fullShopDetailBean);
+                getMyActivity().showFragment(pagerFragment2, parameters2);
+                break;
+            case R.id.imgrentddit:
+                PagerFragment pagerFragment3= new PagerFragment();
+                Map<String, Serializable> parameters3 = new HashMap<String, Serializable>(2);
+                fullShopDetailBean.setEditPage(3);
+                parameters3.put("FULLDETAIL", fullShopDetailBean);
+                getMyActivity().showFragment(pagerFragment3, parameters3);
+                break;
+
+
+
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_PHOTO_LEFT || requestCode == REQUEST_PHOTO_RIGHT || requestCode == REQUEST_PHOTO_FRO || requestCode == REQUEST_PHOTO_OPP) {
+
+            setVehicleImage(data, requestCode);
+        }
+    }
+
+
+    private void setVehicleImage(Intent data, int requestCode) {
+
+        Bitmap bitmap = null;
+        try {
+
+            if (data != null) {
+                if (data.getExtras() != null) {
+
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    // Bitmap bt=Bitmap.createScaledBitmap(bitmap, 720, 1100, false);
+                    Bitmap bt = BITMAP_RESIZER(bitmap, 720, 1100);
+                    bt.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] vehicleImage = stream.toByteArray();
+                    Uri uri = CommonUtils.getImageUri(getMyActivity(), bt);
+                    String encodedImage = Base64.encodeToString(vehicleImage, Base64.DEFAULT);
+
+                    switch (requestCode) {
+                        case 101:
+                            CustomerFiles customerFiles1 = new CustomerFiles();
+                            //customerFiles1.setImagePath(outputFile.getPath());
+                            if (fullShopDetailBean.getShopImages().get(0).getImageId() > 0) {
+                                customerFiles1.setImage_type(fullShopDetailBean.getShopImages().get(0).getImage_type());
+                            } else {
+                                customerFiles1.setImage_type(IConstants.LEFT_IMAGE);
+                            }
+                            customerFiles1.setImage(encodedImage);
+                            if (fullShopDetailBean.getShopImages().get(0).getImageId() > 0) {
+                                customerFiles1.setImageId(fullShopDetailBean.getShopImages().get(0).getImageId());
+                            } else {
+                                customerFiles1.setImageId(0);
+                            }
+                            dataT.add(customerFiles1);
+
+                            break;
+                        case 102:
+                            CustomerFiles customerFiles2 = new CustomerFiles();
+                            if (fullShopDetailBean.getShopImages().get(1).getImageId() > 0) {
+                                customerFiles2.setImage_type(fullShopDetailBean.getShopImages().get(1).getImage_type());
+                            } else {
+                                customerFiles2.setImage_type(IConstants.RIGHT_IMAGE);
+                            }
+                            customerFiles2.setImage(encodedImage);
+                            if (fullShopDetailBean.getShopImages().get(1).getImageId() > 0) {
+                                customerFiles2.setImageId(fullShopDetailBean.getShopImages().get(1).getImageId());
+                            } else {
+                                customerFiles2.setImageId(0);
+                            }
+                            dataT.add(customerFiles2);
+
+                            break;
+                        case 103:
+                            CustomerFiles customerFiles3 = new CustomerFiles();
+                            if (fullShopDetailBean.getShopImages().get(2).getImageId() > 0) {
+                                customerFiles3.setImage_type(fullShopDetailBean.getShopImages().get(2).getImage_type());
+                            } else {
+                                customerFiles3.setImage_type(IConstants.FRONT_IMAGE);
+                            }
+                            customerFiles3.setImage(encodedImage);
+                            if (fullShopDetailBean.getShopImages().get(2).getImageId() > 0) {
+                                customerFiles3.setImageId(fullShopDetailBean.getShopImages().get(2).getImageId());
+                            } else {
+                                customerFiles3.setImageId(0);
+                            }
+                            dataT.add(customerFiles3);
+
+                            break;
+                        case 104:
+                            CustomerFiles customerFiles4 = new CustomerFiles();
+                            if (fullShopDetailBean.getShopImages().get(3).getImageId() > 0) {
+                                customerFiles4.setImage_type(fullShopDetailBean.getShopImages().get(3).getImage_type());
+                            } else {
+                                customerFiles4.setImage_type(IConstants.OPPOSITE_IMAGE);
+                            }
+                            customerFiles4.setImage(encodedImage);
+                            if (fullShopDetailBean.getShopImages().get(3).getImageId() > 0) {
+                                customerFiles4.setImageId(fullShopDetailBean.getShopImages().get(3).getImageId());
+                            } else {
+                                customerFiles4.setImageId(0);
+                            }
+                            dataT.add(customerFiles4);
+
+                            break;
+
+                    }
+
+
+                    bindLocation();
+                    if (checkLocation()) {
+                        save();
+                    }
+
+
+                } else {
+                    Toast.makeText(getMyActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                Toast.makeText(getMyActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(getMyActivity(), "Please select image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void save() {
+
+        CustomerFiles customerFiles = new CustomerFiles();
+
+        customerFiles = dataT.get(sentCount);
+
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        hashMap.put(IJson.image_string, "" + customerFiles.getImage());
+        hashMap.put(IJson.imageType, "" + customerFiles.getImage_type());
+        hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
+        hashMap.put(IJson.latitude, "" + getMyActivity().getLocation().getLatitude());
+        hashMap.put(IJson.longitude, "" + getMyActivity().getLocation().getLongitude());
+        hashMap.put(IJson.imageId, "" + customerFiles.getImageId());
+
+
+        CallWebservice.getWebservice(getMyActivity(), Request.Method.POST, IUrls.URL_SHOP_PHOTOS, hashMap, new VolleyResponseListener<CustomerFiles>() {
+            @Override
+            public void onResponse(CustomerFiles[] object) {
+
+
+                if (object[0] instanceof CustomerFiles) {
+                    for (CustomerFiles bean : object) {
+
+                        sentCount++;
+
+                        if (sentCount < dataT.size()) {
+                            save();
+                        } else {
+
+                            getSuccessDialog("!Congrats", "Shop Photos Saved Successfully", new CustomDialogListener() {
+                                @Override
+                                public void onResponse() {
+                                    getFullDetails();
+                                }
+                            });
+
+
+                            return;
+                        }
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        }, CustomerFiles[].class);
+
 
     }
 
-    protected <T> T getSerializer(String key, Class<T> returnType) {
-        Serializable serializedObject = null;
-        Bundle bundle = null;
 
-        try {
-            bundle = getBundle();
-            if (bundle.containsKey(key)) {
-                serializedObject = this.getBundle().getSerializable(key);
-            }
-        } catch (Throwable var6) {
-            var6.printStackTrace();
+    private void bindLocation() {
+        customerFiles.setLatitude("" + getMyActivity().getLocation().getLatitude());
+        customerFiles.setLongitude("" + getMyActivity().getLocation().getLongitude());
+    }
+
+    private boolean checkLocation() {
+        if (getMyActivity().getLocation().getLatitude() <= 0 || getMyActivity().getLocation().getLongitude() <= 0) {
+            getMyActivity().LocationDialog();
+            CommonUtils.showToast(getMyActivity(), "Start GPS Location First");
+            return false;
         }
 
-        return (T) serializedObject;
+        return true;
     }
 
-    protected Bundle getBundle() {
-        return this.getArguments();
-    }
+
+
+
 
 
     public void ShowProgressDialog(final int percent) {

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +27,7 @@
                 android:id="@+id/edt_apartment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
+                android:digits=" 1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
                 android:hint="Enter Apartment/Society"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
@@ -38,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter Area/Gali/Street"
-                android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
+                android:digits=" 1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
 
@@ -90,7 +96,9 @@
 
         </android.support.design.widget.TextInputLayout>
 
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="80dp"></View>
 
     </LinearLayout>
 
@@ -107,3 +115,4 @@
 
 
 </RelativeLayout>
+</ScrollView>

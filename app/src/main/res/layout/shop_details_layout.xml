@@ -1,131 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layoutDots"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            >
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layoutDots"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/edt_shutter_height"
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Shutter Heights (in feet)"
-                android:inputType="number"
-                />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="7dp">
+
+                <EditText
+                    android:id="@+id/edt_shutter_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Shutter Heights (in feet)"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            >
-
-            <EditText
-                android:id="@+id/edt_shutter_width"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Shutter Width (in feet)"
-                android:inputType="number"
-                />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="7dp">
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            >
+                <EditText
+                    android:id="@+id/edt_shutter_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Shutter Width (in feet)"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/edt_internal_height"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Internal Height(in feet)"
-                android:inputType="number"
-                />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="7dp">
+
+                <EditText
+                    android:id="@+id/edt_internal_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Internal Height(in feet)"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            >
-
-            <EditText
-                android:id="@+id/edt_internal_width"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Internal Width (in feet)"
-                android:inputType="number"
-                />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="7dp">
+
+                <EditText
+                    android:id="@+id/edt_internal_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Internal Width (in feet)"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            >
-
-            <EditText
-                android:id="@+id/edt_internal_depth"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Internal Depth (in feet)"
-                android:inputType="number"
+                android:layout_margin="7dp">
 
-                />
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/edt_internal_depth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Internal Depth (in feet)"
+                    android:inputType="number"
+
+                    />
+            </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            >
-
-            <EditText
-                android:id="@+id/edt_carpet_area"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Carpet Area"
-                android:inputType="number"
-                android:enabled="false"
-                />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="7dp">
+
+                <EditText
+                    android:id="@+id/edt_carpet_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="Carpet Area"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/floating_login"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"></LinearLayout>
 
 
-
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/floating_login"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        ></LinearLayout>
-
-
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

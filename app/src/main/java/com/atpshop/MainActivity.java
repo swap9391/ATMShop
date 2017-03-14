@@ -32,6 +32,8 @@ import com.atpshop.common.GPSTracker;
 import com.atpshop.constant.IConstants;
 import com.atpshop.fragment.PagerFragment;
 import com.atpshop.fragment.ShopListFragment;
+import com.atpshop.listners.PagerListner;
+import com.atpshop.model.FullShopDetailBean;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int position;
     private int REQUEST_PHOTO_LEFT = 101, REQUEST_PHOTO_RIGHT = 102, REQUEST_PHOTO_FRO = 103, REQUEST_PHOTO_OPP = 104;
     int ownerId = 0, shopId = 0;
-
+    FullShopDetailBean fullShopDetailBean;
     //Drawer
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -101,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ownerId = 0;
         shopId = 0;
+        fullShopDetailBean = new FullShopDetailBean();
         showFragment(PagerFragment.class);
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -557,5 +561,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public FullShopDetailBean getFullShopDetailBean() {
+        return fullShopDetailBean;
+    }
 
+    public void setFullShopDetailBean(FullShopDetailBean fullShopDetailBean) {
+        this.fullShopDetailBean = fullShopDetailBean;
+    }
 }

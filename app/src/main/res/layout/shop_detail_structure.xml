@@ -337,6 +337,31 @@
                     android:text="None"
                     android:textAppearance="?android:textAppearanceMedium" />
 
+                <TextView
+                    android:id="@+id/lbCarpettitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/lblintdepttitle"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="Carpet Area"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/lblCarpetArea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/lblintdept"
+                    android:layout_margin="3dp"
+                    android:ems="8"
+                    android:text="None"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+
             </RelativeLayout>
 
         </RelativeLayout>
@@ -377,13 +402,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
-                android:src="@mipmap/ic_edit" />
+                android:src="@mipmap/ic_edit"
+                android:visibility="gone" />
 
             <View
                 android:id="@+id/vwrent"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/imgrentddit"
+                android:layout_below="@+id/renttitle"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="#E5E5E5"></View>

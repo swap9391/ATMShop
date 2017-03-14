@@ -1,15 +1,22 @@
 package com.atpshop.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 
 import com.android.volley.Response;
 import com.atpshop.MainActivity;
 import com.atpshop.constant.CustomDialogListener;
 import com.atpshop.constant.VolleyResponseListener;
+
+import java.io.Serializable;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -19,7 +26,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class CommonFragment extends Fragment {
     SweetAlertDialog proDialog;
-
+    protected CustomViewPager viewPager;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +48,30 @@ public class CommonFragment extends Fragment {
     }
 
     protected void getErroDialog(String msg) {
-        DismissDialog();
         new SweetAlertDialog(getMyActivity(), SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("Try Again !")
                 .setContentText(msg)
                 .show();
+    }
+
+    protected <T> T getSerializer(String key, Class<T> returnType) {
+        Serializable serializedObject = null;
+        Bundle bundle = null;
+
+        try {
+            bundle = getBundle();
+            if (bundle.containsKey(key)) {
+                serializedObject = this.getBundle().getSerializable(key);
+            }
+        } catch (Throwable var6) {
+            var6.printStackTrace();
+        }
+
+        return (T) serializedObject;
+    }
+
+    protected Bundle getBundle() {
+        return this.getArguments();
     }
 
     protected void getSuccessDialog(final String title, final String content, final CustomDialogListener listener) {
@@ -66,6 +92,32 @@ public class CommonFragment extends Fragment {
 
         pDialogSuccess.show();
     }
+
+    protected Bitmap BITMAP_RESIZER(Bitmap bitmap, int newWidth, int newHeight) {
+        Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+
+        float ratioX = newWidth / (float) bitmap.getWidth();
+        float ratioY = newHeight / (float) bitmap.getHeight();
+        float middleX = newWidth / 2.0f;
+        float middleY = newHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
+
+        canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, paint);
+
+        return scaledBitmap;
+
+    }
+
 
 
     public MainActivity getMyActivity() {
