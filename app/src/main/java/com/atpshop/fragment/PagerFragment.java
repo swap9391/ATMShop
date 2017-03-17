@@ -139,7 +139,6 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
         }
 
 
-
         return view;
 
     }
@@ -154,6 +153,7 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
                 ((ImageButton) view.findViewById(R.id.navigateFour)).setImageResource(R.mipmap.ic_uncomplete_four);
                 ((ImageButton) view.findViewById(R.id.navigateFive)).setImageResource(R.mipmap.ic_uncomplete_five);
                 ((ImageButton) view.findViewById(R.id.navigateSix)).setImageResource(R.mipmap.ic_uncomplete_six);
+                mProgressPieView.setVisibility(View.VISIBLE);
                 if (progressflag == true) {
                     mProgressPieView.setProgress(status);
                     mProgressPieView.setText(status + "%");
@@ -168,7 +168,7 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
                 ((ImageButton) view.findViewById(R.id.navigateFive)).setImageResource(R.mipmap.ic_uncomplete_five);
                 ((ImageButton) view.findViewById(R.id.navigateSix)).setImageResource(R.mipmap.ic_uncomplete_six);
                 status = 0;
-
+                mProgressPieView.setVisibility(View.VISIBLE);
                 if (progressflag == true) {
                     if (currentstatus <= 30) {
                         currentstatus = 30;
@@ -186,6 +186,7 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
                 ((ImageButton) view.findViewById(R.id.navigateFive)).setImageResource(R.mipmap.ic_uncomplete_five);
                 ((ImageButton) view.findViewById(R.id.navigateSix)).setImageResource(R.mipmap.ic_uncomplete_six);
                 status = 30;
+                mProgressPieView.setVisibility(View.VISIBLE);
                 if (progressflag == true) {
                     if (currentstatus <= 45) {
                         currentstatus = 45;
@@ -204,6 +205,7 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
                 ((ImageButton) view.findViewById(R.id.navigateFive)).setImageResource(R.mipmap.ic_uncomplete_five);
                 ((ImageButton) view.findViewById(R.id.navigateSix)).setImageResource(R.mipmap.ic_uncomplete_six);
                 status = 45;
+                mProgressPieView.setVisibility(View.VISIBLE);
                 if (progressflag == true) {
                     if (currentstatus <= 60) {
                         currentstatus = 60;
@@ -217,10 +219,11 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
                 getMyActivity().setTitle("Shop Photos");
                 ((ImageButton) view.findViewById(R.id.navigateOne)).setImageResource(R.mipmap.ic_uncomplete_one);
                 ((ImageButton) view.findViewById(R.id.navigateTwo)).setImageResource(R.mipmap.ic_uncomplete_two);
-                ((ImageButton) view.findViewById(R.id.navigateThree)).setImageResource(R.mipmap.ic_uncomplete_four);
+                ((ImageButton) view.findViewById(R.id.navigateThree)).setImageResource(R.mipmap.ic_uncomplete_three);
                 ((ImageButton) view.findViewById(R.id.navigateFour)).setImageResource(R.mipmap.ic_uncomplete_four);
                 ((ImageButton) view.findViewById(R.id.navigateFive)).setImageResource(R.mipmap.ic_complete_five);
                 ((ImageButton) view.findViewById(R.id.navigateSix)).setImageResource(R.mipmap.ic_uncomplete_six);
+                mProgressPieView.setVisibility(View.VISIBLE);
                 status = 60;
                 if (progressflag == true) {
                     if (currentstatus <= 85) {
@@ -235,18 +238,11 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
                 getMyActivity().setTitle("Questioneries");
                 ((ImageButton) view.findViewById(R.id.navigateOne)).setImageResource(R.mipmap.ic_uncomplete_one);
                 ((ImageButton) view.findViewById(R.id.navigateTwo)).setImageResource(R.mipmap.ic_uncomplete_two);
-                ((ImageButton) view.findViewById(R.id.navigateThree)).setImageResource(R.mipmap.ic_uncomplete_four);
+                ((ImageButton) view.findViewById(R.id.navigateThree)).setImageResource(R.mipmap.ic_uncomplete_three);
                 ((ImageButton) view.findViewById(R.id.navigateFour)).setImageResource(R.mipmap.ic_uncomplete_four);
                 ((ImageButton) view.findViewById(R.id.navigateFive)).setImageResource(R.mipmap.ic_uncomplete_five);
                 ((ImageButton) view.findViewById(R.id.navigateSix)).setImageResource(R.mipmap.ic_complete_six);
-                status = 85;
-                if (progressflag == true) {
-                    if (currentstatus <= 95) {
-                        currentstatus = 95;
-                    }
-                    ShowProgressDialog(currentstatus);
-                    progressflag = true;
-                }
+                mProgressPieView.setVisibility(View.GONE);
                 break;
 
 

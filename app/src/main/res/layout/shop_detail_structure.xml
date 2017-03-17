@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 android:background="@android:color/transparent"
                 android:src="@mipmap/ic_edit" />
 
@@ -43,8 +44,7 @@
                 android:id="@+id/vwLoc"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/imgloceddit"
-
+                android:layout_below="@+id/shoploctitle"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="#E5E5E5"></View>
@@ -206,6 +206,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_margin="5dp"
+                android:visibility="gone"
                 android:background="@android:color/transparent"
                 android:src="@mipmap/ic_edit" />
 
@@ -213,7 +214,7 @@
                 android:id="@+id/vwshopDetls"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/imgshopddit"
+                android:layout_below="@+id/shopdetailstitle"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="#E5E5E5"></View>
