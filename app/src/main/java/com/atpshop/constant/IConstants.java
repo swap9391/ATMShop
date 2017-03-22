@@ -29,7 +29,7 @@ public interface IConstants {
     String USER_ID="USER_ID";
     String USER_NAME="USER_NAME";
     String USER_MOBILE="USER_MOBILE";
-
+    String OTP="OTP";
 
 
 

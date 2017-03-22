@@ -35,7 +35,7 @@
                         android:background="@android:color/transparent"
                         android:drawableTop="@mipmap/image_placer"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="Left View" />
+                        android:text="Left View/बाएं हाथ की तरफ फोटो लें" />
 
                     <ImageView
                         android:id="@+id/imgLeft"
@@ -60,7 +60,7 @@
                         android:background="@android:color/transparent"
                         android:drawableTop="@mipmap/image_placer"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="Right View" />
+                        android:text="Right View/दाएं हाथ की तरफ फोटो लें" />
 
                     <ImageView
                         android:id="@+id/imgRight"
@@ -95,7 +95,7 @@
                         android:background="@android:color/transparent"
                         android:drawableTop="@mipmap/image_placer"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="Front View"
+                        android:text="Front View/सामने से फोटो लें"
                         android:visibility="visible" />
 
                     <ImageView
@@ -121,7 +121,7 @@
                         android:background="@android:color/transparent"
                         android:drawableTop="@mipmap/image_placer"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="Opposite View" />
+                        android:text="Opposite View/विरुद्ध फोटो लें" />
 
                     <ImageView
                         android:id="@+id/imgOpposite"

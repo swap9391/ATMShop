@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:digits=" 1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
-                android:hint="Enter Apartment/Society"
+                android:hint="Enter Apartment/Society/अपार्टमेंट / सोसाइटी दर्ज करें"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
 
@@ -43,7 +43,7 @@
                 android:id="@+id/edt_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Area/Gali/Street"
+                android:hint="Enter Area/Gali/Street /क्षेत्र / गली / सड़क दर्ज करें"
                 android:digits=" 1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
@@ -58,7 +58,7 @@
                 android:id="@+id/edt_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter State"
+                android:hint="Enter State/राज्य दर्ज करें"
                 android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
@@ -73,7 +73,7 @@
                 android:id="@+id/edt_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter City"
+                android:hint="Enter City/शहर दर्ज करें"
                 android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
@@ -89,7 +89,7 @@
                 android:id="@+id/edt_pin_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Pin Code"
+                android:hint="Enter Pin Code/पिन कोड दर्ज करें"
                 android:inputType="number"
                 android:maxLength="6"
                 ></EditText>

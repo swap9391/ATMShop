@@ -12,8 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     EditText txtUserName, txtPassword;
+    Button btncreate;
     private LoginActivity TAG = LoginActivity.this;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -70,6 +73,17 @@ public class LoginActivity extends AppCompatActivity {
         }
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_no);
         edt_password = (EditText) findViewById(R.id.edt_password);
+        btncreate= (Button) findViewById(R.id.btnRegister);
+        ((TextView)findViewById(R.id.lblreg)).setVisibility(View.VISIBLE);
+        btncreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(TAG,RegisterActivity.class);
+                startActivity(i);
+
+            }
+        });
+
         loginBean = new LoginBean();
 
         txtUserName = (EditText) findViewById(R.id.edt_mobile_no);
@@ -144,28 +158,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
 
-                /*
-                if (object[0] instanceof LoginBean) {
-                    for (LoginBean bean : object) {
 
-                        SharedPreferences.Editor editor = LoginActivity.this.getSharedPreferences("MY_PREFS", Context.MODE_PRIVATE).edit();
-                        String hotelCode = bean.getHotel_code();
-                        editor.putString("hotelcode", hotelCode);
-                        editor.putInt("userid", bean.getUser_id());
-                        editor.commit();
-
-                        CommonUtils.insertSharedPref(LoginActivity.this, IConstants.SH_FIRSTTIME,"FIRST");
-
-
-                        Toast.makeText(getApplicationContext(), "Welcome " + bean.getFirst_name() + " " + bean.getLast_name(), Toast.LENGTH_LONG).show();
-                        //USER_ID = bean.getJs_id();
-                        Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent1);
-                        // startActivity(new Intent(LoginActivity.this, UserDashboardActivity.class));
-                        finish();
-                    }
-                }
-*/
             }
 
             @Override
@@ -175,7 +168,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
 
     public static void verifyStoragePermissions(Activity activity) {
 
@@ -189,39 +181,6 @@ public class LoginActivity extends AppCompatActivity {
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE);
         }
-    }
-
-
-    private void makeJsonObjectRequest() {
-
-
-// Post params to be sent to the server
-        bindModel();
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(IJson.mobile_no, "" + loginBean.getMobileNumber());
-        hashMap.put(IJson.password, "" + loginBean.getPassword());
-        hashMap.put(IJson.userId, "0");
-        hashMap.put(IJson.active, "1");
-
-        JsonObjectRequest req = new JsonObjectRequest(IUrls.URL_LOGIN, new JSONObject(hashMap),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            VolleyLog.v("Response:%n %s", response.toString(4));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
-            }
-        });
-
-// add the request object to the queue to be executed
-        AppController.getInstance().addToRequestQueue(req);
     }
 
 }

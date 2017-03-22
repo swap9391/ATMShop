@@ -20,39 +20,39 @@
                 android:id="@+id/qstn1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1.How do you know about Application ?"
+                android:text="1.How do you know about Application ? / आप कंपनी के बारे में कैसे जानते हैं?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rd1facebook"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Facebook" />
+                    android:text="Facebook/फेसबुक" />
 
                 <RadioButton
                     android:id="@+id/rd1google"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Google Search" />
+                    android:text="Google Search/Google खोज" />
 
                 <RadioButton
                     android:id="@+id/rd1advertise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Advertisement" />
+                    android:text="Advertisement/विज्ञापन" />
 
                 <RadioButton
                     android:id="@+id/rd1friend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Friend" />
+                    android:text="Friend/दोस्त" />
 
 
             </RadioGroup>
@@ -65,7 +65,7 @@
                     android:id="@+id/edt1_friend_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Name Of Your Friend" />
+                    android:hint="Enter Name Of Your Friend/दोस्त का नाम" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -76,7 +76,9 @@
                     android:id="@+id/edt1_friend_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Mobile Number Of Your Friend" />
+                    android:hint="Enter Mobile Number Of Your Friend/मोबाइल नंबर दर्ज करें"
+                    android:inputType="number"
+                    android:maxLength="10" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -84,27 +86,26 @@
                 android:id="@+id/qstn2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2.Is Your shop  on ground floor or 1st floor ?"
+                android:text="2.Is Your shop  on ground floor or 1st floor ?/क्या आपकी दुकान भूमि तल या पहली मंजिल पर है?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="5dp"
-                >
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rd2ground"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ground Floor" />
+                    android:text="Ground Floor/ग्राउंड" />
 
                 <RadioButton
                     android:id="@+id/rd2firstfloor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="First Floor" />
+                    android:text="First Floor/पहली मंजिल" />
 
             </RadioGroup>
 
@@ -113,15 +114,14 @@
                 android:id="@+id/qstn3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3.Is Your shop roof is of slap or roofing sheet  ?"
+                android:text="3.Is Your shop roof is of slap or roofing sheet  ?/क्या आपकी दुकान की छत थप्पड़ या छत शीट का है?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="5dp"
-                >
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rd3slap"
@@ -133,7 +133,7 @@
                     android:id="@+id/rd3roof"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Roof Sheet" />
+                    android:text="Roof Sheet/छत शीट(पतरा)" />
 
             </RadioGroup>
 
@@ -141,27 +141,26 @@
                 android:id="@+id/qstn4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="4.Is there any ATM within 300 meter ?"
+                android:text="4.Is there any ATM within 300 meter ? /क्या 300 मीटर में कोई एटीएम है?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="5dp"
-                >
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rd4yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yes" />
+                    android:text="Yes/हाॅं" />
 
                 <RadioButton
                     android:id="@+id/rd4no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:text="No/नही" />
 
 
             </RadioGroup>
@@ -174,7 +173,7 @@
                     android:id="@+id/edt4_bank_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Bank Name" />
+                    android:hint="Enter Bank Name/बैंक के नाम" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -182,27 +181,26 @@
                 android:id="@+id/qstn5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="5.Is there any ATM within 500 meter ?"
+                android:text="5.Is there any ATM within 500 meter ?/क्या 500 मीटर के भीतर कोई एटीएम है?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="5dp"
-                >
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rd5yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yes" />
+                    android:text="Yes/हाॅं" />
 
                 <RadioButton
                     android:id="@+id/rd5no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:text="No/नही" />
 
 
             </RadioGroup>
@@ -215,7 +213,7 @@
                     android:id="@+id/edt5_bank_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Bank Name" />
+                    android:hint="Enter Bank Name/बैंक के नाम" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -223,42 +221,40 @@
                 android:id="@+id/qstn6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="6.Is you shop area is crowded (High footfall )?"
+                android:text="6.Is you shop area is crowded (High footfall )?/क्या दुकान क्षेत्र में भीड़ है (उच्च पलट)?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="5dp"
-                >
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rd6yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yes" />
+                    android:text="Yes/हाॅं" />
 
                 <RadioButton
                     android:id="@+id/rd6no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:text="No/नही" />
             </RadioGroup>
 
             <TextView
                 android:id="@+id/qstn7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="7.When there is high footfall ?"
+                android:text="7.When there is high footfall ? /क्या समय पर दुकान क्षेत्र में भीड़ है?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="5dp"
-                >
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rd7am"
@@ -282,7 +278,7 @@
                     android:id="@+id/edt8_bank_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="8.What is the reason behind high footfall ?" />
+                    android:hint="8.What is the reason behind high footfall ? / भीड़ के पीछे क्या कारण है?" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -290,64 +286,63 @@
                 android:id="@+id/qstn9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="9.Which of the following POI is within 100 mt from your shop ?"
+                android:text="9.Which of the following POI is within 100 mt from your shop ?  निम्नलिखित POI में से किसके पास आपकी दुकान से 100 मीटर के भीतर है?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="5dp"
-                >
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rd9garden"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Garden" />
+                    android:text="Garden/गार्डन" />
 
 
                 <RadioButton
                     android:id="@+id/rd9school"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="School" />
+                    android:text="School/स्कूल" />
 
                 <RadioButton
                     android:id="@+id/rd9market"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vegetable Market" />
+                    android:text="Vegetable Market/सब्जी बाजार" />
 
                 <RadioButton
                     android:id="@+id/rd9bus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bus Stop" />
+                    android:text="Bus Stop/बस स्टॉप" />
 
                 <RadioButton
                     android:id="@+id/rd9hospital"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hospital" />
+                    android:text="Hospital/अस्पताल" />
 
                 <RadioButton
                     android:id="@+id/rd9temples"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Temples" />
+                    android:text="Temples/मंदिर" />
 
                 <RadioButton
                     android:id="@+id/rd9churches"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Churches" />
+                    android:text="Churches/चर्च" />
 
                 <RadioButton
                     android:id="@+id/rd9mosques"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mosques" />
+                    android:text="Mosques/मस्जिद" />
 
             </RadioGroup>
 
@@ -355,27 +350,26 @@
                 android:id="@+id/qstn10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="10.Is there any ATM shop having 2 ATM machines within 100 meter  ?"
+                android:text="10.Is there any ATM shop having 2 ATM machines within 100 meter ?/क्या 100 मीटर के भीतर 2 एटीएम मशीन वाले एटीएम शॉप हैं?"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_margin="5dp"
-                >
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/rd10yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yes" />
+                    android:text="Yes/हाॅं" />
 
                 <RadioButton
                     android:id="@+id/rd10no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:text="No/नही" />
             </RadioGroup>
 
 

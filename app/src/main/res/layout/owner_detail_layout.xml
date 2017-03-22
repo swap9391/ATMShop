@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:digits=" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./:;-_|\][()!@#$%"
-                    android:hint="Enter Owner Name"
+                    android:hint="Enter Owner Name/दुकान के मालिक का नाम दर्ज करें"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
@@ -40,7 +40,7 @@
                     android:id="@+id/edt_owner_contact1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Contact Number 1"
+                    android:hint="Enter Contact Number 1/मोबाइल संपर्क नंबर दर्ज करें"
                     android:inputType="number"
                     android:maxLength="10" />
             </android.support.design.widget.TextInputLayout>
@@ -54,7 +54,7 @@
                     android:id="@+id/edt_owner_contact2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Contact Number 2"
+                    android:hint="Enter Contact Number 2/मोबाइल संपर्क नंबर दर्ज करें"
                     android:inputType="number"
                     android:maxLength="10" />
             </android.support.design.widget.TextInputLayout>

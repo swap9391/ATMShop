@@ -3,6 +3,7 @@ package com.atpshop.fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,29 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.atpshop.MainActivity;
 import com.atpshop.R;
+import com.atpshop.common.CommonUtils;
 import com.atpshop.common.FloatingActionButton;
+import com.atpshop.common.StringUtils;
+import com.atpshop.constant.CallWebservice;
+import com.atpshop.constant.CustomDialogListener;
+import com.atpshop.constant.IConstants;
+import com.atpshop.constant.IJson;
+import com.atpshop.constant.IUrls;
+import com.atpshop.constant.VolleyResponseListener;
+import com.atpshop.interf.DialogResult;
+import com.atpshop.model.OwnerDetailBean;
 import com.atpshop.model.QestionBean;
+
+import java.util.HashMap;
 
 /**
  * Created by root on 11/1/17.
  */
 
-public class QuestioneriesFragment extends Fragment implements View.OnClickListener {
+public class QuestioneriesFragment extends CommonFragment implements View.OnClickListener {
 
 
     TextView qst1, qst2, qst3, qst4, qst5, qst6, qst7, qst9, qst10;
@@ -29,6 +43,7 @@ public class QuestioneriesFragment extends Fragment implements View.OnClickListe
     RadioButton rd4no, rd5yes, rd5no, rd6yes, rd6no, rd7am, rd7pm, rd9garden, rd9school, rd9market, rd9bus, rd9hospital, rd9temples, rd9churches, rd9mosques, rd10yes, rd10no;
     EditText edt1_friend_name, edt1_friend_mobile, edt4_bank_name, edt5_bank_name, edt8_bank_name;
     QestionBean qestionBean;
+    boolean flager = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +51,7 @@ public class QuestioneriesFragment extends Fragment implements View.OnClickListe
         View view;
         view = inflater.inflate(R.layout.questoneries_layout, container, false);
         qestionBean = new QestionBean();
-        init();
+        init(view);
 
         LinearLayout yourframelayout = (LinearLayout) view.findViewById(R.id.floating_login);
         FloatingActionButton fabButton = new FloatingActionButton.Builder(getMyActivity(), yourframelayout)
@@ -51,10 +66,30 @@ public class QuestioneriesFragment extends Fragment implements View.OnClickListe
             @Override
             public void onClick(View v) {
 
-               /* bindModel();
-                if (check()) {
-                    save();
-                }*/
+                if (flager == false) {
+                    TermDialogFragment dialogFragment = new TermDialogFragment(new DialogResult() {
+                        @Override
+                        public void onResult(boolean flag) {
+                            if (flag == true) {
+                                flager = flag;
+                                qestionBean.setAns8(edt8_bank_name.getText().toString());
+
+                                if (check()) {
+                                    save();
+                                }
+                            }
+                        }
+                    }
+                    );
+                    dialogFragment.show(getFragmentManager(), "Dialog Fragment");
+                } else {
+                    qestionBean.setAns8(edt8_bank_name.getText().toString());
+
+                    if (check()) {
+                        save();
+                    }
+                }
+
             }
         });
 
@@ -62,55 +97,54 @@ public class QuestioneriesFragment extends Fragment implements View.OnClickListe
         return view;
     }
 
-    public void init() {
-        qst1 = (TextView) getView().findViewById(R.id.qstn1);
-        qst2 = (TextView) getView().findViewById(R.id.qstn2);
-        qst3 = (TextView) getView().findViewById(R.id.qstn3);
-        qst4 = (TextView) getView().findViewById(R.id.qstn4);
-        qst5 = (TextView) getView().findViewById(R.id.qstn5);
-        qst6 = (TextView) getView().findViewById(R.id.qstn6);
-        qst7 = (TextView) getView().findViewById(R.id.qstn7);
-        qst9 = (TextView) getView().findViewById(R.id.qstn9);
-        qst10 = (TextView) getView().findViewById(R.id.qstn10);
+    public void init(View view) {
+        qst1 = (TextView) view.findViewById(R.id.qstn1);
+        qst2 = (TextView) view.findViewById(R.id.qstn2);
+        qst3 = (TextView) view.findViewById(R.id.qstn3);
+        qst4 = (TextView) view.findViewById(R.id.qstn4);
+        qst5 = (TextView) view.findViewById(R.id.qstn5);
+        qst6 = (TextView) view.findViewById(R.id.qstn6);
+        qst7 = (TextView) view.findViewById(R.id.qstn7);
+        qst9 = (TextView) view.findViewById(R.id.qstn9);
+        qst10 = (TextView) view.findViewById(R.id.qstn10);
 
-        edt1_friend_name = (EditText) getView().findViewById(R.id.edt1_friend_name);
-        edt1_friend_mobile = (EditText) getView().findViewById(R.id.edt1_friend_mobile);
-        edt4_bank_name = (EditText) getView().findViewById(R.id.edt4_bank_name);
-        edt5_bank_name = (EditText) getView().findViewById(R.id.edt5_bank_name);
-        edt8_bank_name = (EditText) getView().findViewById(R.id.edt8_bank_name);
+        edt1_friend_name = (EditText) view.findViewById(R.id.edt1_friend_name);
+        edt1_friend_mobile = (EditText) view.findViewById(R.id.edt1_friend_mobile);
+        edt4_bank_name = (EditText) view.findViewById(R.id.edt4_bank_name);
+        edt5_bank_name = (EditText) view.findViewById(R.id.edt5_bank_name);
+        edt8_bank_name = (EditText) view.findViewById(R.id.edt8_bank_name);
 
         edt1_friend_name.setVisibility(View.GONE);
         edt1_friend_mobile.setVisibility(View.GONE);
         edt4_bank_name.setVisibility(View.GONE);
         edt5_bank_name.setVisibility(View.GONE);
-        edt8_bank_name.setVisibility(View.GONE);
 
-        rd1facebook = (RadioButton) getView().findViewById(R.id.rd1facebook);
-        rd1advertise = (RadioButton) getView().findViewById(R.id.rd1advertise);
-        rd1google = (RadioButton) getView().findViewById(R.id.rd1google);
-        rd1friend = (RadioButton) getView().findViewById(R.id.rd1friend);
-        rd2firstfloor = (RadioButton) getView().findViewById(R.id.rd2firstfloor);
-        rd2ground = (RadioButton) getView().findViewById(R.id.rd2ground);
-        rd3roof = (RadioButton) getView().findViewById(R.id.rd3roof);
-        rd3slap = (RadioButton) getView().findViewById(R.id.rd3slap);
-        rd4no = (RadioButton) getView().findViewById(R.id.rd4no);
-        rd4yes = (RadioButton) getView().findViewById(R.id.rd4yes);
-        rd5no = (RadioButton) getView().findViewById(R.id.rd5no);
-        rd5yes = (RadioButton) getView().findViewById(R.id.rd5yes);
-        rd6no = (RadioButton) getView().findViewById(R.id.rd6no);
-        rd6yes = (RadioButton) getView().findViewById(R.id.rd6yes);
-        rd7am = (RadioButton) getView().findViewById(R.id.rd7am);
-        rd7pm = (RadioButton) getView().findViewById(R.id.rd7pm);
-        rd9bus = (RadioButton) getView().findViewById(R.id.rd9bus);
-        rd9churches = (RadioButton) getView().findViewById(R.id.rd9churches);
-        rd9garden = (RadioButton) getView().findViewById(R.id.rd9garden);
-        rd9hospital = (RadioButton) getView().findViewById(R.id.rd9hospital);
-        rd9market = (RadioButton) getView().findViewById(R.id.rd9market);
-        rd9school = (RadioButton) getView().findViewById(R.id.rd9school);
-        rd9temples = (RadioButton) getView().findViewById(R.id.rd9temples);
-        rd9mosques = (RadioButton) getView().findViewById(R.id.rd9mosques);
-        rd10no = (RadioButton) getView().findViewById(R.id.rd10no);
-        rd10yes = (RadioButton) getView().findViewById(R.id.rd10yes);
+        rd1facebook = (RadioButton) view.findViewById(R.id.rd1facebook);
+        rd1advertise = (RadioButton) view.findViewById(R.id.rd1advertise);
+        rd1google = (RadioButton) view.findViewById(R.id.rd1google);
+        rd1friend = (RadioButton) view.findViewById(R.id.rd1friend);
+        rd2firstfloor = (RadioButton) view.findViewById(R.id.rd2firstfloor);
+        rd2ground = (RadioButton) view.findViewById(R.id.rd2ground);
+        rd3roof = (RadioButton) view.findViewById(R.id.rd3roof);
+        rd3slap = (RadioButton) view.findViewById(R.id.rd3slap);
+        rd4no = (RadioButton) view.findViewById(R.id.rd4no);
+        rd4yes = (RadioButton) view.findViewById(R.id.rd4yes);
+        rd5no = (RadioButton) view.findViewById(R.id.rd5no);
+        rd5yes = (RadioButton) view.findViewById(R.id.rd5yes);
+        rd6no = (RadioButton) view.findViewById(R.id.rd6no);
+        rd6yes = (RadioButton) view.findViewById(R.id.rd6yes);
+        rd7am = (RadioButton) view.findViewById(R.id.rd7am);
+        rd7pm = (RadioButton) view.findViewById(R.id.rd7pm);
+        rd9bus = (RadioButton) view.findViewById(R.id.rd9bus);
+        rd9churches = (RadioButton) view.findViewById(R.id.rd9churches);
+        rd9garden = (RadioButton) view.findViewById(R.id.rd9garden);
+        rd9hospital = (RadioButton) view.findViewById(R.id.rd9hospital);
+        rd9market = (RadioButton) view.findViewById(R.id.rd9market);
+        rd9school = (RadioButton) view.findViewById(R.id.rd9school);
+        rd9temples = (RadioButton) view.findViewById(R.id.rd9temples);
+        rd9mosques = (RadioButton) view.findViewById(R.id.rd9mosques);
+        rd10no = (RadioButton) view.findViewById(R.id.rd10no);
+        rd10yes = (RadioButton) view.findViewById(R.id.rd10yes);
 
         rd1facebook.setOnClickListener(this);
         rd1advertise.setOnClickListener(this);
@@ -241,4 +275,97 @@ public class QuestioneriesFragment extends Fragment implements View.OnClickListe
 
         }
     }
+
+    private boolean check() {
+        if (StringUtils.isEmpty(qestionBean.getAns1()) ||
+                StringUtils.isEmpty(qestionBean.getAns2()) ||
+                StringUtils.isEmpty(qestionBean.getAns3()) ||
+                StringUtils.isEmpty(qestionBean.getAns4()) ||
+                StringUtils.isEmpty(qestionBean.getAns5()) ||
+                StringUtils.isEmpty(qestionBean.getAns6()) ||
+                StringUtils.isEmpty(qestionBean.getAns7()) ||
+                StringUtils.isEmpty(qestionBean.getAns8()) ||
+                StringUtils.isEmpty(qestionBean.getAns9()) ||
+                StringUtils.isEmpty(qestionBean.getAns10())
+                ) {
+            CommonUtils.showToast(getMyActivity(), "All questions are compulsory to answer");
+            return false;
+        }
+
+        if (qestionBean.getAns1() != null
+                && qestionBean.getAns1().equals("Friend")
+                && StringUtils.isEmpty(edt1_friend_name.getText().toString())
+                && StringUtils.isEmpty(edt1_friend_mobile.getText().toString())
+                ) {
+            CommonUtils.showToast(getMyActivity(), "Please enter friends name and mobile number for Question 1");
+            return false;
+        }
+
+        if (qestionBean.getAns4() != null
+                && qestionBean.getAns4().equals("Yes")
+                && StringUtils.isEmpty(edt4_bank_name.getText().toString())) {
+            CommonUtils.showToast(getMyActivity(), "Please enter bank name for Question 4");
+            return false;
+        }
+
+        if (qestionBean.getAns5() != null
+                && qestionBean.getAns5().equals("Yes")
+                && StringUtils.isEmpty(edt5_bank_name.getText().toString())) {
+            CommonUtils.showToast(getMyActivity(), "Please enter bank name for Question 5");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void save() {
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(IJson.companyReference, "" + qestionBean.getAns1());
+        hashMap.put(IJson.referenceName, "" + edt1_friend_name.getText().toString());
+        hashMap.put(IJson.referenceMobileNo, "" + edt1_friend_mobile.getText().toString());
+        hashMap.put(IJson.shopFloor, "" + qestionBean.getAns2());
+        hashMap.put(IJson.shopRoof, "" + qestionBean.getAns3());
+        hashMap.put(IJson.nearAtmFirst, "" + qestionBean.getAns4());
+        hashMap.put(IJson.nearAtmSecond, "" + qestionBean.getAns5());
+        hashMap.put(IJson.firstBankName, "" + edt4_bank_name.getText().toString());
+        hashMap.put(IJson.secondBankName, "" + edt5_bank_name.getText().toString());
+        hashMap.put(IJson.shopArea, "" + qestionBean.getAns6());
+        hashMap.put(IJson.highFootfall, "" + qestionBean.getAns7());
+        hashMap.put(IJson.highFootfallReason, "" + qestionBean.getAns8());
+        hashMap.put(IJson.shopPoi, "" + qestionBean.getAns9());
+        hashMap.put(IJson.atmMachines, "" + qestionBean.getAns10());
+        hashMap.put(IJson.shopId, "21");
+        // hashMap.put(IJson.userId, "1" );
+
+
+        CallWebservice.getWebservice(getMyActivity(), Request.Method.POST, IUrls.URL_SAVE_QSTN, hashMap, new VolleyResponseListener<QestionBean>() {
+            @Override
+            public void onResponse(QestionBean[] object) {
+
+                if (object[0] instanceof QestionBean) {
+                    for (QestionBean bean : object) {
+
+                        getSuccessDialog("!Congrats", "Questions Submitted Successfully", new CustomDialogListener() {
+                            @Override
+                            public void onResponse() {
+
+                            }
+                        });
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+            }
+
+        }, QestionBean[].class);
+
+
+    }
+
+
 }
