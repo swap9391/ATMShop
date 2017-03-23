@@ -92,9 +92,14 @@ RentDetailBean rentDetailBean;
         }
 
         if(rentDetailBean.getNegotiableRent()<=0  ){
-            edt_expected.setError("Enter Negotiable Rent");
+            edt_negot.setError("Enter Final Rent");
             return false;
         }
+        if(rentDetailBean.getShopRent() <rentDetailBean.getNegotiableRent()){
+            edt_negot.setError("Final Rent is larger amount than expected rent");
+            return false;
+        }
+
         if (getMyActivity().getShopId()<=0) {
             CommonUtils.showToast(getMyActivity(),"Please Fill Shop Location Detail First");
             return false;

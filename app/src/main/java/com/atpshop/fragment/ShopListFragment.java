@@ -153,7 +153,7 @@ public class ShopListFragment extends CommonFragment implements View.OnClickList
 
             @Override
             public void onError(String message) {
-                getErroDialog(message);
+
             }
         }, OwnerDetailBean[].class);
 

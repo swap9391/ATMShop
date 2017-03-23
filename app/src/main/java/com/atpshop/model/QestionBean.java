@@ -16,6 +16,15 @@ public class QestionBean {
     private String ans9;
     private String ans10;
     private String shopId;
+    private Integer questionId;
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
 
     public String getAns1() {
         return ans1;

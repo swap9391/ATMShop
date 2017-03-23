@@ -1,5 +1,6 @@
 package com.atpshop.fragment;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,11 +11,13 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import com.android.volley.Request;
 import com.atpshop.MainActivity;
 import com.atpshop.R;
 import com.atpshop.common.CommonUtils;
+import com.atpshop.common.StringUtils;
 import com.atpshop.constant.CallWebservice;
 import com.atpshop.constant.CustomDialogListener;
 import com.atpshop.constant.IConstants;
@@ -77,7 +81,8 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
     View view;
     OwnerDetailBean ownerDetailBean;
     TextView lblOwnerName, lblMobile;
-    TextView lblapt, lblarea, lblState, lblCity, lblPin, lblshopht, lblshopwt, lblintht, lblintwt, lblintdept, lblCarpetArea,lblexptrent, lblnegrent;
+    TextView lblapt, lblarea, lblState, lblCity, lblPin, lblshopht, lblshopwt, lblintht, lblintwt, lblintdept, lblCarpetArea, lblexptrent, lblnegrent;
+    CardView cardLoc, cardDetail, cardRent;
     CircleImageView circleLeft, circleRight, circleFront, circleOppos;
     ImageButton editLocation, editrent, editShopDetail;
     private ProgressPieView mProgressPieView;
@@ -168,7 +173,9 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         editLocation = (ImageButton) view.findViewById(R.id.imgloceddit);
         editShopDetail = (ImageButton) view.findViewById(R.id.imgshopddit);
         editrent = (ImageButton) view.findViewById(R.id.imgrentddit);
-
+        cardLoc = (CardView) view.findViewById(R.id.card_loc);
+        cardRent = (CardView) view.findViewById(R.id.card_rent);
+        cardDetail = (CardView) view.findViewById(R.id.card_shop);
         circleLeft.setOnClickListener(this);
         circleOppos.setOnClickListener(this);
         circleRight.setOnClickListener(this);
@@ -214,21 +221,31 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
 
         lblOwnerName.setText(ownerDetailBean.getOwnerName());
         lblMobile.setText(ownerDetailBean.getOwnerMobileNo());
-        lblapt.setText(fullShopDetailBean.getAppartmentName());
-        lblarea.setText(fullShopDetailBean.getArea());
-        lblState.setText(fullShopDetailBean.getState());
-        lblCity.setText(fullShopDetailBean.getDistrict());
-        lblPin.setText(fullShopDetailBean.getPincode());
-        lblshopht.setText(fullShopDetailBean.getShopHeight() + " feet");
-        lblshopwt.setText(fullShopDetailBean.getShopWidth() + " feet");
-        lblintht.setText(fullShopDetailBean.getInternalHeight() + " feet");
-        lblintwt.setText(fullShopDetailBean.getInternalWidth() + " feet");
-        lblintdept.setText(fullShopDetailBean.getInternalDepth() + " feet");
-        lblCarpetArea.setText(fullShopDetailBean.getCarpetArea() + " feet");
-        lblexptrent.setText(getResources().getString(R.string.Rs) + fullShopDetailBean.getRent().getShopRent());
-        lblnegrent.setText(getResources().getString(R.string.Rs) + fullShopDetailBean.getRent().getNegotiableRent());
-
-
+        if (fullShopDetailBean.getAppartmentName() != null) {
+            lblapt.setText(fullShopDetailBean.getAppartmentName());
+            lblarea.setText(fullShopDetailBean.getArea());
+            lblState.setText(fullShopDetailBean.getState());
+            lblCity.setText(fullShopDetailBean.getDistrict());
+            lblPin.setText(fullShopDetailBean.getPincode());
+        } else {
+            cardLoc.setVisibility(View.GONE);
+        }
+        if (fullShopDetailBean.getShopHeight() != null) {
+            lblshopht.setText(fullShopDetailBean.getShopHeight() + " feet");
+            lblshopwt.setText(fullShopDetailBean.getShopWidth() + " feet");
+            lblintht.setText(fullShopDetailBean.getInternalHeight() + " feet");
+            lblintwt.setText(fullShopDetailBean.getInternalWidth() + " feet");
+            lblintdept.setText(fullShopDetailBean.getInternalDepth() + " feet");
+            lblCarpetArea.setText(fullShopDetailBean.getCarpetArea() + " feet");
+        } else {
+            cardDetail.setVisibility(View.GONE);
+        }
+        if (fullShopDetailBean.getRent() != null && fullShopDetailBean.getRent().getShopRent() > 0) {
+            lblexptrent.setText(getResources().getString(R.string.Rs) + fullShopDetailBean.getRent().getShopRent());
+            lblnegrent.setText(getResources().getString(R.string.Rs) + fullShopDetailBean.getRent().getNegotiableRent());
+        } else {
+            cardRent.setVisibility(View.GONE);
+        }
         if (fullShopDetailBean.getShopImages().size() > 0) {
             setImages(circleLeft, fullShopDetailBean.getShopImages().get(0).getImageName() != null ? fullShopDetailBean.getShopImages().get(0).getImageName() : null);
         } else {
@@ -298,6 +315,7 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
                 load(IUrls.IMAGE_BASE + path).
                 error(R.drawable.ic_atm).
                 noFade().
+                resize(200, 200).
                 placeholder(R.drawable.ic_atm).
                 into(img);
 
@@ -367,7 +385,7 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         return (MainActivity) getActivity();
     }
 
-    private void performSelection(final String uripath, final int recode) {
+    /*private void performSelection(final String uripath, final int recode) {
         String[] labels = new String[]{"Show", "Update"};
         AlertDialog dlg = new AlertDialog.Builder(getActivity()).setItems(
                 labels, new DialogInterface.OnClickListener() {
@@ -380,7 +398,7 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
                                 Intent intent = new Intent();
                                 intent.setAction(Intent.ACTION_VIEW);
                                 Uri myUri = Uri.parse(IUrls.IMAGE_BASE + uripath);
-                                intent.setDataAndType(myUri, "image/*");
+                                intent.setDataAndType(myUri, "image*//*");
                                 startActivity(intent);
                                 break;
                             }
@@ -396,28 +414,81 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         dlg.show();
 
     }
+*/
+    private String fileExt(String url) {
+        if (url.indexOf("?") > -1) {
+            url = url.substring(0, url.indexOf("?"));
+        }
+        if (url.lastIndexOf(".") == -1) {
+            return null;
+        } else {
+            String ext = url.substring(url.lastIndexOf(".") + 1);
+            if (ext.indexOf("%") > -1) {
+                ext = ext.substring(0, ext.indexOf("%"));
+            }
+            if (ext.indexOf("/") > -1) {
+                ext = ext.substring(0, ext.indexOf("/"));
+            }
+            return ext.toLowerCase();
 
+        }
+    }
+
+    public void setImage(String urlpath) {
+        try {
+            MimeTypeMap myMime = MimeTypeMap.getSingleton();
+            Intent newIntent = new Intent(Intent.ACTION_VIEW);
+            String mimeType = myMime.getMimeTypeFromExtension(urlpath);
+            Uri myUri = Uri.parse(IUrls.IMAGE_BASE + urlpath);
+            newIntent.setDataAndType(myUri,mimeType);
+            newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            try {
+                startActivity(newIntent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getMyActivity(), "No handler for this type of file.", Toast.LENGTH_LONG).show();
+            }
+
+
+/*
+
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            Uri myUri = Uri.parse(IUrls.IMAGE_BASE + urlpath);
+            intent.setDataAndType(myUri, "image*//**//*");
+            startActivity(intent);*/
+        } catch (Exception e) {
+
+        }
+
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.circleLeft:
-                if (fullShopDetailBean.getShopImages().get(0).getImageId() > 0) {
-                    performSelection(fullShopDetailBean.getShopImages().get(0).getImageName() != null ? fullShopDetailBean.getShopImages().get(0).getImageName() : null, REQUEST_PHOTO_LEFT);
+                if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(0).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(0).getImageName())) {
+                    setImage(fullShopDetailBean.getShopImages().get(0).getImageName());
                 }
                 break;
             case R.id.circleRight:
-                performSelection(fullShopDetailBean.getShopImages().get(1).getImageName() != null ? fullShopDetailBean.getShopImages().get(1).getImageName() : null, REQUEST_PHOTO_LEFT);
+                if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(1).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(1).getImageName())) {
+                    setImage(fullShopDetailBean.getShopImages().get(1).getImageName());
+                }
+
                 break;
             case R.id.circleFront:
-                performSelection(fullShopDetailBean.getShopImages().get(2).getImageName() != null ? fullShopDetailBean.getShopImages().get(2).getImageName() : null, REQUEST_PHOTO_LEFT);
+                if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(2).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(2).getImageName())) {
+                    setImage(fullShopDetailBean.getShopImages().get(2).getImageName());
+                }
                 break;
             case R.id.circleOppo:
-                performSelection(fullShopDetailBean.getShopImages().get(3).getImageName() != null ? fullShopDetailBean.getShopImages().get(3).getImageName() : null, REQUEST_PHOTO_LEFT);
+                if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(3).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(3).getImageName())) {
+                    setImage(fullShopDetailBean.getShopImages().get(3).getImageName());
+                }
                 break;
 
             case R.id.imgloceddit:
-                PagerFragment pagerFragment1= new PagerFragment();
+                PagerFragment pagerFragment1 = new PagerFragment();
                 Map<String, Serializable> parameters = new HashMap<String, Serializable>(2);
                 fullShopDetailBean.setEditPage(1);
                 parameters.put("FULLDETAIL", fullShopDetailBean);
@@ -425,20 +496,19 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
                 break;
 
             case R.id.imgshopddit:
-                PagerFragment pagerFragment2= new PagerFragment();
+                PagerFragment pagerFragment2 = new PagerFragment();
                 Map<String, Serializable> parameters2 = new HashMap<String, Serializable>(2);
                 fullShopDetailBean.setEditPage(2);
                 parameters2.put("FULLDETAIL", fullShopDetailBean);
                 getMyActivity().showFragment(pagerFragment2, parameters2);
                 break;
             case R.id.imgrentddit:
-                PagerFragment pagerFragment3= new PagerFragment();
+                PagerFragment pagerFragment3 = new PagerFragment();
                 Map<String, Serializable> parameters3 = new HashMap<String, Serializable>(2);
                 fullShopDetailBean.setEditPage(3);
                 parameters3.put("FULLDETAIL", fullShopDetailBean);
                 getMyActivity().showFragment(pagerFragment3, parameters3);
                 break;
-
 
 
         }
@@ -450,7 +520,6 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_PHOTO_LEFT || requestCode == REQUEST_PHOTO_RIGHT || requestCode == REQUEST_PHOTO_FRO || requestCode == REQUEST_PHOTO_OPP) {
-
             setVehicleImage(data, requestCode);
         }
     }
@@ -634,10 +703,6 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
 
         return true;
     }
-
-
-
-
 
 
     public void ShowProgressDialog(final int percent) {

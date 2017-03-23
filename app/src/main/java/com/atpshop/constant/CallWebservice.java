@@ -105,6 +105,7 @@ public class CallWebservice {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    dismissDialog();
                     getErroDialog(error.toString(), context);
                     listener.onError(error.toString());
                 }

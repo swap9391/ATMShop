@@ -1,5 +1,6 @@
 package com.atpshop.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -335,7 +336,9 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         hashMap.put(IJson.highFootfallReason, "" + qestionBean.getAns8());
         hashMap.put(IJson.shopPoi, "" + qestionBean.getAns9());
         hashMap.put(IJson.atmMachines, "" + qestionBean.getAns10());
-        hashMap.put(IJson.shopId, "21");
+        // hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
+        hashMap.put(IJson.questionId, "" + getMyActivity().getQuestionId());
+        hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
         // hashMap.put(IJson.userId, "1" );
 
 
@@ -345,11 +348,13 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
 
                 if (object[0] instanceof QestionBean) {
                     for (QestionBean bean : object) {
-
+                        getMyActivity().setQuestionId(bean.getQuestionId());
                         getSuccessDialog("!Congrats", "Questions Submitted Successfully", new CustomDialogListener() {
                             @Override
                             public void onResponse() {
-
+                                Intent i = new Intent(getMyActivity(), MainActivity.class);
+                                startActivity(i);
+                                getMyActivity().finish();
                             }
                         });
 

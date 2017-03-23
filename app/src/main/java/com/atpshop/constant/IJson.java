@@ -70,6 +70,6 @@ public interface IJson {
     String highFootfallReason = "highFootfallReason";
     String shopPoi = "shopPoi";
     String atmMachines = "atmMachines";
-
+    String questionId = "questionId";
 
 }

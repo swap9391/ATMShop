@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -60,6 +62,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static android.R.attr.path;
 
 
 public class CommonUtils {
@@ -1459,6 +1462,17 @@ public class CommonUtils {
     public static Uri getImageUri(Context inContext, Bitmap inImage) {
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
+    }
+
+    public static Bitmap getBitmap(String filePath) {
+        Bitmap myBitmap=null;
+        File imgFile = new  File(filePath);
+        if(imgFile.exists()){
+            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            //Drawable d = new BitmapDrawable(getResources(), myBitmap);
+        }
+
+        return myBitmap;
     }
 
 }

@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toolbar toolbar;
     int position;
     private int REQUEST_PHOTO_LEFT = 101, REQUEST_PHOTO_RIGHT = 102, REQUEST_PHOTO_FRO = 103, REQUEST_PHOTO_OPP = 104;
-    int ownerId = 0, shopId = 0;
+    int ownerId = 0, shopId = 0, questionId = 0;
     FullShopDetailBean fullShopDetailBean;
     //Drawer
     private NavigationView navigationView;
@@ -101,8 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             LocationDialog();
         }
 
-        ownerId = 0;
-        shopId = 0;
         fullShopDetailBean = new FullShopDetailBean();
         showFragment(PagerFragment.class);
 
@@ -193,27 +191,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (navItemIndex) {
             case 0:
                 // home
+                refresh();
                 PagerFragment homeFragment = new PagerFragment();
                 return homeFragment;
             case 1:
                 // photos
+                refresh();
                 ShopListFragment moviesFragment = new ShopListFragment();
                 return moviesFragment;
-
-            case 2:
-                // Share App
-                try {
-                    Intent i = new Intent(Intent.ACTION_SEND);
-                    i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, "Indoc- India Documents");
-                    String sAux = "\nLet me recommend you this application\n\n";
-                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.exa.bdg&hl=en \n\n";
-                    i.putExtra(Intent.EXTRA_TEXT, sAux);
-                    startActivity(Intent.createChooser(i, "choose one"));
-                } catch (Exception e) {
-                    //e.toString();
-                }
-
             default:
                 return new PagerFragment();
         }
@@ -243,10 +228,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_SHOP_DETLS;
                         break;
-                    case R.id.nav_share:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_SHARE;
-                        break;
                     case R.id.nav_about_us:
                         CommonUtils.showToast(MainActivity.this, "About Us");
                         // launch new intent instead of loading fragment
@@ -259,6 +240,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
                         //drawer.closeDrawers();
                         return true;
+                    case R.id.nav_share:
+                        // Share App
+                        try {
+                            Intent i = new Intent(Intent.ACTION_SEND);
+                            i.setType("text/plain");
+                            i.putExtra(Intent.EXTRA_SUBJECT, "Indoc- India Documents");
+                            String sAux = "\nLet me recommend you this application\n\n";
+                            sAux = sAux + "https://play.google.com/store/apps/details?id=com.exa.bdg&hl=en \n\n";
+                            i.putExtra(Intent.EXTRA_TEXT, sAux);
+                            startActivity(Intent.createChooser(i, "choose one"));
+                        } catch (Exception e) {
+                            //e.toString();
+                        }
+                        return true;
+
                     default:
                         navItemIndex = 0;
                 }
@@ -340,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void showFragment(Class<? extends Fragment> fragmentClass) {
+        refresh();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, Fragment.instantiate(this, fragmentClass.getCanonicalName()));
         fragmentTransaction.commit();
@@ -409,7 +406,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.shopId = shopId;
     }
 
-//Location
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
+    //Location
 
 
     public void LocationDialog() {
@@ -567,5 +571,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void setFullShopDetailBean(FullShopDetailBean fullShopDetailBean) {
         this.fullShopDetailBean = fullShopDetailBean;
+    }
+
+    public void refresh() {
+        setOwnerId(0);
+        setShopId(0);
+        setQuestionId(0);
     }
 }
