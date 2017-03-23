@@ -32,7 +32,7 @@ public class TermDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.term_dialog, container);
         checkBox=(CheckBox)view.findViewById(R.id.chkTerms);
         btnAccept=(Button) view.findViewById(R.id.btn_accept);
-
+        getDialog().setTitle("Terms & Condition for ATM");
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

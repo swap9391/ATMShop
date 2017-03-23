@@ -9,12 +9,20 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
         <TextView
             android:id="@+id/lblTerms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="text" />
-
+            android:text="@string/str_terms" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="150dp"></View>
+        </LinearLayout>
 
     </ScrollView>
 
@@ -29,7 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="I accept Terms and Condition" />
+            android:text="I accept Terms and Condition"
+            android:background="@color/white"
+            />
 
         <Button
             android:id="@+id/btn_accept"

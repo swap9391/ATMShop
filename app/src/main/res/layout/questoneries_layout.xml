@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1.How do you know about Application ? / आप कंपनी के बारे में कैसे जानते हैं?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                 />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2.Is Your shop  on ground floor or 1st floor ?/क्या आपकी दुकान भूमि तल या पहली मंजिल पर है?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                 />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="3.Is Your shop roof is of slap or roofing sheet  ?/क्या आपकी दुकान की छत थप्पड़ या छत शीट का है?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                 />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="4.Is there any ATM within 300 meter ? /क्या 300 मीटर में कोई एटीएम है?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                 />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -182,7 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="5.Is there any ATM within 500 meter ?/क्या 500 मीटर के भीतर कोई एटीएम है?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                 />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -222,7 +222,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="6.Is you shop area is crowded (High footfall )?/क्या दुकान क्षेत्र में भीड़ है (उच्च पलट)?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                 />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -248,7 +248,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="7.When there is high footfall ? /क्या समय पर दुकान क्षेत्र में भीड़ है?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                 />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -287,7 +287,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="9.Which of the following POI is within 100 mt from your shop ?  निम्नलिखित POI में से किसके पास आपकी दुकान से 100 मीटर के भीतर है?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                 />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -351,7 +351,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="10.Is there any ATM shop having 2 ATM machines within 100 meter ?/क्या 100 मीटर के भीतर 2 एटीएम मशीन वाले एटीएम शॉप हैं?"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                 />
 
             <RadioGroup
                 android:layout_width="match_parent"

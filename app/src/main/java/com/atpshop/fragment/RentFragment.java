@@ -34,8 +34,9 @@ import java.util.HashMap;
 
 public class RentFragment extends CommonFragment implements View.OnClickListener {
 
-RentDetailBean rentDetailBean;
-    EditText edt_expected,edt_negot;
+    RentDetailBean rentDetailBean;
+    EditText edt_expected, edt_negot;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,50 +70,46 @@ RentDetailBean rentDetailBean;
         });
 
 
-
-
         return view;
 
     }
 
 
-
-
-    private void bindModel(){
-        rentDetailBean.setShopRent(CommonUtils.asInt(edt_expected.getText().toString(),0) );
-        rentDetailBean.setNegotiableRent(CommonUtils.asInt(edt_negot.getText().toString(),0) );
+    private void bindModel() {
+        rentDetailBean.setShopRent(CommonUtils.asInt(edt_expected.getText().toString(), 0));
+        rentDetailBean.setNegotiableRent(CommonUtils.asInt(edt_negot.getText().toString(), 0));
     }
 
-    private boolean check(){
+    private boolean check() {
 
 
-        if(rentDetailBean.getShopRent()<=0  ){
+        if (rentDetailBean.getShopRent() <= 0) {
             edt_expected.setError("Enter Expected Rent");
             return false;
         }
 
-        if(rentDetailBean.getNegotiableRent()<=0  ){
+        if (rentDetailBean.getNegotiableRent() <= 0) {
             edt_negot.setError("Enter Final Rent");
             return false;
         }
-        if(rentDetailBean.getShopRent() <rentDetailBean.getNegotiableRent()){
+        if (rentDetailBean.getShopRent() < rentDetailBean.getNegotiableRent()) {
             edt_negot.setError("Final Rent is larger amount than expected rent");
             return false;
         }
 
-        if (getMyActivity().getShopId()<=0) {
-            CommonUtils.showToast(getMyActivity(),"Please Fill Shop Location Detail First");
+        if (getMyActivity().getShopId() <= 0) {
+            CommonUtils.showToast(getMyActivity(), "Please Fill Shop Location Detail First");
             return false;
         }
-        return  true;
+        return true;
     }
 
 
-    private void save(){
+    private void save() {
 
         HashMap<String, String> hashMap = new HashMap<>();
-        //hashMap.put(IJson.shopId, "7" );
-        hashMap.put(IJson.shopId, ""+getMyActivity().getShopId() );
+        hashMap.put(IJson.rentId, "" + getMyActivity().getRentId());
+        hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
         hashMap.put(IJson.shopRent, "" + rentDetailBean.getShopRent());
         hashMap.put(IJson.negotiableRent, "" + rentDetailBean.getNegotiableRent());
 
@@ -123,6 +120,7 @@ RentDetailBean rentDetailBean;
                 if (object[0] instanceof RentDetailBean) {
                     for (RentDetailBean bean : object) {
 
+                        getMyActivity().setRentId(bean.getRentId());
                         getSuccessDialog("!Congrats", "Rent Details Saved Successfully", new CustomDialogListener() {
                             @Override
                             public void onResponse() {

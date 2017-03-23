@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toolbar toolbar;
     int position;
     private int REQUEST_PHOTO_LEFT = 101, REQUEST_PHOTO_RIGHT = 102, REQUEST_PHOTO_FRO = 103, REQUEST_PHOTO_OPP = 104;
-    int ownerId = 0, shopId = 0, questionId = 0;
+    int ownerId = 0, shopId = 0, questionId = 0,rentId=0;
+    int leftId = 0, rightId = 0, frontId = 0, oppId = 0;
     FullShopDetailBean fullShopDetailBean;
     //Drawer
     private NavigationView navigationView;
@@ -399,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public int getShopId() {
-        return shopId;
+        return 28;
     }
 
     public void setShopId(int shopId) {
@@ -412,6 +413,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void setQuestionId(int questionId) {
         this.questionId = questionId;
+    }
+
+    public int getLeftId() {
+        return leftId;
+    }
+
+    public void setLeftId(int leftId) {
+        this.leftId = leftId;
+    }
+
+    public int getRightId() {
+        return rightId;
+    }
+
+    public void setRightId(int rightId) {
+        this.rightId = rightId;
+    }
+
+    public int getFrontId() {
+        return frontId;
+    }
+
+    public void setFrontId(int frontId) {
+        this.frontId = frontId;
+    }
+
+    public int getOppId() {
+        return oppId;
+    }
+
+    public void setOppId(int oppId) {
+        this.oppId = oppId;
+    }
+
+    public int getRentId() {
+        return rentId;
+    }
+
+    public void setRentId(int rentId) {
+        this.rentId = rentId;
     }
     //Location
 
@@ -577,5 +618,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setOwnerId(0);
         setShopId(0);
         setQuestionId(0);
+        setLeftId(0);
+        setRightId(0);
+        setFrontId(0);
+        setOppId(0);
     }
 }

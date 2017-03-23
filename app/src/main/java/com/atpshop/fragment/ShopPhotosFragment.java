@@ -317,6 +317,7 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                         //customerFiles1.setImagePath(outputFile.getPath());
                         customerFiles1.setImage_type(IConstants.LEFT_IMAGE);
                         customerFiles1.setImage(encodedImage);
+                        customerFiles1.setImageId(getMyActivity().getLeftId());
                         dataT.add(customerFiles1);
                         imgLeft.setVisibility(View.VISIBLE);
                         Picasso.with(getMyActivity())
@@ -330,6 +331,7 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                         CustomerFiles customerFiles2 = new CustomerFiles();
                         customerFiles2.setImage_type(IConstants.RIGHT_IMAGE);
                         customerFiles2.setImage(encodedImage);
+                        customerFiles2.setImageId(getMyActivity().getRightId());
                         dataT.add(customerFiles2);
                         imgRight.setVisibility(View.VISIBLE);
                         Picasso.with(getMyActivity())
@@ -343,6 +345,7 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                         CustomerFiles customerFiles3 = new CustomerFiles();
                         customerFiles3.setImage_type(IConstants.FRONT_IMAGE);
                         customerFiles3.setImage(encodedImage);
+                        customerFiles3.setImageId(getMyActivity().getFrontId());
                         dataT.add(customerFiles3);
                         imgFront.setVisibility(View.VISIBLE);
                         Picasso.with(getMyActivity())
@@ -356,6 +359,7 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                         CustomerFiles customerFiles4 = new CustomerFiles();
                         customerFiles4.setImage_type(IConstants.OPPOSITE_IMAGE);
                         customerFiles4.setImage(encodedImage);
+                        customerFiles4.setImageId(getMyActivity().getOppId());
                         dataT.add(customerFiles4);
                         imgOpposit.setVisibility(View.VISIBLE);
                         Picasso.with(getMyActivity())
@@ -395,14 +399,13 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
         customerFiles = dataT.get(sentCount);
 
         HashMap<String, String> hashMap = new HashMap<>();
-
+        hashMap.put(IJson.imageId, "" + customerFiles.getImageId());
         hashMap.put(IJson.image_string, "" + customerFiles.getImage());
         hashMap.put(IJson.imageType, "" + customerFiles.getImage_type());
         //hashMap.put(IJson.shopId, "1" );
         hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
         hashMap.put(IJson.latitude, "" + getMyActivity().getLocation().getLatitude());
         hashMap.put(IJson.longitude, "" + getMyActivity().getLocation().getLongitude());
-        hashMap.put(IJson.imageId, "0");
 
 
         CallWebservice.getWebservice(getMyActivity(), Request.Method.POST, IUrls.URL_SHOP_PHOTOS, hashMap, new VolleyResponseListener<CustomerFiles>() {
@@ -412,6 +415,17 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
 
                 if (object[0] instanceof CustomerFiles) {
                     for (CustomerFiles bean : object) {
+                        switch (sentCount) {
+                            case 0:
+                                getMyActivity().setLeftId(bean.getImageId());
+                                break;
+                            case 1:
+                                getMyActivity().setRightId(bean.getImageId());
+                                break;
+                            case 2:
+                                getMyActivity().setFrontId(bean.getImageId());
+                                break;
+                        }
 
                         sentCount++;
 
@@ -419,14 +433,14 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                             CommonUtils.showToast(getMyActivity(), "Image" + sentCount + " Uploaded");
                             save();
                         } else {
-
+                            getMyActivity().setOppId(bean.getImageId());
+                            dataT= new ArrayList<CustomerFiles>();
+                            sentCount=0;
                             getSuccessDialog("!Congrats", "Shop Photos Saved Successfully", new CustomDialogListener() {
                                 @Override
                                 public void onResponse() {
-
                                     PagerFragment pager = ((PagerFragment) getParentFragment());
                                     pager.setPage(5);
-
                                 }
                             });
 
