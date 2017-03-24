@@ -400,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public int getShopId() {
-        return 28;
+        return shopId;
     }
 
     public void setShopId(int shopId) {

@@ -73,12 +73,12 @@ public class LoginActivity extends AppCompatActivity {
         }
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_no);
         edt_password = (EditText) findViewById(R.id.edt_password);
-        btncreate= (Button) findViewById(R.id.btnRegister);
-        ((TextView)findViewById(R.id.lblreg)).setVisibility(View.VISIBLE);
+        btncreate = (Button) findViewById(R.id.btnRegister);
+        ((TextView) findViewById(R.id.lblreg)).setVisibility(View.VISIBLE);
         btncreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(TAG,RegisterActivity.class);
+                Intent i = new Intent(TAG, RegisterActivity.class);
                 startActivity(i);
 
             }
@@ -139,7 +139,11 @@ public class LoginActivity extends AppCompatActivity {
                         CommonUtils.InsertSharedPref(LoginActivity.this, IConstants.USER_ID, bean.getUserId());
                         CommonUtils.InsertSharedPref(LoginActivity.this, IConstants.USER_NAME, bean.getUserName());
                         CommonUtils.InsertSharedPref(LoginActivity.this, IConstants.USER_MOBILE, bean.getMobileNumber());
-                        final SweetAlertDialog pDialogSuccess = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.SUCCESS_TYPE);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        CommonUtils.showToast(LoginActivity.this, bean.getUserName() + " You Are Logged In Successfully!");
+                        finish();
+                        /*final SweetAlertDialog pDialogSuccess = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.SUCCESS_TYPE);
                         pDialogSuccess.setCancelable(false);
                         pDialogSuccess.setTitleText("! Congrats");
                         pDialogSuccess.setContentText("You Are Logged In Successfully");
@@ -147,13 +151,12 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
                                 sDialog.dismiss();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
+
                             }
                         });
 
                         pDialogSuccess.show();
-
+*/
 
                     }
                 }
