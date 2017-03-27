@@ -3,6 +3,7 @@ package com.atpshop.constant;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 
@@ -40,9 +41,12 @@ public class AppController extends Application {
         mMainHandler = new Handler(getMainLooper());
         mMainLayoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 
-
     }
-
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
 

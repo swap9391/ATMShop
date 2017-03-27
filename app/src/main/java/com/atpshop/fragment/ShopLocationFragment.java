@@ -41,13 +41,14 @@ public class ShopLocationFragment extends CommonFragment implements View.OnClick
     ShopLocationBean shopLocationBean;
     EditText et_apartment, et_street, et_city, et_state, et_pincode;
     FullShopDetailBean fullShopDetailBean;
-    boolean isUpadte=false;
+    boolean isUpadte = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view;
         view = inflater.inflate(R.layout.shop_location_layout, container, false);
-        fullShopDetailBean= getMyActivity().getFullShopDetailBean();
+        fullShopDetailBean = getMyActivity().getFullShopDetailBean();
         shopLocationBean = new ShopLocationBean();
         et_apartment = (EditText) view.findViewById(R.id.edt_apartment);
         et_street = (EditText) view.findViewById(R.id.edt_area);
@@ -55,7 +56,7 @@ public class ShopLocationFragment extends CommonFragment implements View.OnClick
         et_city = (EditText) view.findViewById(R.id.edt_city);
         et_pincode = (EditText) view.findViewById(R.id.edt_pin_code);
 
-        if(fullShopDetailBean.getOwner().getOwnerId()>0){
+        if (fullShopDetailBean.getOwner().getOwnerId() > 0) {
             bindView();
         }
 
@@ -84,24 +85,24 @@ public class ShopLocationFragment extends CommonFragment implements View.OnClick
     }
 
 
-    public PagerFragment getParent(){
-        return (PagerFragment)getParentFragment();
+    public PagerFragment getParent() {
+        return (PagerFragment) getParentFragment();
     }
+
     private void bindView() {
-        isUpadte=true;
+        isUpadte = true;
         et_apartment.setText(fullShopDetailBean.getAppartmentName());
         et_street.setText(fullShopDetailBean.getArea());
         et_city.setText(fullShopDetailBean.getDistrict());
         et_state.setText(fullShopDetailBean.getState());
         et_pincode.setText(fullShopDetailBean.getPincode());
         getMyActivity().setOwnerId(fullShopDetailBean.getOwner().getOwnerId());
-        if(fullShopDetailBean.getShopId()>0) {
+        if (fullShopDetailBean.getShopId() > 0) {
             getMyActivity().setShopId(fullShopDetailBean.getShopId());
-        }
-        else {
+        } else {
             getMyActivity().setShopId(0);
         }
-        }
+    }
 
 
     private void bindModel() {
@@ -115,15 +116,15 @@ public class ShopLocationFragment extends CommonFragment implements View.OnClick
 
     private boolean check() {
 
-        if (shopLocationBean.getArea() == null || StringUtils.isEmpty(shopLocationBean.getArea())) {
+        if (shopLocationBean.getArea() == null || shopLocationBean.getArea().equals("")) {
             et_street.setError("Please Enter Area/Street/Gali");
             return false;
         }
-        if (shopLocationBean.getState() == null || StringUtils.isEmpty(shopLocationBean.getState())) {
+        if (shopLocationBean.getState() == null || shopLocationBean.getState().equals("")) {
             et_state.setError("Please Enter District");
             return false;
         }
-        if (shopLocationBean.getDistrict() == null || StringUtils.isEmpty(shopLocationBean.getDistrict())) {
+        if (shopLocationBean.getDistrict() == null || shopLocationBean.getDistrict().equals("")) {
             et_city.setError("Please Enter City");
             return false;
         }
@@ -175,10 +176,10 @@ public class ShopLocationFragment extends CommonFragment implements View.OnClick
                         getSuccessDialog("!Congrats", "Shop Location Saved Successfully", new CustomDialogListener() {
                             @Override
                             public void onResponse() {
-                                if (isUpadte==false) {
+                                if (isUpadte == false) {
                                     PagerFragment pager = ((PagerFragment) getParentFragment());
                                     pager.setPage(2);
-                                }else {
+                                } else {
                                     FullShopDetailBean fullShopDetailBean = new FullShopDetailBean();
                                     getMyActivity().setFullShopDetailBean(fullShopDetailBean);
                                     getMyActivity().showFragment(ShopListFragment.class);

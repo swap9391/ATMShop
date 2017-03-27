@@ -93,7 +93,7 @@ public class RentFragment extends CommonFragment implements View.OnClickListener
             return false;
         }
         if (rentDetailBean.getShopRent() < rentDetailBean.getNegotiableRent()) {
-            edt_negot.setError("Final Rent is larger amount than expected rent");
+            edt_negot.setError("Please enter less than expected amount");
             return false;
         }
 

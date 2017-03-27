@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -41,10 +42,12 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
 
     TextView qst1, qst2, qst3, qst4, qst5, qst6, qst7, qst9, qst10;
     RadioButton rd1facebook, rd1google, rd1advertise, rd1friend, rd2ground, rd2firstfloor, rd3slap, rd3roof, rd4yes;
-    RadioButton rd4no, rd5yes, rd5no, rd6yes, rd6no, rd7am, rd7pm, rd9garden, rd9school, rd9market, rd9bus, rd9hospital, rd9temples, rd9churches, rd9mosques, rd10yes, rd10no;
-    EditText edt1_friend_name, edt1_friend_mobile, edt4_bank_name, edt5_bank_name, edt8_bank_name;
+    RadioButton rd4no, rd5yes, rd5no, rd6yes, rd6no, rd7am, rd7pm, rd10yes, rd10no;
+    CheckBox rd9garden, rd9school, rd9market, rd9bus, rd9hospital, rd9temples, rd9churches, rd9mosques;
+    EditText edt1_friend_name, edt1_friend_mobile, edt4_bank_name, edt5_bank_name, edt8_bank_name, edt10_bank_name;
     QestionBean qestionBean;
     boolean flager = false;
+    StringBuilder sb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +56,7 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         view = inflater.inflate(R.layout.questoneries_layout, container, false);
         qestionBean = new QestionBean();
         init(view);
-
+        sb = new StringBuilder();
         LinearLayout yourframelayout = (LinearLayout) view.findViewById(R.id.floating_login);
         FloatingActionButton fabButton = new FloatingActionButton.Builder(getMyActivity(), yourframelayout)
                 .withDrawable(getResources().getDrawable(R.mipmap.ic_check_white))
@@ -73,7 +76,6 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
                         public void onResult(boolean flag) {
                             if (flag == true) {
                                 flager = flag;
-                                qestionBean.setAns8(edt8_bank_name.getText().toString());
 
                                 if (check()) {
                                     save();
@@ -84,7 +86,7 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
                     );
                     dialogFragment.show(getFragmentManager(), "Dialog Fragment");
                 } else {
-                    qestionBean.setAns8(edt8_bank_name.getText().toString());
+
 
                     if (check()) {
                         save();
@@ -114,11 +116,12 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         edt4_bank_name = (EditText) view.findViewById(R.id.edt4_bank_name);
         edt5_bank_name = (EditText) view.findViewById(R.id.edt5_bank_name);
         edt8_bank_name = (EditText) view.findViewById(R.id.edt8_bank_name);
-
+        edt10_bank_name = (EditText) view.findViewById(R.id.edt10_bank_name);
         edt1_friend_name.setVisibility(View.GONE);
         edt1_friend_mobile.setVisibility(View.GONE);
         edt4_bank_name.setVisibility(View.GONE);
         edt5_bank_name.setVisibility(View.GONE);
+        edt10_bank_name.setVisibility(View.GONE);
 
         rd1facebook = (RadioButton) view.findViewById(R.id.rd1facebook);
         rd1advertise = (RadioButton) view.findViewById(R.id.rd1advertise);
@@ -136,14 +139,14 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         rd6yes = (RadioButton) view.findViewById(R.id.rd6yes);
         rd7am = (RadioButton) view.findViewById(R.id.rd7am);
         rd7pm = (RadioButton) view.findViewById(R.id.rd7pm);
-        rd9bus = (RadioButton) view.findViewById(R.id.rd9bus);
-        rd9churches = (RadioButton) view.findViewById(R.id.rd9churches);
-        rd9garden = (RadioButton) view.findViewById(R.id.rd9garden);
-        rd9hospital = (RadioButton) view.findViewById(R.id.rd9hospital);
-        rd9market = (RadioButton) view.findViewById(R.id.rd9market);
-        rd9school = (RadioButton) view.findViewById(R.id.rd9school);
-        rd9temples = (RadioButton) view.findViewById(R.id.rd9temples);
-        rd9mosques = (RadioButton) view.findViewById(R.id.rd9mosques);
+        rd9bus = (CheckBox) view.findViewById(R.id.rd9bus);
+        rd9churches = (CheckBox) view.findViewById(R.id.rd9churches);
+        rd9garden = (CheckBox) view.findViewById(R.id.rd9garden);
+        rd9hospital = (CheckBox) view.findViewById(R.id.rd9hospital);
+        rd9market = (CheckBox) view.findViewById(R.id.rd9market);
+        rd9school = (CheckBox) view.findViewById(R.id.rd9school);
+        rd9temples = (CheckBox) view.findViewById(R.id.rd9temples);
+        rd9mosques = (CheckBox) view.findViewById(R.id.rd9mosques);
         rd10no = (RadioButton) view.findViewById(R.id.rd10no);
         rd10yes = (RadioButton) view.findViewById(R.id.rd10yes);
 
@@ -243,51 +246,73 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
             case R.id.rd7pm:
                 qestionBean.setAns7("Pm");
                 break;
-            case R.id.rd9bus:
-                qestionBean.setAns9("Bus");
-                break;
-            case R.id.rd9churches:
-                qestionBean.setAns9("Church");
-                break;
-            case R.id.rd9garden:
-                qestionBean.setAns9("Garden");
-                break;
-            case R.id.rd9hospital:
-                qestionBean.setAns9("Hospital");
-                break;
-            case R.id.rd9market:
-                qestionBean.setAns9("Vegetable Market");
-                break;
-            case R.id.rd9mosques:
-                qestionBean.setAns9("Mosque");
-                break;
-            case R.id.rd9school:
-                qestionBean.setAns9("School");
-                break;
-            case R.id.rd9temples:
-                qestionBean.setAns9("Temple");
-                break;
             case R.id.rd10no:
+                edt10_bank_name.setVisibility(View.GONE);
                 qestionBean.setAns10("No");
                 break;
             case R.id.rd10yes:
+                edt10_bank_name.setVisibility(View.VISIBLE);
                 qestionBean.setAns10("Yes");
                 break;
 
         }
     }
 
+    private void bindModel() {
+        if (rd9bus.isChecked()) {
+            sb.append("Bus,");
+        }
+        if (rd9churches.isChecked()) {
+            sb.append("Church,");
+        }
+        if (rd9school.isChecked()) {
+            sb.append("School,");
+        }
+        if (rd9garden.isChecked()) {
+            sb.append("Garden,");
+        }
+        if (rd9temples.isChecked()) {
+            sb.append("Temple,");
+        }
+        if (rd9hospital.isChecked()) {
+            sb.append("Hospital,");
+        }
+        if (rd9mosques.isChecked()) {
+            sb.append("Mosque,");
+        }
+        if (rd9market.isChecked()) {
+            sb.append("Vegetable Market,");
+        }
+        qestionBean.setAns9(sb.toString());
+        qestionBean.setAns8(edt8_bank_name.getText().toString());
+        if(qestionBean.getAns10()!=null&& qestionBean.getAns10().equals("Yes")) {
+            qestionBean.setAns10(edt10_bank_name.getText().toString());
+        }
+        }
+
     private boolean check() {
-        if (StringUtils.isEmpty(qestionBean.getAns1()) ||
-                StringUtils.isEmpty(qestionBean.getAns2()) ||
-                StringUtils.isEmpty(qestionBean.getAns3()) ||
-                StringUtils.isEmpty(qestionBean.getAns4()) ||
-                StringUtils.isEmpty(qestionBean.getAns5()) ||
-                StringUtils.isEmpty(qestionBean.getAns6()) ||
-                StringUtils.isEmpty(qestionBean.getAns7()) ||
-                StringUtils.isEmpty(qestionBean.getAns8()) ||
-                StringUtils.isEmpty(qestionBean.getAns9()) ||
-                StringUtils.isEmpty(qestionBean.getAns10())
+        bindModel();
+
+        if (qestionBean.getAns1() == null ||
+                qestionBean.getAns2() == null ||
+                qestionBean.getAns3() == null ||
+                qestionBean.getAns4() == null ||
+                qestionBean.getAns5() == null ||
+                qestionBean.getAns6() == null ||
+                qestionBean.getAns7() == null ||
+                qestionBean.getAns8() == null ||
+                qestionBean.getAns9() == null ||
+                qestionBean.getAns10() == null ||
+                qestionBean.getAns1().equals("") ||
+                qestionBean.getAns2().equals("") ||
+                qestionBean.getAns3().equals("") ||
+                qestionBean.getAns4().equals("") ||
+                qestionBean.getAns5().equals("") ||
+                qestionBean.getAns6().equals("") ||
+                qestionBean.getAns7().equals("") ||
+                qestionBean.getAns8().equals("") ||
+                qestionBean.getAns9().equals("") ||
+                qestionBean.getAns10().equals("")
                 ) {
             CommonUtils.showToast(getMyActivity(), "All questions are compulsory to answer");
             return false;
@@ -295,24 +320,34 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
 
         if (qestionBean.getAns1() != null
                 && qestionBean.getAns1().equals("Friend")
-                && StringUtils.isEmpty(edt1_friend_name.getText().toString())
-                && StringUtils.isEmpty(edt1_friend_mobile.getText().toString())
+                && edt1_friend_name.getText().toString().equals("")
+                && edt1_friend_mobile.getText().toString().equals("")
                 ) {
             CommonUtils.showToast(getMyActivity(), "Please enter friends name and mobile number for Question 1");
             return false;
         }
 
-        if (qestionBean.getAns4() != null
+        if (qestionBean.getAns4() != null && !qestionBean.getAns4().equals("")
                 && qestionBean.getAns4().equals("Yes")
                 && StringUtils.isEmpty(edt4_bank_name.getText().toString())) {
             CommonUtils.showToast(getMyActivity(), "Please enter bank name for Question 4");
             return false;
         }
 
-        if (qestionBean.getAns5() != null
+        if (qestionBean.getAns5() != null && !qestionBean.getAns5().equals("")
                 && qestionBean.getAns5().equals("Yes")
                 && StringUtils.isEmpty(edt5_bank_name.getText().toString())) {
             CommonUtils.showToast(getMyActivity(), "Please enter bank name for Question 5");
+            return false;
+        }
+
+
+        if (edt10_bank_name.getVisibility()==View.VISIBLE && edt10_bank_name.getText().toString().equals("")) {
+            CommonUtils.showToast(getMyActivity(), "Please enter bank name for Question 10");
+            return false;
+        }
+        if (getMyActivity().getShopId() <= 0) {
+            CommonUtils.showToast(getMyActivity(), "Please Fill Shop Location Detail First");
             return false;
         }
 

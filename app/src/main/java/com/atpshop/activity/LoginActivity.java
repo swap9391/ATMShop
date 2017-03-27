@@ -31,6 +31,7 @@ import com.atpshop.R;
 import com.atpshop.common.CommonUtils;
 import com.atpshop.common.CustomProgressDialog;
 import com.atpshop.common.FloatingActionButton;
+import com.atpshop.common.MarshMallowPermission;
 import com.atpshop.constant.AppController;
 import com.atpshop.constant.CallWebservice;
 import com.atpshop.constant.IConstants;
@@ -106,8 +107,14 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
+        MarshMallowPermission marshMallowPermission = new MarshMallowPermission(LoginActivity.this);
         verifyStoragePermissions(LoginActivity.this);
+        if (!marshMallowPermission.checkPermissionForCamera() && !marshMallowPermission.checkPermissionForExternalStorage() && !marshMallowPermission.checkPermissionForReadExternalStorage()) {
+            marshMallowPermission.requestPermissionForCamera();
+            marshMallowPermission.requestPermissionForExternalStorage();
+            marshMallowPermission.requestPermissionForReadExternalStorage();
+        }
+
         // toolbar =(Toolbar) findViewById(R.id.toolbar);
     }
 

@@ -1,23 +1,19 @@
 package com.atpshop.fragment;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,11 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,7 +30,6 @@ import com.atpshop.MainActivity;
 import com.atpshop.R;
 import com.atpshop.common.CommonUtils;
 import com.atpshop.common.FloatingActionButton;
-import com.atpshop.common.GPSTracker;
 import com.atpshop.common.MarshMallowPermission;
 import com.atpshop.constant.CallWebservice;
 import com.atpshop.constant.CustomDialogListener;
@@ -46,24 +38,13 @@ import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
 import com.atpshop.constant.VolleyResponseListener;
 import com.atpshop.model.CustomerFiles;
-import com.atpshop.model.OwnerDetailBean;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import static android.R.attr.data;
-import static android.R.attr.path;
-import static android.R.attr.thumbnail;
-import static com.atpshop.constant.IConstants.USER_ID;
 
 /**
  * Created by root on 11/1/17.
@@ -167,11 +148,9 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
             marshMallowPermission.requestPermissionForReadExternalStorage();
 
         } else {
-
             switch (v.getId()) {
                 case R.id.btnLeft:
                 case R.id.imgLeft:
-
                     ContentValues values = new ContentValues();
                     values.put(MediaStore.Images.Media.TITLE, "LEFT");
                     values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
@@ -188,6 +167,10 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                     break;
                 case R.id.btnRight:
                 case R.id.imgRight:
+                    if (getMyActivity().getLeftId() > 0) {
+                        btnOpposit.setVisibility(View.VISIBLE);
+                        imgOpposit.setVisibility(View.GONE);
+                    }
                     ContentValues values1 = new ContentValues();
                     values1.put(MediaStore.Images.Media.TITLE, "RIGHT");
                     values1.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
@@ -196,7 +179,6 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                     Intent cameraIntent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     cameraIntent2.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(cameraIntent2, REQUEST_PHOTO_RIGHT);
-
                     break;
 
                 case R.id.btnFront:
@@ -249,9 +231,12 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
 
             if (resultCode == Activity.RESULT_OK) {
                 try {
-                    thumbnails = MediaStore.Images.Media.getBitmap(
-                            getMyActivity().getContentResolver(), imageUri);
 
+                    ContentResolver cr = getMyActivity().getContentResolver();
+                  /*  thumbnails = MediaStore.Images.Media.getBitmap(
+                            getMyActivity().getContentResolver(), imageUri);
+*/
+                    //  thumbnails= new MediaStore.Images.Media(getMyActivity().getContentResolver(), imageUri);
                     String imageurl = getRealPathFromURI(imageUri);
                     setVehicleImage(imageurl, requestCode);
                     Log.e("", imageurl);
@@ -305,7 +290,7 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 // Bitmap bt=Bitmap.createScaledBitmap(bitmap, 720, 1100, false);
                 Bitmap bt = BITMAP_RESIZER(bitmap, 500, 600);
-                bt.compress(Bitmap.CompressFormat.PNG, 50, stream);
+                bt.compress(Bitmap.CompressFormat.PNG, 30, stream);
                 byte[] vehicleImage = stream.toByteArray();
                 Uri uri = CommonUtils.getImageUri(getMyActivity(), bt);
                 String encodedImage = Base64.encodeToString(vehicleImage, Base64.DEFAULT);
@@ -323,7 +308,7 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                         Picasso.with(getMyActivity())
                                 .load(uri)
                                 .placeholder(R.drawable.circular_progress_dialog)
-                                .error(R.drawable.circular_progress_dialog)         // optional
+                                .error(R.drawable.circular_progress_dialog)
                                 .into(imgLeft);
                         btnLeft.setVisibility(View.GONE);
                         break;
@@ -434,8 +419,8 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                             save();
                         } else {
                             getMyActivity().setOppId(bean.getImageId());
-                            dataT= new ArrayList<CustomerFiles>();
-                            sentCount=0;
+                            dataT = new ArrayList<CustomerFiles>();
+                            sentCount = 0;
                             getSuccessDialog("!Congrats", "Shop Photos Saved Successfully", new CustomDialogListener() {
                                 @Override
                                 public void onResponse() {
@@ -477,16 +462,21 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
         }
 
 
+        if (dataT.size() < 4) {
+            if (getMyActivity().getLeftId() > 0 ||
+                    getMyActivity().getRightId() > 0 ||
+                    getMyActivity().getFrontId() > 0 ||
+                    getMyActivity().getRightId() > 0) {
+                int remain = 4 - dataT.size();
+                CommonUtils.showToast(getMyActivity(), "Re Capture " + remain + " Photos");
+            }
+            return false;
+        }
+
         if (getMyActivity().getShopId() <= 0) {
             CommonUtils.showToast(getMyActivity(), "Please Fill Shop Location Detail First");
             return false;
         }
-
-        if (dataT.size() < 4) {
-            CommonUtils.showToast(getMyActivity(), "Capture 4 Photos");
-            return false;
-        }
-
         return true;
     }
 

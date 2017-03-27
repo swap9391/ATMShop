@@ -20,8 +20,7 @@
                 android:id="@+id/qstn1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1.How do you know about Application ? / आप कंपनी के बारे में कैसे जानते हैं?"
-                 />
+                android:text="1.How do you know about Application ? / आप कंपनी के बारे में कैसे जानते हैं?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -86,8 +85,7 @@
                 android:id="@+id/qstn2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2.Is Your shop  on ground floor or 1st floor ?/क्या आपकी दुकान भूमि तल या पहली मंजिल पर है?"
-                 />
+                android:text="2.Is Your shop  on ground floor or 1st floor ?/क्या आपकी दुकान भूमि तल या पहली मंजिल पर है?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -114,8 +112,7 @@
                 android:id="@+id/qstn3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3.Is Your shop roof is of slap or roofing sheet  ?/क्या आपकी दुकान की छत थप्पड़ या छत शीट का है?"
-                 />
+                android:text="3.Is Your shop roof is of slap or roofing sheet  ?/क्या आपकी दुकान की छत थप्पड़ या छत शीट का है?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -135,14 +132,13 @@
                     android:layout_height="wrap_content"
                     android:text="Roof Sheet/छत शीट(पतरा)" />
 
-            </RadioGroup>
+                <TextView
+                    android:id="@+id/qstn4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4.Is there any ATM within 300 meter ? /क्या 300 मीटर में कोई एटीएम है?" />
 
-            <TextView
-                android:id="@+id/qstn4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="4.Is there any ATM within 300 meter ? /क्या 300 मीटर में कोई एटीएम है?"
-                 />
+            </RadioGroup>
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -181,8 +177,7 @@
                 android:id="@+id/qstn5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="5.Is there any ATM within 500 meter ?/क्या 500 मीटर के भीतर कोई एटीएम है?"
-                 />
+                android:text="5.Is there any ATM within 500 meter ?/क्या 500 मीटर के भीतर कोई एटीएम है?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -221,8 +216,7 @@
                 android:id="@+id/qstn6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="6.Is you shop area is crowded (High footfall )?/क्या दुकान क्षेत्र में भीड़ है (उच्च पलट)?"
-                 />
+                android:text="6.Is you shop area is crowded (High footfall )?/क्या दुकान क्षेत्र में भीड़ है (उच्च पलट)?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -247,8 +241,7 @@
                 android:id="@+id/qstn7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="7.When there is high footfall ? /क्या समय पर दुकान क्षेत्र में भीड़ है?"
-                 />
+                android:text="7.When there is high footfall ? /क्या समय पर दुकान क्षेत्र में भीड़ है?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -286,72 +279,70 @@
                 android:id="@+id/qstn9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="9.Which of the following POI is within 100 mt from your shop ?  निम्नलिखित POI में से किसके पास आपकी दुकान से 100 मीटर के भीतर है?"
-                 />
+                android:text="9.Which of the following POI is within 100 mt from your shop ?  निम्नलिखित POI में से किसके पास आपकी दुकान से 100 मीटर के भीतर है?" />
 
-            <RadioGroup
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:orientation="vertical">
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rd9garden"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Garden/गार्डन" />
 
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rd9school"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="School/स्कूल" />
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rd9market"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Vegetable Market/सब्जी बाजार" />
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rd9bus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bus Stop/बस स्टॉप" />
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rd9hospital"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hospital/अस्पताल" />
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rd9temples"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Temples/मंदिर" />
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rd9churches"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Churches/चर्च" />
 
-                <RadioButton
+                <CheckBox
                     android:id="@+id/rd9mosques"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mosques/मस्जिद" />
 
-            </RadioGroup>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/qstn10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="10.Is there any ATM shop having 2 ATM machines within 100 meter ?/क्या 100 मीटर के भीतर 2 एटीएम मशीन वाले एटीएम शॉप हैं?"
-                 />
+                android:text="10.Is there any ATM shop having 2 ATM machines within 100 meter ?/क्या 100 मीटर के भीतर 2 एटीएम मशीन वाले एटीएम शॉप हैं?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -372,6 +363,21 @@
                     android:text="No/नही" />
             </RadioGroup>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt10_bank_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Bank Name/बैंक के नाम" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="200dp"></View>
 
         </LinearLayout>
     </ScrollView>

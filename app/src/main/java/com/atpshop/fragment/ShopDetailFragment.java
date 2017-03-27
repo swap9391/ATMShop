@@ -56,7 +56,7 @@ public class ShopDetailFragment extends CommonFragment implements View.OnClickLi
         et_interna_wt.addTextChangedListener(this);
         et_interna_depth.addTextChangedListener(this);
 
-        fullShopDetailBean= getMyActivity().getFullShopDetailBean();
+        fullShopDetailBean = getMyActivity().getFullShopDetailBean();
         if (fullShopDetailBean.getOwner().getOwnerId() > 0) {
             bindView();
         }
@@ -115,28 +115,28 @@ public class ShopDetailFragment extends CommonFragment implements View.OnClickLi
 
     private boolean check() {
 
-        if (shopDetailBean.getShopHeight() == null && StringUtils.isEmpty(shopDetailBean.getShopHeight())) {
+        if (shopDetailBean.getShopHeight() == null || shopDetailBean.getShopHeight().equals("")) {
             et_shutter_ht.setError("Please Enter Shutter Height");
             return false;
         }
 
-        if (shopDetailBean.getShopWidth() == null && StringUtils.isEmpty(shopDetailBean.getShopWidth())) {
+        if (shopDetailBean.getShopWidth() == null || shopDetailBean.getShopWidth().equals("")) {
             et_shutter_wt.setError("Please Enter Shutter Width");
             return false;
         }
 
-        if (shopDetailBean.getInternalWidth() == null && StringUtils.isEmpty(shopDetailBean.getInternalHeight())) {
+        if (shopDetailBean.getInternalWidth() == null || shopDetailBean.getInternalHeight().equals("")) {
             et_interna_ht.setError("Please Enter Internal Height");
             return false;
         }
 
 
-        if (shopDetailBean.getInternalWidth() == null && StringUtils.isEmpty(shopDetailBean.getInternalWidth())) {
+        if (shopDetailBean.getInternalWidth() == null || shopDetailBean.getInternalWidth().equals("")) {
             et_interna_wt.setError("Please Enter Internal Width");
             return false;
         }
 
-        if (shopDetailBean.getInternalDepth() == null && StringUtils.isEmpty(shopDetailBean.getInternalDepth())) {
+        if (shopDetailBean.getInternalDepth() == null || shopDetailBean.getInternalDepth().equals("")) {
             et_interna_depth.setError("Please Enter Internal Depth");
             return false;
         }
@@ -173,19 +173,16 @@ public class ShopDetailFragment extends CommonFragment implements View.OnClickLi
                         getSuccessDialog("!Congrats", "Shop Details Saved Successfully", new CustomDialogListener() {
                             @Override
                             public void onResponse() {
-                                if (isUpadte==false) {
+                                if (isUpadte == false) {
                                     PagerFragment pager = ((PagerFragment) getParentFragment());
                                     pager.setPage(3);
-                                }else {
+                                } else {
                                     FullShopDetailBean fullShopDetailBean = new FullShopDetailBean();
                                     getMyActivity().setFullShopDetailBean(fullShopDetailBean);
                                     getMyActivity().showFragment(ShopListFragment.class);
                                 }
                             }
                         });
-
-
-
 
 
                     }

@@ -89,17 +89,17 @@ public class OwnerDetailFragment extends CommonFragment implements View.OnClickL
 
     private boolean check() {
 
-        if (ownerDetailBean.getOwnerName() == null || StringUtils.isEmpty(ownerDetailBean.getOwnerName())) {
+        if (ownerDetailBean.getOwnerName() == null || ownerDetailBean.getOwnerName().equals("")) {
             et_owner_name.setError("Please Enter Owner Name");
             return false;
         }
 
-        if (ownerDetailBean.getOwnerMobileNo() == null || StringUtils.isEmpty(ownerDetailBean.getOwnerMobileNo())) {
+        if (ownerDetailBean.getOwnerMobileNo() == null || ownerDetailBean.getOwnerMobileNo().equals("")) {
             et_contact_1.setError("Please Enter Contact Number");
             return false;
         }
 
-        if (ownerDetailBean.getOwnerMobileNo() != null && !StringUtils.isEmpty(ownerDetailBean.getOwnerMobileNo()) && ownerDetailBean.getOwnerMobileNo().length() < 10) {
+        if (ownerDetailBean.getOwnerMobileNo() != null && !ownerDetailBean.getOwnerMobileNo().equals("") && ownerDetailBean.getOwnerMobileNo().length() < 10) {
             et_contact_1.setError("Minimum 10 digits required");
             return false;
         }
