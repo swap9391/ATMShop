@@ -45,6 +45,7 @@ public class ShopListFragment extends CommonFragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getMyActivity().refresh();
         View view;
         view = inflater.inflate(R.layout.shop_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);

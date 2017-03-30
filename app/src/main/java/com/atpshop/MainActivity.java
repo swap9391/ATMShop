@@ -192,12 +192,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (navItemIndex) {
             case 0:
                 // home
-                refresh();
                 PagerFragment homeFragment = new PagerFragment();
                 return homeFragment;
             case 1:
                 // photos
-                refresh();
                 ShopListFragment moviesFragment = new ShopListFragment();
                 return moviesFragment;
             default:
@@ -337,7 +335,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void showFragment(Class<? extends Fragment> fragmentClass) {
-        refresh();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, Fragment.instantiate(this, fragmentClass.getCanonicalName()));
         fragmentTransaction.commit();

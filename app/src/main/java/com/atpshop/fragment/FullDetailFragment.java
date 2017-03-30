@@ -135,11 +135,8 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         mProgressPieView.setProgress(status);
         mProgressPieView.setText(status + "%");
         handler = new Handler();
-
-
         Init();
         getFullDetails();
-
         //images
         dataT = new ArrayList<CustomerFiles>();
         customerFiles = new CustomerFiles();
@@ -440,7 +437,7 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
             Intent newIntent = new Intent(Intent.ACTION_VIEW);
             String mimeType = myMime.getMimeTypeFromExtension(urlpath);
             Uri myUri = Uri.parse(IUrls.IMAGE_BASE + urlpath);
-            newIntent.setDataAndType(myUri,mimeType);
+            newIntent.setDataAndType(myUri, mimeType);
             newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             try {
                 startActivity(newIntent);

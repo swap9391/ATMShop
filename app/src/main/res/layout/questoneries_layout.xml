@@ -124,7 +124,7 @@
                     android:id="@+id/rd3slap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Slap" />
+                    android:text="Slab/छप्पर" />
 
                 <RadioButton
                     android:id="@+id/rd3roof"
