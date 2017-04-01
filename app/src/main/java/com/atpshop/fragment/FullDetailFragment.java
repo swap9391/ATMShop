@@ -311,7 +311,6 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         Picasso.with(getMyActivity()).
                 load(IUrls.IMAGE_BASE + path).
                 error(R.drawable.ic_atm).
-                noFade().
                 resize(200, 200).
                 placeholder(R.drawable.ic_atm).
                 into(img);
