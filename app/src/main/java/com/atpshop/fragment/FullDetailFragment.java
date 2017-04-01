@@ -13,6 +13,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -311,7 +312,6 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
         Picasso.with(getMyActivity()).
                 load(IUrls.IMAGE_BASE + path).
                 error(R.drawable.ic_atm).
-                noFade().
                 resize(200, 200).
                 placeholder(R.drawable.ic_atm).
                 into(img);
@@ -461,53 +461,59 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.circleLeft:
-                if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(0).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(0).getImageName())) {
-                    setImage(fullShopDetailBean.getShopImages().get(0).getImageName());
-                }
-                break;
-            case R.id.circleRight:
-                if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(1).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(1).getImageName())) {
-                    setImage(fullShopDetailBean.getShopImages().get(1).getImageName());
-                }
 
-                break;
-            case R.id.circleFront:
-                if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(2).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(2).getImageName())) {
-                    setImage(fullShopDetailBean.getShopImages().get(2).getImageName());
-                }
-                break;
-            case R.id.circleOppo:
-                if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(3).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(3).getImageName())) {
-                    setImage(fullShopDetailBean.getShopImages().get(3).getImageName());
-                }
-                break;
+        try {
 
-            case R.id.imgloceddit:
-                PagerFragment pagerFragment1 = new PagerFragment();
-                Map<String, Serializable> parameters = new HashMap<String, Serializable>(2);
-                fullShopDetailBean.setEditPage(1);
-                parameters.put("FULLDETAIL", fullShopDetailBean);
-                getMyActivity().showFragment(pagerFragment1, parameters);
-                break;
+            switch (v.getId()) {
+                case R.id.circleLeft:
+                    if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(0).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(0).getImageName())) {
+                        setImage(fullShopDetailBean.getShopImages().get(0).getImageName());
+                    }
+                    break;
+                case R.id.circleRight:
+                    if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(1).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(1).getImageName())) {
+                        setImage(fullShopDetailBean.getShopImages().get(1).getImageName());
+                    }
 
-            case R.id.imgshopddit:
-                PagerFragment pagerFragment2 = new PagerFragment();
-                Map<String, Serializable> parameters2 = new HashMap<String, Serializable>(2);
-                fullShopDetailBean.setEditPage(2);
-                parameters2.put("FULLDETAIL", fullShopDetailBean);
-                getMyActivity().showFragment(pagerFragment2, parameters2);
-                break;
-            case R.id.imgrentddit:
-                PagerFragment pagerFragment3 = new PagerFragment();
-                Map<String, Serializable> parameters3 = new HashMap<String, Serializable>(2);
-                fullShopDetailBean.setEditPage(3);
-                parameters3.put("FULLDETAIL", fullShopDetailBean);
-                getMyActivity().showFragment(pagerFragment3, parameters3);
-                break;
+                    break;
+                case R.id.circleFront:
+                    if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(2).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(2).getImageName())) {
+                        setImage(fullShopDetailBean.getShopImages().get(2).getImageName());
+                    }
+                    break;
+                case R.id.circleOppo:
+                    if (fullShopDetailBean.getShopImages().size() > 0 && fullShopDetailBean.getShopImages().get(3).getImageName() != null && !StringUtils.isEmpty(fullShopDetailBean.getShopImages().get(3).getImageName())) {
+                        setImage(fullShopDetailBean.getShopImages().get(3).getImageName());
+                    }
+                    break;
+
+                case R.id.imgloceddit:
+                    PagerFragment pagerFragment1 = new PagerFragment();
+                    Map<String, Serializable> parameters = new HashMap<String, Serializable>(2);
+                    fullShopDetailBean.setEditPage(1);
+                    parameters.put("FULLDETAIL", fullShopDetailBean);
+                    getMyActivity().showFragment(pagerFragment1, parameters);
+                    break;
+
+                case R.id.imgshopddit:
+                    PagerFragment pagerFragment2 = new PagerFragment();
+                    Map<String, Serializable> parameters2 = new HashMap<String, Serializable>(2);
+                    fullShopDetailBean.setEditPage(2);
+                    parameters2.put("FULLDETAIL", fullShopDetailBean);
+                    getMyActivity().showFragment(pagerFragment2, parameters2);
+                    break;
+                case R.id.imgrentddit:
+                    PagerFragment pagerFragment3 = new PagerFragment();
+                    Map<String, Serializable> parameters3 = new HashMap<String, Serializable>(2);
+                    fullShopDetailBean.setEditPage(3);
+                    parameters3.put("FULLDETAIL", fullShopDetailBean);
+                    getMyActivity().showFragment(pagerFragment3, parameters3);
+                    break;
 
 
+            }
+        }catch (Exception e){
+            Log.e("Exception",e.getMessage());
         }
     }
 

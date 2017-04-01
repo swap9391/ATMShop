@@ -16,35 +16,68 @@
 
         <TextView
             android:id="@+id/lblOwnerName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:ellipsize="end"
+            android:ems="8"
             android:singleLine="true"
             android:text="Owner Name"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/dot_dark_screen1" />
 
+
+        <TextView
+            android:id="@+id/lblShopId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Site Id:"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            />
+
+
         <TextView
             android:id="@+id/lblContactNo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblOwnerName"
             android:layout_margin="5dp"
+            android:ellipsize="end"
+            android:ems="8"
+            android:singleLine="true"
             android:text="Mobile Number"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/dot_dark_screen3" />
 
         <TextView
             android:id="@+id/lblContactNo2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblContactNo"
             android:layout_margin="5dp"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="Mobile Number"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/dot_dark_screen3" />
 
+
+        <TextView
+            android:id="@+id/lblStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/lblShopId"
+            android:layout_margin="8dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Status"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#00c853" />
 
     </RelativeLayout>
 

@@ -37,6 +37,7 @@ import com.atpshop.constant.IConstants;
 import com.atpshop.constant.IJson;
 import com.atpshop.constant.IUrls;
 import com.atpshop.constant.VolleyResponseListener;
+import com.atpshop.interf.DialogResult;
 import com.atpshop.model.CustomerFiles;
 import com.squareup.picasso.Picasso;
 
@@ -151,59 +152,108 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
             switch (v.getId()) {
                 case R.id.btnLeft:
                 case R.id.imgLeft:
-                    ContentValues values = new ContentValues();
-                    values.put(MediaStore.Images.Media.TITLE, "LEFT");
-                    values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-                    imageUri = getMyActivity().getContentResolver().insert(
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(intent, REQUEST_PHOTO_LEFT);
+
+                    GuideDialogFragment dialogFragment = new GuideDialogFragment(new DialogResult() {
+                        @Override
+                        public void onResult(boolean flag) {
+                            if (flag == true) {
 
 
-                   /* Intent cameraIntent1 = new Intent(
-                            MediaStore.ACTION_IMAGE_CAPTURE);
-                    getMyActivity().startActivityForResult(cameraIntent1, REQUEST_PHOTO_LEFT);*/
+
+                                ContentValues values = new ContentValues();
+                                values.put(MediaStore.Images.Media.TITLE, "LEFT");
+                                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                                imageUri = getMyActivity().getContentResolver().insert(
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                startActivityForResult(intent, REQUEST_PHOTO_LEFT);
+
+                            }
+                        }
+                    }, IConstants.LEFT_IMAGE
+                    );
+                    dialogFragment.show(getFragmentManager(), "Dialog Fragment");
+
                     break;
                 case R.id.btnRight:
                 case R.id.imgRight:
-                    if (getMyActivity().getLeftId() > 0) {
-                        btnOpposit.setVisibility(View.VISIBLE);
-                        imgOpposit.setVisibility(View.GONE);
-                    }
-                    ContentValues values1 = new ContentValues();
-                    values1.put(MediaStore.Images.Media.TITLE, "RIGHT");
-                    values1.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-                    imageUri = getMyActivity().getContentResolver().insert(
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values1);
-                    Intent cameraIntent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    cameraIntent2.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(cameraIntent2, REQUEST_PHOTO_RIGHT);
+
+
+                    GuideDialogFragment dialogFragment1 = new GuideDialogFragment(new DialogResult() {
+                        @Override
+                        public void onResult(boolean flag) {
+                            if (flag == true) {
+
+
+
+                                if (getMyActivity().getLeftId() > 0) {
+                                    btnOpposit.setVisibility(View.VISIBLE);
+                                    imgOpposit.setVisibility(View.GONE);
+                                }
+                                ContentValues values1 = new ContentValues();
+                                values1.put(MediaStore.Images.Media.TITLE, "RIGHT");
+                                values1.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                                imageUri = getMyActivity().getContentResolver().insert(
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values1);
+                                Intent cameraIntent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                cameraIntent2.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                startActivityForResult(cameraIntent2, REQUEST_PHOTO_RIGHT);
+
+                            }
+                        }
+                    }, IConstants.RIGHT_IMAGE
+                    );
+                    dialogFragment1.show(getFragmentManager(), "Dialog Fragment");
+
+
+
                     break;
 
                 case R.id.btnFront:
                 case R.id.imgFront:
-                    ContentValues values2 = new ContentValues();
-                    values2.put(MediaStore.Images.Media.TITLE, "Front");
-                    values2.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-                    imageUri = getMyActivity().getContentResolver().insert(
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values2);
-                    Intent cameraIntent3 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    cameraIntent3.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(cameraIntent3, REQUEST_PHOTO_FRO);
 
+                    GuideDialogFragment dialogFragment2 = new GuideDialogFragment(new DialogResult() {
+                        @Override
+                        public void onResult(boolean flag) {
+                            if (flag == true) {
+                                ContentValues values2 = new ContentValues();
+                                values2.put(MediaStore.Images.Media.TITLE, "Front");
+                                values2.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                                imageUri = getMyActivity().getContentResolver().insert(
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values2);
+                                Intent cameraIntent3 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                cameraIntent3.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                startActivityForResult(cameraIntent3, REQUEST_PHOTO_FRO);
+
+                            }
+                        }
+                    }, IConstants.FRONT_IMAGE
+                    );
+                    dialogFragment2.show(getFragmentManager(), "Dialog Fragment");
                     break;
 
                 case R.id.btnOpposite:
                 case R.id.imgOpposite:
-                    ContentValues values3 = new ContentValues();
-                    values3.put(MediaStore.Images.Media.TITLE, "Opposite");
-                    values3.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-                    imageUri = getMyActivity().getContentResolver().insert(
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values3);
-                    Intent cameraIntent4 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    cameraIntent4.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(cameraIntent4, REQUEST_PHOTO_OPP);
+
+                    GuideDialogFragment dialogFragment3 = new GuideDialogFragment(new DialogResult() {
+                        @Override
+                        public void onResult(boolean flag) {
+                            if (flag == true) {
+                                ContentValues values3 = new ContentValues();
+                                values3.put(MediaStore.Images.Media.TITLE, "Opposite");
+                                values3.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                                imageUri = getMyActivity().getContentResolver().insert(
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values3);
+                                Intent cameraIntent4 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                cameraIntent4.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                startActivityForResult(cameraIntent4, REQUEST_PHOTO_OPP);
+
+                            }
+                        }
+                    }, IConstants.OPPOSITE_IMAGE
+                    );
+                    dialogFragment3.show(getFragmentManager(), "Dialog Fragment");
                     break;
 
 

@@ -1,12 +1,14 @@
 package com.atpshop.model;
 
+import java.io.Serializable;
+
 import static com.atpshop.constant.IJson.shopId;
 
 /**
  * Created by Swapnil on 05/02/2017.
  */
 
-public class ShopDetailBean {
+public class ShopDetailBean implements Serializable {
     private String shopHeight;
     private String shopWidth;
     private String internalWidth;
@@ -14,6 +16,15 @@ public class ShopDetailBean {
     private String carpetArea;
     private String internalHeight;
     private int shopId;
+    private Integer  shopStatus;
+
+    public Integer getShopStatus() {
+        return shopStatus;
+    }
+
+    public void setShopStatus(Integer shopStatus) {
+        this.shopStatus = shopStatus;
+    }
 
     public int getShopId() {
         return shopId;

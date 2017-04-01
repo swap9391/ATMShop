@@ -63,18 +63,20 @@ public class ShopListFragment extends CommonFragment implements View.OnClickList
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 
         {
-            public TextView owner_name, contact_number, contact_number2;
+            public TextView owner_name, contact_number, contact_number2, shopid, status;
 
             public MyViewHolder(View view) {
                 super(view);
                 owner_name = (TextView) view.findViewById(R.id.lblOwnerName);
                 contact_number = (TextView) view.findViewById(R.id.lblContactNo);
                 contact_number2 = (TextView) view.findViewById(R.id.lblContactNo2);
+                shopid = (TextView) view.findViewById(R.id.lblShopId);
+                status = (TextView) view.findViewById(R.id.lblStatus);
             }
 
             @Override
             public void onClick(View view) {
-                            }
+            }
         }
 
 
@@ -87,12 +89,12 @@ public class ShopListFragment extends CommonFragment implements View.OnClickList
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_shop_item, parent, false);
 
-            ((CardView)itemView.findViewById(R.id.card_view)).setOnClickListener(new View.OnClickListener() {
+            ((CardView) itemView.findViewById(R.id.card_view)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = recyclerView.getChildPosition(view);
-                    OwnerDetailBean ownerDetailBean= lstOwner.get(position);
-                    FullDetailFragment fullDetailFragment= new FullDetailFragment();
+                    OwnerDetailBean ownerDetailBean = lstOwner.get(position);
+                    FullDetailFragment fullDetailFragment = new FullDetailFragment();
                     Map<String, Serializable> parameters = new HashMap<String, Serializable>(2);
                     parameters.put("ownerdetail", ownerDetailBean);
 
@@ -109,6 +111,33 @@ public class ShopListFragment extends CommonFragment implements View.OnClickList
             OwnerDetailBean customerBean = list.get(position);
             holder.owner_name.setText(customerBean.getOwnerName());
             holder.contact_number.setText(customerBean.getOwnerMobileNo());
+
+            if (customerBean.getShopDetailBean() != null) {
+
+                if (customerBean.getShopDetailBean().getShopId() > 0) {
+                    holder.shopid.setText("SHOP" + customerBean.getShopDetailBean().getShopId());
+                } else {
+                    holder.shopid.setText("");
+                }
+
+                switch (customerBean.getShopDetailBean().getShopStatus()) {
+                    case 1:
+                        holder.status.setText("Open");
+                        break;
+                    case 2:
+                        holder.status.setText("Approved");
+                        break;
+                    case 3:
+                        holder.status.setText("Dropped");
+                        break;
+                    default:
+                        holder.status.setText("Open");
+                        break;
+                }
+
+            }
+            holder.contact_number.setText(customerBean.getOwnerMobileNo());
+            holder.contact_number.setText(customerBean.getOwnerMobileNo());
             if (customerBean.getOwnerAlternativeMobileNo() != null) {
                 holder.contact_number2.setText(customerBean.getOwnerAlternativeMobileNo());
             } else {
@@ -122,15 +151,13 @@ public class ShopListFragment extends CommonFragment implements View.OnClickList
         }
 
 
-
     }
 
 
-    public void getShopList(){
+    public void getShopList() {
         HashMap<String, String> hashMap = new HashMap<>();
-         hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(), IConstants.USER_ID));
+        hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(), IConstants.USER_ID));
         //hashMap.put(IJson.userId, "1" );
-
 
 
         CallWebservice.getWebservice(getMyActivity(), Request.Method.POST, IUrls.URL_SHOP_LIST, hashMap, new VolleyResponseListener<OwnerDetailBean>() {
@@ -166,17 +193,15 @@ public class ShopListFragment extends CommonFragment implements View.OnClickList
     }
 
 
-
-
     @Override
     public void onClick(View v) {
         int position = recyclerView.getChildPosition(v);
-        OwnerDetailBean ownerDetailBean= lstOwner.get(position);
-        FullDetailFragment fullDetailFragment= new FullDetailFragment();
+        OwnerDetailBean ownerDetailBean = lstOwner.get(position);
+        FullDetailFragment fullDetailFragment = new FullDetailFragment();
         Map<String, Serializable> parameters = new HashMap<String, Serializable>(2);
         parameters.put("ownerdetail", ownerDetailBean);
 
-       getMyActivity().showFragment(fullDetailFragment, parameters);
+        getMyActivity().showFragment(fullDetailFragment, parameters);
     }
 
 }

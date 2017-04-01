@@ -11,6 +11,15 @@ public class OwnerDetailBean implements Serializable{
     private String ownerName;
     private String ownerMobileNo;
     private String ownerAlternativeMobileNo;
+    ShopDetailBean shopDetails ;
+
+    public ShopDetailBean getShopDetailBean() {
+        return shopDetails;
+    }
+
+    public void setShopDetailBean(ShopDetailBean shopDetailBean) {
+        this.shopDetails = shopDetailBean;
+    }
 
     public int getOwnerId() {
         return ownerId;
