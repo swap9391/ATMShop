@@ -50,7 +50,7 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.layout_view_pager, container, false);
-
+        getMyActivity().getToolbar().setTitle("ATM Shop");
         dotsLayout = (LinearLayout) view.findViewById(R.id.layoutDots);
         viewPager = (CustomViewPager) view.findViewById(R.id.pager);
 

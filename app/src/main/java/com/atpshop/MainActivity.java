@@ -32,6 +32,7 @@ import com.atpshop.common.GPSTracker;
 import com.atpshop.constant.IConstants;
 import com.atpshop.fragment.PagerFragment;
 import com.atpshop.fragment.ShopListFragment;
+import com.atpshop.fragment.TermsFragment;
 import com.atpshop.listners.PagerListner;
 import com.atpshop.model.FullShopDetailBean;
 import com.google.android.gms.common.ConnectionResult;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toolbar toolbar;
     int position;
     private int REQUEST_PHOTO_LEFT = 101, REQUEST_PHOTO_RIGHT = 102, REQUEST_PHOTO_FRO = 103, REQUEST_PHOTO_OPP = 104;
-    int ownerId = 0, shopId = 0, questionId = 0,rentId=0;
+    int ownerId = 0, shopId = 0, questionId = 0, rentId = 0;
     int leftId = 0, rightId = 0, frontId = 0, oppId = 0;
     FullShopDetailBean fullShopDetailBean;
     //Drawer
@@ -234,10 +235,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //drawer.closeDrawers();
                         return true;
                     case R.id.nav_privacy_policy:
-                        CommonUtils.showToast(MainActivity.this, "Policy");
-                        // launch new intent instead of loading fragment
-                        //startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
-                        //drawer.closeDrawers();
+                        showFragment(TermsFragment.class);
+                        drawer.closeDrawers();
                         return true;
                     case R.id.nav_share:
                         // Share App

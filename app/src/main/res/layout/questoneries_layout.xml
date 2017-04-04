@@ -112,7 +112,7 @@
                 android:id="@+id/qstn3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3.Is Your shop roof is of slap or roofing sheet  ?/क्या आपकी दुकान की छत थप्पड़ या छत शीट का है?" />
+                android:text="3.Is Your shop roof is of slab or roofing sheet  ?/क्या आपकी दुकान की छत छप्पर या छत शीट का है?" />
 
             <RadioGroup
                 android:layout_width="match_parent"

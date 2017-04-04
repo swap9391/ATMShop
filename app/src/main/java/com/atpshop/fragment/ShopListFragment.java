@@ -50,7 +50,9 @@ public class ShopListFragment extends CommonFragment implements View.OnClickList
         view = inflater.inflate(R.layout.shop_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         lstOwner = new ArrayList<>();
+        getMyActivity().getToolbar().setTitle("Shop List");
         getShopList();
+
         return view;
 
     }
