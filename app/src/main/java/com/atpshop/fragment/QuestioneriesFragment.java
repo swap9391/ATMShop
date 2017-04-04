@@ -371,9 +371,9 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         hashMap.put(IJson.highFootfallReason, "" + qestionBean.getAns8());
         hashMap.put(IJson.shopPoi, "" + qestionBean.getAns9());
         hashMap.put(IJson.atmMachines, "" + qestionBean.getAns10());
-        hashMap.put(IJson.shopId, "30" );
+       // hashMap.put(IJson.shopId, "30" );
         hashMap.put(IJson.questionId, "" + getMyActivity().getQuestionId());
-        //hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
+        hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
         // hashMap.put(IJson.userId, "1" );
 
 
