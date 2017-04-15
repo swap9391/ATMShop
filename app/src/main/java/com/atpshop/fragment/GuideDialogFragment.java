@@ -59,7 +59,7 @@ public class GuideDialogFragment extends DialogFragment {
         }
 
 
-        getDialog().setTitle("Follow instruction for " );
+        getDialog().setTitle("Follow instruction");
         btnCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

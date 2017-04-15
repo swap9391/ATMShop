@@ -285,9 +285,7 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         }
         qestionBean.setAns9(sb.toString());
         qestionBean.setAns8(edt8_bank_name.getText().toString());
-        if(qestionBean.getAns10()!=null&& qestionBean.getAns10().equals("Yes")) {
-            qestionBean.setAns10(edt10_bank_name.getText().toString());
-        }
+
         }
 
     private boolean check() {
@@ -341,11 +339,13 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
             return false;
         }
 
-
-        if (edt10_bank_name.getVisibility()==View.VISIBLE && edt10_bank_name.getText().toString().equals("")) {
+        if (qestionBean.getAns10() != null && !qestionBean.getAns10().equals("")
+                && qestionBean.getAns10().equals("Yes")
+                && StringUtils.isEmpty(edt10_bank_name.getText().toString())) {
             CommonUtils.showToast(getMyActivity(), "Please enter bank name for Question 10");
             return false;
         }
+
         if (getMyActivity().getShopId() <= 0) {
             CommonUtils.showToast(getMyActivity(), "Please Fill Shop Location Detail First");
             return false;
@@ -366,12 +366,12 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         hashMap.put(IJson.nearAtmSecond, "" + qestionBean.getAns5());
         hashMap.put(IJson.firstBankName, "" + edt4_bank_name.getText().toString());
         hashMap.put(IJson.secondBankName, "" + edt5_bank_name.getText().toString());
+        hashMap.put(IJson.twoAtmBank, "" + edt10_bank_name.getText().toString());
         hashMap.put(IJson.shopArea, "" + qestionBean.getAns6());
         hashMap.put(IJson.highFootfall, "" + qestionBean.getAns7());
         hashMap.put(IJson.highFootfallReason, "" + qestionBean.getAns8());
         hashMap.put(IJson.shopPoi, "" + qestionBean.getAns9());
         hashMap.put(IJson.atmMachines, "" + qestionBean.getAns10());
-       // hashMap.put(IJson.shopId, "30" );
         hashMap.put(IJson.questionId, "" + getMyActivity().getQuestionId());
         hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
         // hashMap.put(IJson.userId, "1" );

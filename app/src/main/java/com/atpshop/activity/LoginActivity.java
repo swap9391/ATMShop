@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        edt_mobile = (EditText) findViewById(R.id.edt_mobile_no);
+       edt_mobile = (EditText) findViewById(R.id.edt_mobile_no);
         edt_password = (EditText) findViewById(R.id.edt_password);
         btncreate = (Button) findViewById(R.id.btnRegister);
         ((TextView) findViewById(R.id.lblreg)).setVisibility(View.VISIBLE);
@@ -193,4 +193,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("Log","CRASHED");
+    }
 }

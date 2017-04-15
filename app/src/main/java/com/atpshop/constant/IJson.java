@@ -65,6 +65,7 @@ public interface IJson {
     String nearAtmSecond = "nearAtmSecond";
     String firstBankName = "firstBankName";
     String secondBankName = "secondBankName";
+    String twoAtmBank = "twoAtmBank";
     String shopArea = "shopArea";
     String highFootfall = "highFootfall";
     String highFootfallReason = "highFootfallReason";

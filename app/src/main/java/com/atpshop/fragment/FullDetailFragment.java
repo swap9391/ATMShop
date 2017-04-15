@@ -315,9 +315,7 @@ public class FullDetailFragment extends CommonFragment implements View.OnClickLi
                 resize(200, 200).
                 placeholder(R.drawable.ic_atm).
                 into(img);
-
     }
-
 
     private void bindActivity() {
         mTitle = (TextView) view.findViewById(R.id.main_textview_title);
