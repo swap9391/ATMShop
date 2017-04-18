@@ -10,21 +10,32 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/imgguide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/guide_front"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="10dp"
                 android:scaleType="fitStart"
-                />
+                android:adjustViewBounds="true"
+                android:layout_weight="1"
+                android:src="@drawable/guide_front" />
+
+            <ImageView
+                android:id="@+id/imgabstract"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="10dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/abstract_front" />
+
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="150dp"></View>
+                android:layout_height="70dp"></View>
         </LinearLayout>
 
     </ScrollView>

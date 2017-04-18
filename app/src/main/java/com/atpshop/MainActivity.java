@@ -1,9 +1,11 @@
 package com.atpshop;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,11 +32,13 @@ import android.widget.TextView;
 import com.atpshop.activity.LoginActivity;
 import com.atpshop.common.CommonUtils;
 import com.atpshop.common.GPSTracker;
+import com.atpshop.common.MarshMallowPermission;
 import com.atpshop.constant.IConstants;
+import com.atpshop.fragment.AboutFragment;
 import com.atpshop.fragment.PagerFragment;
 import com.atpshop.fragment.ShopListFragment;
 import com.atpshop.fragment.TermsFragment;
-import com.atpshop.listners.PagerListner;
+import com.atpshop.listners.GpsLocationReceiver;
 import com.atpshop.model.FullShopDetailBean;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -50,6 +55,9 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
+import static com.atpshop.R.id.otp;
+import static com.atpshop.fragment.OtpDialogFrag.getOnlyNumerics;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
@@ -91,14 +99,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected LocationRequest locationRequest;
     int REQUEST_CHECK_SETTINGS = 10;
     GPSTracker gpsTracker;
+    MarshMallowPermission marshMallowPermission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        marshMallowPermission = new MarshMallowPermission(this);
+
+        if (!marshMallowPermission.checkPermissionForCamera() && !marshMallowPermission.checkPermissionForExternalStorage() && !marshMallowPermission.checkPermissionForReadExternalStorage()) {
+            marshMallowPermission.requestPermissionForCamera();
+        }
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.app_name);
         if (getLocation().getLatitude() <= 0 || getLocation().getLongitude() <= 0) {
             LocationDialog();
         }
@@ -128,7 +145,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             loadHomeFragment();
         }
 
+        registerReceiver(receiver, new IntentFilter("android.location.PROVIDERS_CHANGED"));
+
     }
+
+    private GpsLocationReceiver receiver = new GpsLocationReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e("Location","changed");
+        }
+    };
 
     private void loadNavHeader() {
         // name, website
@@ -229,10 +255,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         CURRENT_TAG = TAG_SHOP_DETLS;
                         break;
                     case R.id.nav_about_us:
-                        CommonUtils.showToast(MainActivity.this, "About Us");
-                        // launch new intent instead of loading fragment
-                        // startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
-                        //drawer.closeDrawers();
+                        showFragment(AboutFragment.class);
+                        drawer.closeDrawers();
                         return true;
                     case R.id.nav_privacy_policy:
                         showFragment(TermsFragment.class);
@@ -619,4 +643,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setFrontId(0);
         setOppId(0);
     }
+
+    public MarshMallowPermission getMarshMallowPermission() {
+        return marshMallowPermission;
+    }
+
+    public void setMarshMallowPermission(MarshMallowPermission marshMallowPermission) {
+        this.marshMallowPermission = marshMallowPermission;
+    }
+
+
 }

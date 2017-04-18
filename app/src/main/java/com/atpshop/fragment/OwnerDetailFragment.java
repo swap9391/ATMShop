@@ -48,7 +48,7 @@ public class OwnerDetailFragment extends CommonFragment implements View.OnClickL
                              Bundle savedInstanceState) {
         View view;
         view = inflater.inflate(R.layout.owner_detail_layout, container, false);
-
+        getMyActivity().getToolbar().setTitle(R.string.app_name);
 
         ownerDetailBean = new OwnerDetailBean();
 

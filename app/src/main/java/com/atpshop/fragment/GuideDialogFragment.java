@@ -30,7 +30,7 @@ public class GuideDialogFragment extends DialogFragment {
 
     CheckBox checkBox;
     Button btnCapture;
-    ImageView imgGuide;
+    ImageView imgGuide,imgAbstract;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,22 +39,28 @@ public class GuideDialogFragment extends DialogFragment {
         checkBox = (CheckBox) view.findViewById(R.id.chkTerms);
         btnCapture = (Button) view.findViewById(R.id.btn_capture);
         imgGuide = (ImageView) view.findViewById(R.id.imgguide);
+        imgAbstract= (ImageView) view.findViewById(R.id.imgabstract);
 
         switch (angle) {
             case IConstants.LEFT_IMAGE:
                 imgGuide.setImageResource(R.drawable.guide_left);
+                imgAbstract.setImageResource(R.drawable.abstract_left);
                 break;
             case IConstants.RIGHT_IMAGE:
                 imgGuide.setImageResource(R.drawable.guide_right);
+                imgAbstract.setImageResource(R.drawable.abstract_right);
                 break;
             case IConstants.FRONT_IMAGE:
                 imgGuide.setImageResource(R.drawable.guide_front);
+                imgAbstract.setImageResource(R.drawable.abstract_front);
                 break;
             case IConstants.OPPOSITE_IMAGE:
                 imgGuide.setImageResource(R.drawable.guide_opp);
+                imgAbstract.setImageResource(R.drawable.abstract_opposite);
                 break;
             default:
                 imgGuide.setImageResource(R.drawable.guide_left);
+                imgAbstract.setImageResource(R.drawable.abstract_left);
                 break;
         }
 

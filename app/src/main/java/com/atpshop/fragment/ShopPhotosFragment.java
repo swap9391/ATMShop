@@ -44,6 +44,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -159,7 +160,6 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                             if (flag == true) {
 
 
-
                                 ContentValues values = new ContentValues();
                                 values.put(MediaStore.Images.Media.TITLE, "LEFT");
                                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
@@ -186,7 +186,6 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                             if (flag == true) {
 
 
-
                                 if (getMyActivity().getLeftId() > 0) {
                                     btnOpposit.setVisibility(View.VISIBLE);
                                     imgOpposit.setVisibility(View.GONE);
@@ -205,7 +204,6 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
                     }, IConstants.RIGHT_IMAGE
                     );
                     dialogFragment1.show(getFragmentManager(), "Dialog Fragment");
-
 
 
                     break;
@@ -430,14 +428,11 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
     private void save() {
 
         CustomerFiles customerFiles = new CustomerFiles();
-
         customerFiles = dataT.get(sentCount);
-
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put(IJson.imageId, "" + customerFiles.getImageId());
         hashMap.put(IJson.image_string, "" + customerFiles.getImage());
         hashMap.put(IJson.imageType, "" + customerFiles.getImage_type());
-        //hashMap.put(IJson.shopId, "1" );
         hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
         hashMap.put(IJson.latitude, "" + getMyActivity().getLocation().getLatitude());
         hashMap.put(IJson.longitude, "" + getMyActivity().getLocation().getLongitude());
@@ -505,13 +500,16 @@ public class ShopPhotosFragment extends CommonFragment implements View.OnClickLi
     }
 
     private boolean check() {
+
+
+        if (getMyActivity().getMarshMallowPermission().checkPermissionAccessLocation()) {
+            getMyActivity().getMarshMallowPermission().requestPermissionForFineLocation();
+        }
         if (getMyActivity().getLocation().getLatitude() <= 0 || getMyActivity().getLocation().getLongitude() <= 0) {
             getMyActivity().LocationDialog();
             CommonUtils.showToast(getMyActivity(), "Start GPS Location First");
             return false;
         }
-
-
         if (dataT.size() < 4) {
             if (getMyActivity().getLeftId() > 0 ||
                     getMyActivity().getRightId() > 0 ||

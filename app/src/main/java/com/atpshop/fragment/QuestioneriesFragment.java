@@ -374,7 +374,6 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         hashMap.put(IJson.atmMachines, "" + qestionBean.getAns10());
         hashMap.put(IJson.questionId, "" + getMyActivity().getQuestionId());
         hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
-        // hashMap.put(IJson.userId, "1" );
 
 
         CallWebservice.getWebservice(getMyActivity(), Request.Method.POST, IUrls.URL_SAVE_QSTN, hashMap, new VolleyResponseListener<QestionBean>() {

@@ -53,6 +53,7 @@ public class ShopListFragment extends CommonFragment implements View.OnClickList
         getMyActivity().getToolbar().setTitle("Shop List");
         getShopList();
 
+
         return view;
 
     }

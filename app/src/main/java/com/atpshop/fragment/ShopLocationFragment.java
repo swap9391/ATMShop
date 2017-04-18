@@ -160,9 +160,7 @@ public class ShopLocationFragment extends CommonFragment implements View.OnClick
         hashMap.put(IJson.state, "" + shopLocationBean.getState());
         hashMap.put(IJson.pincode, "" + shopLocationBean.getPincode());
         hashMap.put(IJson.userId, "" + CommonUtils.getSharedPref(getMyActivity(), IConstants.USER_ID));
-        //hashMap.put(IJson.userId, "1" );
         hashMap.put(IJson.ownerId, "" + getMyActivity().getOwnerId());
-        //hashMap.put(IJson.ownerId,"28");
         hashMap.put(IJson.shopId, "" + getMyActivity().getShopId());
 
 

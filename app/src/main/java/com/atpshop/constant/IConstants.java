@@ -1,7 +1,7 @@
 package com.atpshop.constant;
 
 /**
- * Created by Anil Sharma on 25/1/16.
+ * Created by Swapnil on 25/1/16.
  */
 public interface IConstants {
 
