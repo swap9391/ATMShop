@@ -19,11 +19,11 @@ public class AboutFragment extends CommonFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        getMyActivity().getToolbar().setTitle("About App and Company");
-        getMyActivity().refresh();
         View view;
         view = inflater.inflate(R.layout.about_us, container, false);
+        getMyActivity().getToolbar().setTitle("About Application");
+        getMyActivity().refresh();
+
         return view;
 
     }

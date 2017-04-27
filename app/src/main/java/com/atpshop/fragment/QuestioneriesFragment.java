@@ -1,5 +1,6 @@
 package com.atpshop.fragment;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,11 +10,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.android.volley.Request;
 import com.atpshop.MainActivity;
@@ -31,6 +34,7 @@ import com.atpshop.interf.DialogResult;
 import com.atpshop.model.OwnerDetailBean;
 import com.atpshop.model.QestionBean;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -42,9 +46,10 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
 
     TextView qst1, qst2, qst3, qst4, qst5, qst6, qst7, qst9, qst10;
     RadioButton rd1facebook, rd1google, rd1advertise, rd1friend, rd2ground, rd2firstfloor, rd3slap, rd3roof, rd4yes;
-    RadioButton rd4no, rd5yes, rd5no, rd6yes, rd6no, rd7am, rd7pm, rd10yes, rd10no;
+    RadioButton rd4no, rd5yes, rd5no, rd6yes, rd6no, rd10yes, rd10no;
     CheckBox rd9garden, rd9school, rd9market, rd9bus, rd9hospital, rd9temples, rd9churches, rd9mosques;
     EditText edt1_friend_name, edt1_friend_mobile, edt4_bank_name, edt5_bank_name, edt8_bank_name, edt10_bank_name;
+    Button btnTime;
     QestionBean qestionBean;
     boolean flager = false;
     StringBuilder sb;
@@ -69,22 +74,23 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (check()) {
+                    if (flager == false) {
+                        TermDialogFragment dialogFragment = new TermDialogFragment(new DialogResult() {
+                            @Override
+                            public void onResult(boolean flag) {
+                                if (flag == true) {
+                                    flager = flag;
 
-                if (flager == false) {
-                    TermDialogFragment dialogFragment = new TermDialogFragment(new DialogResult() {
-                        @Override
-                        public void onResult(boolean flag) {
-                            if (flag == true) {
-                                flager = flag;
 
-                                if (check()) {
                                     save();
+
                                 }
                             }
                         }
+                        );
+                        dialogFragment.show(getFragmentManager(), "Dialog Fragment");
                     }
-                    );
-                    dialogFragment.show(getFragmentManager(), "Dialog Fragment");
                 } else {
 
 
@@ -137,8 +143,7 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         rd5yes = (RadioButton) view.findViewById(R.id.rd5yes);
         rd6no = (RadioButton) view.findViewById(R.id.rd6no);
         rd6yes = (RadioButton) view.findViewById(R.id.rd6yes);
-        rd7am = (RadioButton) view.findViewById(R.id.rd7am);
-        rd7pm = (RadioButton) view.findViewById(R.id.rd7pm);
+        btnTime = (Button) view.findViewById(R.id.btnTime);
         rd9bus = (CheckBox) view.findViewById(R.id.rd9bus);
         rd9churches = (CheckBox) view.findViewById(R.id.rd9churches);
         rd9garden = (CheckBox) view.findViewById(R.id.rd9garden);
@@ -164,8 +169,7 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         rd5yes.setOnClickListener(this);
         rd6no.setOnClickListener(this);
         rd6yes.setOnClickListener(this);
-        rd7am.setOnClickListener(this);
-        rd7pm.setOnClickListener(this);
+        btnTime.setOnClickListener(this);
         rd9bus.setOnClickListener(this);
         rd9churches.setOnClickListener(this);
         rd9garden.setOnClickListener(this);
@@ -240,12 +244,6 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
             case R.id.rd6yes:
                 qestionBean.setAns6("Yes");
                 break;
-            case R.id.rd7am:
-                qestionBean.setAns7("Am");
-                break;
-            case R.id.rd7pm:
-                qestionBean.setAns7("Pm");
-                break;
             case R.id.rd10no:
                 edt10_bank_name.setVisibility(View.GONE);
                 qestionBean.setAns10("No");
@@ -253,6 +251,9 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
             case R.id.rd10yes:
                 edt10_bank_name.setVisibility(View.VISIBLE);
                 qestionBean.setAns10("Yes");
+                break;
+            case R.id.btnTime:
+                openTime();
                 break;
 
         }
@@ -286,7 +287,7 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
         qestionBean.setAns9(sb.toString());
         qestionBean.setAns8(edt8_bank_name.getText().toString());
 
-        }
+    }
 
     private boolean check() {
         bindModel();
@@ -403,6 +404,33 @@ public class QuestioneriesFragment extends CommonFragment implements View.OnClic
 
         }, QestionBean[].class);
 
+
+    }
+    private void openTime() {
+
+        Calendar calendar = Calendar.getInstance();
+        int hr = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+      /*  if(time != null && time.length() >=4){
+            hr = CommonUtils.toInt(time.substring(0,2));
+            minute = CommonUtils.toInt(time.substring(2));
+        }*/
+        TimePickerDialog timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                cal.set(Calendar.MINUTE, minute);
+                qestionBean.setAns7(CommonUtils.formatDateForDisplay(cal.getTime(), "HH:mm:ss"));
+
+                ((Button) getView().findViewById(R.id.btnTime))
+                        .setText(CommonUtils.formatDateForDisplay(cal.getTime(), "hh:mm aaa"));
+
+
+            }
+        }, hr, minute, false);
+        timePicker.show();
 
     }
 

@@ -19,14 +19,15 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:title="Share Application" />
+                android:title="Share Application"
+                />
 
             <item
                 android:id="@+id/nav_about_us"
                 android:title="@string/activity_title_about_us" />
             <item
                 android:id="@+id/nav_privacy_policy"
-                android:title="@string/privacy_policy" />
+                android:title="@string/activity_title_privacy_policy" />
         </menu>
     </item>
 

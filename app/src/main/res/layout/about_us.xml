@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -11,14 +11,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="7dp"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -28,18 +30,22 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
                         android:text="About Application"
                         android:textColor="@color/colorPrimaryDark" />
 
-                    <view
+                    <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_margin="5dp"></view>
+                        android:layout_margin="5dp"
+                        android:background="#E5E5E5"></View>
 
                     <TextView
                         android:id="@+id/lblTerms"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:text="@string/str_about_us" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -48,7 +54,9 @@
             <android.support.v7.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_margin="5dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -58,17 +66,21 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
                         android:text="About Company"
                         android:textColor="@color/colorPrimaryDark" />
 
-                    <view
+                    <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_margin="5dp"></view>
+                        android:layout_margin="5dp"
+                        android:background="#E5E5E5"></View>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:text="@string/st_company" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
