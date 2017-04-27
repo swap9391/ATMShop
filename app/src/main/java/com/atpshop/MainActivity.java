@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GpsLocationReceiver receiver = new GpsLocationReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.e("Location","changed");
+            Log.e("Location", "changed");
         }
     };
 

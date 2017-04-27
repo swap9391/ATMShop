@@ -29,8 +29,8 @@
     <string name="action_clear_all">Clear All</string>
     <string name="action_logout">Logout</string>
     <string name="action_mark_all_read">Mark All as Read</string>
-    <string name="privacy_policy">Privacy Policy</string>
-    <string name="str_about_us">ABOUT APP\n\n
+    <string name="privacy_policy">Terms And Condition</string>
+    <string name="str_about_us">
 ATM SHOP is combination of some essential requirement to rent out your shop for ATM available in a SINGLE platform to make things simple.\n
 1. Owner details\n
 2. Shop Location details\n
@@ -39,11 +39,14 @@ ATM SHOP is combination of some essential requirement to rent out your shop for 
 5. Shop Photos\n
 6. Questionaries’\n
 You can share to your family or friends or colleagues.\n\n
-Please call 9890799930 for more information and features.\n
-About Company:-\n
-We are a new-age ATM consulting Company. Our Services is available in Pan India. We provide highly professional and transparent services in the field of real estate. You will appreciate that as we are settled in PUNE have gained sufficient experience in ATM consultancy, we can give you reliable and trouble free services for renting of property for ATM
-\nPlease call 9890799930 for more information and features.\n\n
+Please call 09890799930 for more information and features.\n
+
     </string>
+    <string name="st_company">
+We are a new-age ATM consulting Company. Our Services is available in Pan India. We provide highly professional and transparent services in the field of real estate. You will appreciate that as we are settled in PUNE have gained sufficient experience in ATM consultancy, we can give you reliable and trouble free services for renting of property for ATM
+\nPlease call 09890799930 for more information and features.\n\n
+</string>
+
     <string name="str_terms">
 (1)	Slab shop\n\n
 (2)	Space of the shop should be 10 X 10 X 10\n\n
@@ -60,7 +63,7 @@ We are a new-age ATM consulting Company. Our Services is available in Pan India.
 (13)	No objection letter to install V-Sat dish ,Photo copy of pan card ,One cancel cheque ,Photo copy of Bank pass book of the shop owner and light bill of the shop should be submitted.\n\n
 (14)	Photo copy of the documents of the shop required for the agreement.\n\n
 (15)	The shop shown for the ATM can not be changed in any condition , failure to which a penality will be charged to the owner.\n\n
-Office Contact No.:  9890799930\n\n
+Office Contact No.:  09890799930\n\n
 
 एटीएम मशीन के लिए नियम और शर्तें\n
 
@@ -79,6 +82,6 @@ Office Contact No.:  9890799930\n\n
 (13)   अनुमोदन के बाद   वी-सैट डिश स्थापित करने के लिए नोबजेक्शन पत्र, पैन कार्ड की फोटो प्रति, एक रद्द चेक , दुकान के मालिक की बैंक पास बुक की फोटो कॉपी और दुकान के लाइट बिल को जमा करें।\n
 (14)    समझौते के लिए आवश्यक दुकान के दस्तावेजों की फोटो प्रति।\n
 (15)   एटीएम के लिए दिखाया गया दुकान किसी भी हालत में बदला नहीं जा सकता है, या फिर मालिक को दंड लगाया जाएगा।\n\n
-कार्यालय संपर्क नंबर: 9890799930\n
+कार्यालय संपर्क नंबर: 09890799930\n
 </string>
 </resources>

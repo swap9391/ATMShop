@@ -15,7 +15,7 @@ public class GpsLocationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
-            Toast.makeText(context, "Gps is on",
+            Toast.makeText(context, "Gps Setting Changed",
                     Toast.LENGTH_SHORT).show();
 
         }
