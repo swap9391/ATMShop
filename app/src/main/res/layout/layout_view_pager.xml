@@ -74,7 +74,7 @@
             </LinearLayout>
 
             <!-- View pager to swipe views -->
-            <com.atpshop.fragment.CustomViewPager
+            <com.atmshop.fragment.CustomViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
