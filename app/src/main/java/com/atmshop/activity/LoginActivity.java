@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.atmshop.R;
 import com.atmshop.common.CommonUtils;
 import com.atmshop.common.FloatingActionButton;
 import com.atmshop.common.MarshMallowPermission;
+import com.atmshop.common.StringUtils;
 import com.atmshop.constant.CallWebservice;
 import com.atmshop.constant.IConstants;
 import com.atmshop.constant.IJson;
@@ -31,13 +33,16 @@ import com.atmshop.constant.IUrls;
 import com.atmshop.constant.VolleyResponseListener;
 import com.atmshop.model.LoginBean;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     Toolbar toolbar;
     EditText txtUserName, txtPassword;
     Button btncreate;
+    TextView txtforgotpass;
     private LoginActivity TAG = LoginActivity.this;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -60,6 +65,9 @@ public class LoginActivity extends AppCompatActivity {
         }
         edt_mobile = (EditText) findViewById(R.id.edt_mobile_no);
         edt_password = (EditText) findViewById(R.id.edt_password);
+        txtforgotpass = (TextView) findViewById(R.id.txtforgotpass);
+        txtforgotpass.setOnClickListener(this);
+
         btncreate = (Button) findViewById(R.id.btnRegister);
         ((TextView) findViewById(R.id.lblreg)).setVisibility(View.VISIBLE);
         btncreate.setOnClickListener(new View.OnClickListener() {
@@ -89,17 +97,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                /* Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent1);*/
-                Login();
+                bindModel();
+                if (check()) {
+                    Login();
+                }
+
 
             }
         });
-        MarshMallowPermission marshMallowPermission = new MarshMallowPermission(LoginActivity.this);
-        verifyStoragePermissions(LoginActivity.this);
-        if (!marshMallowPermission.checkPermissionForCamera() && !marshMallowPermission.checkPermissionForExternalStorage() && !marshMallowPermission.checkPermissionForReadExternalStorage()) {
-            marshMallowPermission.requestPermissionForCamera();
-            marshMallowPermission.requestPermissionForExternalStorage();
-            marshMallowPermission.requestPermissionForReadExternalStorage();
-        }
+
 
         // toolbar =(Toolbar) findViewById(R.id.toolbar);
     }
@@ -111,11 +117,24 @@ public class LoginActivity extends AppCompatActivity {
         loginBean.setPassword(edt_password.getText().toString());
     }
 
+    private boolean check() {
+        if (loginBean.getMobileNumber() == null || StringUtils.isEmpty(loginBean.getMobileNumber())) {
+            CommonUtils.showToast(this, "Please Enter Mobile Number");
+            return false;
+        }
+
+        if (loginBean.getPassword() == null || StringUtils.isEmpty(loginBean.getPassword())) {
+            CommonUtils.showToast(this, "Please Enter Password");
+            return false;
+        }
+
+        return true;
+    }
+
 
     public void Login() {
         if (connectflag == false) {
             connectflag = true;
-            bindModel();
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put(IJson.mobile_no, "" + loginBean.getMobileNumber());
             hashMap.put(IJson.password, "" + loginBean.getPassword());
@@ -186,5 +205,47 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("Log", "CRASHED");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkAndRequestPermissions();
+    }
+
+    /**
+     * permission
+     */
+    private void checkAndRequestPermissions() {
+        String[] permissions = new String[]{
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.GET_ACCOUNTS,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.READ_CONTACTS
+
+        };
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(permission);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), 1);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txtforgotpass:
+                Intent i = new Intent(TAG, ForgotPasswordActivity.class);
+                startActivity(i);
+                break;
+        }
     }
 }

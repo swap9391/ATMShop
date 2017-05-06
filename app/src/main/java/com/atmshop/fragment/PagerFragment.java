@@ -36,7 +36,6 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
     int status = 0;
     int currentstatus = 0;
     boolean progressflag = true;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -130,10 +129,18 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
 
         }
 
+        ((ImageButton) view.findViewById(R.id.navigateOne)).setOnClickListener(this);
+        ((ImageButton) view.findViewById(R.id.navigateTwo)).setOnClickListener(this);
+        ((ImageButton) view.findViewById(R.id.navigateThree)).setOnClickListener(this);
+        ((ImageButton) view.findViewById(R.id.navigateFour)).setOnClickListener(this);
+        ((ImageButton) view.findViewById(R.id.navigateFive)).setOnClickListener(this);
+        ((ImageButton) view.findViewById(R.id.navigateSix)).setOnClickListener(this);
+
 
         return view;
 
     }
+
 
     public void pageSelected(int position) {
         switch (position) {
@@ -262,7 +269,33 @@ public class PagerFragment extends CommonFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        switch (v.getId()) {
+            case R.id.navigateOne:
+                pageSelected(0);
+                setPage(0);
+                break;
+            case R.id.navigateTwo:
+                pageSelected(1);
+                setPage(1);
+                break;
+            case R.id.navigateThree:
+                pageSelected(2);
+                setPage(2);
+                break;
+            case R.id.navigateFour:
+                pageSelected(3);
+                setPage(3);
+                break;
+            case R.id.navigateFive:
+                pageSelected(4);
+                setPage(4);
+                break;
+            case R.id.navigateSix:
+                pageSelected(5);
+                setPage(5);
+                break;
+        }
     }
 
     public void next() {

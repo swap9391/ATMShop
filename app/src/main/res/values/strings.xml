@@ -83,4 +83,7 @@ Office Contact No.:  09890799930\n\n
 (15)   एटीएम के लिए दिखाया गया दुकान किसी भी हालत में बदला नहीं जा सकता है, या फिर मालिक को दंड लगाया जाएगा।\n\n
 कार्यालय संपर्क नंबर: 09890799930\n
 </string>
+    <string name="forgot_pass"><a href="forgot">Forgot Pasword</a></string>
+
+
 </resources>
