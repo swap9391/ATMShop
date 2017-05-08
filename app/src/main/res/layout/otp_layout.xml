@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="400dp"
-    android:minHeight="300dp"
-    android:orientation="vertical">
+    android:minHeight="150dp"
+    android:orientation="vertical"
+    android:gravity="center_horizontal|center_vertical"
+    >
 
     <EditText
         android:id="@+id/otp"
@@ -18,7 +20,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <Button
             android:id="@+id/btn_resend_otp"

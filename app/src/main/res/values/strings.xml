@@ -16,7 +16,7 @@
     <string name="nav_home">Add Shop Detail</string>
     <string name="nav_shop_dtls">Your Shops</string>
     <string name="nav_share">Share App</string>
-
+    <string name="nav_change_pass">Change Password</string>
 
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">

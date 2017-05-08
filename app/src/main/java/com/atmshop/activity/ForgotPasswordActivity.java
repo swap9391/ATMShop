@@ -19,6 +19,7 @@ import com.atmshop.constant.IConstants;
 import com.atmshop.constant.IJson;
 import com.atmshop.constant.IUrls;
 import com.atmshop.constant.VolleyResponseListener;
+import com.atmshop.fragment.ForgotOtpDialogFrag;
 import com.atmshop.fragment.OtpDialogFrag;
 import com.atmshop.interf.DialogResult;
 import com.atmshop.model.LoginBean;
@@ -103,19 +104,21 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             connectflag = true;
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put(IJson.mobile_no, "" + loginBean.getMobileNumber());
-            CallWebservice.getWebservice(TAG, Request.Method.POST, IUrls.URL_GENRATE_OTP, hashMap, new VolleyResponseListener<LoginBean>() {
+            CallWebservice.getWebservice(TAG, Request.Method.POST, IUrls.URL_VALIDATE_MOBILE, hashMap, new VolleyResponseListener<LoginBean>() {
                 @Override
                 public void onResponse(LoginBean[] object) {
                     if (object[0] instanceof LoginBean) {
-                        for (LoginBean bean : object) {
+                        for (final LoginBean bean : object) {
+
                             connectflag = false;
                             CommonUtils.insertSharedPref(TAG, IConstants.OTP, bean.getOtp().toString());
-                            OtpDialogFrag dialogFragment = new OtpDialogFrag(new DialogResult() {
+                            ForgotOtpDialogFrag dialogFragment = new ForgotOtpDialogFrag(new DialogResult() {
                                 @Override
                                 public void onResult(boolean flag) {
                                     if (flag == true) {
                                         flager = flag;
-                                        //  Register();
+                                        loginBean.setUserId(bean.getUserId());
+                                         Register();
                                     }
                                 }
                             }
@@ -141,8 +144,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         if (connectflag == false) {
             connectflag = true;
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put(IJson.userName, "" + loginBean.getUserName());
-            hashMap.put(IJson.mobile_no, "" + loginBean.getMobileNumber());
+            hashMap.put(IJson.userId, "" + loginBean.getUserId());
             hashMap.put(IJson.password, "" + loginBean.getPassword());
             CallWebservice.getWebservice(TAG, Request.Method.POST, IUrls.URL_REGISTER, hashMap, new VolleyResponseListener<LoginBean>() {
                 @Override

@@ -34,6 +34,7 @@ import com.atmshop.common.GPSTracker;
 import com.atmshop.common.MarshMallowPermission;
 import com.atmshop.constant.IConstants;
 import com.atmshop.fragment.AboutFragment;
+import com.atmshop.fragment.ChangePasswordFrag;
 import com.atmshop.fragment.PagerFragment;
 import com.atmshop.fragment.ShopListFragment;
 import com.atmshop.fragment.TermsFragment;
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // tags used to attach the fragments
     private static final String TAG_HOME = "home";
     private static final String TAG_SHOP_DETLS = "shopdtls";
-    private static final String TAG_SHARE = "share";
+    private static final String TAG_CHANGE_PASS = "changepass";
     public static String CURRENT_TAG = TAG_HOME;
 
     // toolbar titles respected to selected nav menu item
@@ -221,6 +222,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // photos
                 ShopListFragment moviesFragment = new ShopListFragment();
                 return moviesFragment;
+            case 2:
+                // photos
+                ChangePasswordFrag changepass = new ChangePasswordFrag();
+                return changepass;
+
             default:
                 return new PagerFragment();
         }
@@ -250,6 +256,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_SHOP_DETLS;
                         break;
+                    case R.id.nav_change_pass:
+                        showFragment(ChangePasswordFrag.class);
+                        drawer.closeDrawers();
+                        return true;
                     case R.id.nav_about_us:
                         showFragment(AboutFragment.class);
                         drawer.closeDrawers();
