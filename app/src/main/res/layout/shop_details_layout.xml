@@ -26,7 +26,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Shutter Heights (in feet)/शटर हाइट दर्ज करें (फुट में)"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -40,7 +41,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Shutter Width (in feet)/शटर चौड़ाई दर्ज करें (फुट में)"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -53,7 +55,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Internal Height(in feet)/आंतरिक हाइट दर्ज करें (फुट में)"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -67,7 +70,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Internal Width (in feet)/आंतरिक चौड़ाई दर्ज करें (फुट में)"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -81,7 +85,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Internal Depth (in feet)/आंतरिक लंबाई दर्ज करें (फुट में)"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5"
 
                     />
             </android.support.design.widget.TextInputLayout>
@@ -98,7 +103,8 @@
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:hint="Carpet Area/कालीन क्षेत्र"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
             </android.support.design.widget.TextInputLayout>
 
 

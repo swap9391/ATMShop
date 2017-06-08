@@ -243,31 +243,19 @@
                 android:layout_height="wrap_content"
                 android:text="7.When there is high footfall ? /कौन से समय पर दुकान क्षेत्र में भीड़ है?" />
 
-           <Button
-               android:id="@+id/btnTime"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Select Time"
-               android:drawableRight="@mipmap/ic_time"
-               />
-
-            <android.support.design.widget.TextInputLayout
+            <Button
+                android:id="@+id/btnTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/edt8_bank_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="8.What is the reason behind high footfall ? / भीड़ के पीछे क्या कारण है?" />
-            </android.support.design.widget.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/ic_time"
+                android:text="Select Time" />
 
 
             <TextView
                 android:id="@+id/qstn9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="9.Which of the following POI is within 100 mt from your shop ?  निम्नलिखित POI में से किसके पास आपकी दुकान से 100 मीटर के भीतर है?" />
+                android:text="8.Which of the following POI is within 100 mt from your shop ?  निम्नलिखित POI में से किसके पास आपकी दुकान से 100 मीटर के भीतर है?" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -330,7 +318,7 @@
                 android:id="@+id/qstn10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="10.Is there any ATM shop having 2 ATM machines within 100 meter ?/क्या 100 मीटर के भीतर 2 एटीएम मशीन वाले एटीएम शॉप हैं?" />
+                android:text="9.Is there any ATM shop having 2 ATM machines within 100 meter ?/क्या 100 मीटर के भीतर 2 एटीएम मशीन वाले एटीएम शॉप हैं?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -360,6 +348,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Bank Name/बैंक के नाम" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10.What is the reason behind high footfall ? / भीड़ के पीछे क्या कारण है?" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt8_bank_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Reason"
+                    android:lines="2"
+                    android:maxLength="100" />
             </android.support.design.widget.TextInputLayout>
 
 
