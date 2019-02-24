@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -351,6 +352,12 @@
             </android.support.design.widget.TextInputLayout>
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10.What is the reason behind high footfall ? / भीड़ के पीछे क्या कारण है?" />
+
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -359,9 +366,9 @@
                     android:id="@+id/edt8_bank_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Enter Reason"
                     android:lines="2"
-                    android:maxLength="100"
-                    android:hint="10.What is the reason behind high footfall ? / भीड़ के पीछे क्या कारण है?" />
+                    android:maxLength="100" />
             </android.support.design.widget.TextInputLayout>
 
 
